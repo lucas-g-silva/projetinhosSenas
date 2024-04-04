@@ -10,7 +10,7 @@ programa
     	caracter direcao = 'n'
 
      funcao mover()
-     {	
+     {	
      	se(tecla(t.TECLA_ESPACO)){
      		escolha(direcao){
      			caso 'c':
@@ -45,17 +45,17 @@ programa
                u.aguarde(v)
                direcao = 'c'
           }
-          se (tecla(t.TECLA_SETA_ABAIXO) ou tecla(t.TECLA_S)) {
+          senao se (tecla(t.TECLA_SETA_ABAIXO) ou tecla(t.TECLA_S)) {
                by++
                u.aguarde(v)
                direcao = 'b'
           }
-          se (tecla(t.TECLA_SETA_ESQUERDA) ou tecla(t.TECLA_A)) {
+          senao se (tecla(t.TECLA_SETA_ESQUERDA) ou tecla(t.TECLA_A)) {
                bx--
                u.aguarde(v)
                direcao = 'e'
           }
-          se (tecla(t.TECLA_SETA_DIREITA) ou tecla(t.TECLA_D)){
+          senao se (tecla(t.TECLA_SETA_DIREITA) ou tecla(t.TECLA_D)){
                bx++
                u.aguarde(v)
                direcao = 'd'
@@ -91,12 +91,11 @@ programa
           retorne t.tecla_pressionada(tecla_)
      }
 
-     funcao desenhar()
-     {	inteiro vermelho = 255-v*25, azul = v*25
-     	inteiro color = g.criar_cor(vermelho, 0, azul)
+     funcao desenhar(){
+     	inteiro color = g.criar_cor(255-v*25, v*25, v*25)
           g.definir_cor(g.COR_BRANCO)
           g.limpar()
-          g.definir_cor(color)
+          g.definir_gradiente(3, color, g.COR_BRANCO)
           g.desenhar_elipse(bx, by, 30, 30, verdadeiro)
           
           g.definir_cor(g.COR_PRETO)
@@ -105,7 +104,6 @@ programa
           g.desenhar_texto(10, 30, "X: " + bx + "")
           g.desenhar_texto(10, 50, "Y: " + by + "")
 
-		g.definir_cor(g.COR_BRANCO)
           g.desenhar_elipse(bx+8, by+12, 2, 2, verdadeiro)
           g.desenhar_elipse(bx+20, by+12, 2, 2, verdadeiro)
           g.desenhar_linha(bx+8, by+20, bx+22, by+20)
@@ -155,7 +153,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 352; 
+ * @POSICAO-CURSOR = 3851; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
