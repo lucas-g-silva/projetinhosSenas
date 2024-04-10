@@ -7,45 +7,35 @@ programa
 	inclua biblioteca Mouse --> m
 
 	const inteiro XY = 80, IMG_XY = 72
-	inteiro pxBrancas[16], pyBrancas[16]
-	inteiro pxPretas[16], pyPretas[16]
 	cadeia nmPecas[] = {"b", "t", "c", "p", "q", "r", ""}
 	inteiro imgPecasBrancas[6], imgPecasPretas[6]
 	inteiro corTab[3] = {g.criar_cor(232, 237, 249), g.criar_cor(183, 192, 216), g.criar_cor(153, 144, 236)}
-	inteiro posicoes[][] = {{1,2,0,5,4,0,2,1},
-					    {3,3,3,3,3,3,3,3},
-					    {7,7,7,7,7,7,7,7},
-					    {7,7,7,7,7,7,7,7},
-					    {7,7,7,7,7,7,7,7},
-					    {7,7,7,7,7,7,7,7},
-					    {11,11,11,11,11,11,11,11},
-					    {9,10,8,13,12,8,10,9}}
-	inteiro possibilidades[][] = {{0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0},
-							{0,0,0,0,0,0,0,0}}
+	inteiro posicoes[8][8]
+	inteiro possibilidades[8][8]
 	inteiro clicado[2] = {-1, -1}
 	cadeia vez = "branco"
 	logico chequeB = falso, chequeP = falso
 	
 	funcao inicio(){
 		g.iniciar_modo_grafico(verdadeiro)
-		g.definir_dimensoes_janela(640, 640)
+		g.definir_dimensoes_janela(1000, 640)
 		g.definir_titulo_janela("Xadrez")
+		recomecar()
 		para(inteiro i = 0; i < 6; i++){
 			imgPecasBrancas[i] = g.carregar_imagem("/pecas/" + nmPecas[i] + "-white.jpg")
 			imgPecasPretas[i] = g.carregar_imagem("/pecas/" + nmPecas[i] + "-black.jpg")
 		}
 		enquanto(nao t.tecla_pressionada(t.TECLA_ESC)){
+			tela()
 			tabuleiro()
 			pecas()
 			ctrl()
 			g.renderizar()
 		}
+	}
+	funcao tela(){
+		g.definir_cor(g.COR_BRANCO)
+		g.limpar()
 	}
 	funcao tabuleiro(){
 		cadeia letras[] = {"A", "B", "C", "D", "E", "F", "G", "H"}
@@ -149,10 +139,10 @@ programa
 	funcao ctrl(){
 		para(inteiro j = 0; j < 8; j++){
 			para(inteiro i = 0; i < 8; i++){
-				se(m.posicao_x() > i*80 e
-				   m.posicao_x() < (i+1)*80 e
-				   m.posicao_y() > j*80 e
-				   m.posicao_y() < (j+1)*80 e
+				se(m.posicao_x() > i*XY e
+				   m.posicao_x() < (i+1)*XY e
+				   m.posicao_y() > j*XY e
+				   m.posicao_y() < (j+1)*XY e
 				   m.botao_pressionado(m.BOTAO_ESQUERDO)){
 				   	se(possibilidades[j][i] == 1){
 				   		posicoes[j][i] = posicoes[clicado[0]][clicado[1]]
@@ -183,14 +173,14 @@ programa
 				   		clicado[1] = -1
 				   	}
 				}
-				se(m.posicao_x() > i*80 e
-				   m.posicao_x() < (i+1)*80 e
-				   m.posicao_y() > j*80 e
-				   m.posicao_y() < (j+1)*80 e
+				se(m.posicao_x() > i*XY e
+				   m.posicao_x() < (i+1)*XY e
+				   m.posicao_y() > j*XY e
+				   m.posicao_y() < (j+1)*XY e
 				   m.botao_pressionado(m.BOTAO_DIREITO)){
 				   	g.definir_tamanho_texto(30.0)
 				   	g.definir_cor(corTab[2])
-				   	g.desenhar_texto(i*80+ 25, j*80 + 25, posicoes[j][i]+"")
+				   	g.desenhar_texto(i*XY+ 25, j*XY + 25, posicoes[j][i]+"")
 				   }
 			}
 		}
@@ -206,9 +196,9 @@ programa
 	}
 	funcao peao(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasBrancas[3])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[3])
 		} senao{
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasPretas[3])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[3])
 		}
 		se(click == verdadeiro){
 			se(cor == "branco"){
@@ -266,9 +256,9 @@ programa
 	}
 	funcao torre(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasBrancas[1])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[1])
 		} senao{
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasPretas[1])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[1])
 		}
 		se(click == verdadeiro){
 			inteiro i = y-1
@@ -375,9 +365,9 @@ programa
 	}
 	funcao cavalo(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasBrancas[2])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[2])
 		} senao{
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasPretas[2])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[2])
 		}
 		se(click == verdadeiro){
 			se(x > 0 e y > 1){
@@ -448,9 +438,9 @@ programa
 	}
 	funcao bispo(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasBrancas[0])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[0])
 		} senao{
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasPretas[0])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[0])
 		}
 		se(click == verdadeiro){
 			inteiro i = y-1
@@ -510,7 +500,7 @@ programa
 			i = y-1
 			j = x+1
 			auxiliar = verdadeiro
-			enquanto(i < 8 e j > -1){
+			enquanto(i > -1 e j < 8){
 				se(cor == "branco"){
 					se(posicoes[i][j] != 7 e posicoes[i][j] > 7){
 						auxiliar = falso
@@ -537,7 +527,7 @@ programa
 			i = y+1
 			j = x+1
 			auxiliar = verdadeiro
-			enquanto(i < 8 e j > -1){
+			enquanto(i < 8 e j < 8){
 				se(cor == "branco"){
 					se(posicoes[i][j] != 7 e posicoes[i][j] > 7){
 						auxiliar = falso
@@ -565,26 +555,320 @@ programa
 	}
 	funcao rainha(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasBrancas[4])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[4])
 		} senao{
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasPretas[4])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[4])
+		}
+		se(click == verdadeiro){
+			inteiro i = y-1
+			inteiro j = x-1
+			logico auxiliar = verdadeiro
+			enquanto(i > -1 e j > -1){
+				se(cor == "branco"){
+					se(posicoes[i][j] != 7 e posicoes[i][j] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] < 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[i][j] != 7 e posicoes[i][j] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] > 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[i][j] = 1
+				}
+				i--
+				j--
+			}
+			i = y+1
+			j = x-1
+			auxiliar = verdadeiro
+			enquanto(i < 8 e j > -1){
+				se(cor == "branco"){
+					se(posicoes[i][j] != 7 e posicoes[i][j] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] < 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[i][j] != 7 e posicoes[i][j] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] > 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[i][j] = 1
+				}
+				i++
+				j--
+			}
+			i = y-1
+			j = x+1
+			auxiliar = verdadeiro
+			enquanto(i > -1 e j < 8){
+				se(cor == "branco"){
+					se(posicoes[i][j] != 7 e posicoes[i][j] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] < 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[i][j] != 7 e posicoes[i][j] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] > 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[i][j] = 1
+				}
+				i--
+				j++
+			}
+			i = y+1
+			j = x+1
+			auxiliar = verdadeiro
+			enquanto(i < 8 e j < 8){
+				se(cor == "branco"){
+					se(posicoes[i][j] != 7 e posicoes[i][j] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] < 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[i][j] != 7 e posicoes[i][j] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][j] > 7 e auxiliar == verdadeiro){
+						possibilidades[i][j] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[i][j] = 1
+				}
+				i++
+				j++
+			}
+			i = y-1
+			auxiliar = verdadeiro
+			enquanto(i > -1){
+				se(cor == "branco"){
+					se(posicoes[i][x] != 7 e posicoes[i][x] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][x] < 7 e auxiliar == verdadeiro){
+						possibilidades[i][x] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[i][x] != 7 e posicoes[i][x] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][x] > 7 e auxiliar == verdadeiro){
+						possibilidades[i][x] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[i][x] = 1
+				}
+				i--
+			}
+			i = y+1
+			auxiliar = verdadeiro
+			enquanto(i < 8){
+				se(cor == "branco"){
+					se(posicoes[i][x] != 7 e posicoes[i][x] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][x] < 7 e auxiliar == verdadeiro){
+						possibilidades[i][x] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[i][x] != 7 e posicoes[i][x] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[i][x] > 7 e auxiliar == verdadeiro){
+						possibilidades[i][x] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[i][x] = 1
+				}
+				i++
+			}
+			i = x-1
+			auxiliar = verdadeiro
+			enquanto(i > -1){
+				se(cor == "branco"){
+					se(posicoes[y][i] != 7 e posicoes[y][i] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[y][i] < 7 e auxiliar == verdadeiro){
+						possibilidades[y][i] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[y][i] != 7 e posicoes[y][i] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[y][i] > 7 e auxiliar == verdadeiro){
+						possibilidades[y][i] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[y][i] = 1
+				}
+				i--
+			}
+			i = x+1
+			auxiliar = verdadeiro
+			enquanto(i < 8){
+				se(cor == "branco"){
+					se(posicoes[y][i] != 7 e posicoes[y][i] > 7){
+						auxiliar = falso
+					}
+					se(posicoes[y][i] < 7 e auxiliar == verdadeiro){
+						possibilidades[y][i] = 1
+						auxiliar = falso
+					}
+				} senao {
+					se(posicoes[y][i] != 7 e posicoes[y][i] < 7){
+						auxiliar = falso
+					}
+					se(posicoes[y][i] > 7 e auxiliar == verdadeiro){
+						possibilidades[y][i] = 1
+						auxiliar = falso
+					}
+				}
+				se(auxiliar == verdadeiro){
+					possibilidades[y][i] = 1
+				}
+				i++
+			}
 		}
 	}
 	funcao rei(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasBrancas[5])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[5])
 		} senao{
-			g.desenhar_imagem(x*80+4, y*80+4, imgPecasPretas[5])
+			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[5])
+		}
+		se(click == verdadeiro){
+			se(y > 0){
+				se(cor == "branco"){
+					se(posicoes[y-1][x] <= 7)
+						possibilidades[y-1][x] = 1
+					se(x > 0 e posicoes[y-1][x-1] <=7)
+						possibilidades[y-1][x-1] = 1
+					se(x < 7 e posicoes[y-1][x+1] <=7)
+						possibilidades[y-1][x+1] = 1
+				} senao {
+					se(posicoes[y-1][x] >= 7)
+						possibilidades[y-1][x] = 1
+					se(x > 0 e posicoes[y-1][x-1] >=7)
+						possibilidades[y-1][x-1] = 1
+					se(x < 7 e posicoes[y-1][x+1] >=7)
+						possibilidades[y-1][x+1] = 1
+				}
+			}
+			se(y < 7){
+				se(cor == "branco"){
+					se(posicoes[y+1][x] <= 7)
+						possibilidades[y+1][x] = 1
+					se(x > 0 e posicoes[y+1][x-1] <=7)
+						possibilidades[y+1][x-1] = 1
+					se(x < 7 e posicoes[y+1][x+1] <=7)
+						possibilidades[y+1][x+1] = 1
+				} senao{
+					se(posicoes[y+1][x] >= 7)
+						possibilidades[y+1][x] = 1
+					se(x > 0 e posicoes[y+1][x-1] >=7)
+						possibilidades[y+1][x-1] = 1
+					se(x < 7 e posicoes[y+1][x+1] >=7)
+						possibilidades[y+1][x+1] = 1
+				}
+			}
+			se(cor == "branco"){
+				se(x > 0 e posicoes[y][x-1] <= 7)
+					possibilidades[y][x-1] = 1
+				se(x < 7 e posicoes[y][x+1] <= 7)
+					possibilidades[y][x+1] = 1
+			} senao{
+				se(x > 0 e posicoes[y][x-1] >= 7)
+					possibilidades[y][x-1] = 1
+				se(x < 7 e posicoes[y][x+1] >= 7)
+					possibilidades[y][x+1] = 1
+			}
 		}
 	}
 	funcao botao(inteiro x, inteiro y, logico possivelMorte){
 		g.definir_cor(corTab[2])
 		se(possivelMorte == falso){
-			g.desenhar_elipse(x*80+30, y*80+30, 20, 20, verdadeiro)
+			g.desenhar_elipse(x*XY+30, y*XY+30, 20, 20, verdadeiro)
 		} senao{
-			g.desenhar_elipse(x*80+1, y*80+2, 78, 78, verdadeiro)
+			g.desenhar_elipse(x*XY+1, y*XY+2, 78, 78, verdadeiro)
 		}
 		
+	}
+	funcao recomecar(){
+		para(inteiro j = 0; j < 8; j++){
+			para(inteiro i = 0; i < 8; i++){
+				se(j == 0){
+					se(i == 0 ou i == 7)
+						posicoes[j][i] = 1
+					se(i == 1 ou i == 6)
+						posicoes[j][i] = 2
+					se(i == 2 ou i == 5)
+						posicoes[j][i] = 0
+					se(i == 3)
+						posicoes[j][i] = 5
+					se(i == 4)
+						posicoes[j][i] = 4
+				}
+				se(j == 1)
+					posicoes[j][i] = 3
+				se(j > 1 e j < 6)
+					posicoes[j][i] = 7
+				se(j == 6)
+					posicoes[j][i] = 11
+				se(j == 7){
+					se(i == 0 ou i == 7)
+						posicoes[j][i] = 9
+					se(i == 1 ou i == 6)
+						posicoes[j][i] = 10
+					se(i == 2 ou i == 5)
+						posicoes[j][i] = 8
+					se(i == 3)
+						posicoes[j][i] = 13
+					se(i == 4)
+						posicoes[j][i] = 12
+				}
+				possibilidades[j][i] = 0
+			}
+		}
 	}
 }
 /* $$$ Portugol Studio $$$ 
@@ -592,8 +876,8 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 13478; 
- * @DOBRAMENTO-CODIGO = [14, 22, 38, 42, 34, 56, 58, 63, 66, 55, 70, 72, 77, 80, 69, 54, 53, 49, 93, 95, 92, 100, 91, 90, 89, 142, 144, 141, 161, 163, 156, 169, 168, 175, 174, 167, 180, 155, 189, 150, 149, 199, 198, 197, 196, 148, 207, 209, 217, 215, 214, 222, 221, 228, 227, 233, 232, 226, 213, 242, 240, 239, 247, 246, 253, 252, 258, 257, 251, 238, 212, 206, 376, 378, 383, 386, 382, 391, 394, 390, 399, 402, 398, 407, 410, 406, 415, 418, 414, 423, 426, 422, 431, 434, 430, 439, 442, 438, 381, 375, 566, 568, 565, 573, 575, 572, 581, 583, 579];
+ * @POSICAO-CURSOR = 1034; 
+ * @DOBRAMENTO-CODIGO = [43, 39, 79, 131, 138, 196, 256, 365, 438, 555, 772, 826, 835];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
