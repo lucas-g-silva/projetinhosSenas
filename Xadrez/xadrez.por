@@ -1,5 +1,7 @@
 programa
 {
+	inclua biblioteca Texto --> txt
+	inclua biblioteca Calendario --> c
 	inclua biblioteca Teclado --> t
 	inclua biblioteca Arquivos --> a
 	inclua biblioteca Graficos --> g
@@ -7,6 +9,8 @@ programa
 	inclua biblioteca Mouse --> m
 
 	const inteiro XY = 80, IMG_XY = 72
+	inteiro reiP[] = {0, 3}
+	inteiro reiB[] = {7, 3}
 	inteiro logoImg = g.carregar_imagem("/logo.png")
 	const cadeia nmPecas[] = {"b", "t", "c", "p", "q", "r", ""}
 	inteiro imgPecasBrancas[6], imgPecasPretas[6]
@@ -17,6 +21,10 @@ programa
 	inteiro clicado[2]
 	cadeia vez = ""
 	logico chequeB, chequeP
+	inteiro segundoAnterior = c.segundo_atual()
+	inteiro minP = 10, segP = 0
+	inteiro minB = 10, segB = 0
+	cadeia mB, mP, sB, sP
 	
 	funcao inicio(){
 		g.iniciar_modo_grafico(verdadeiro)
@@ -28,19 +36,60 @@ programa
 			imgPecasPretas[i] = g.carregar_imagem("/pecas/" + nmPecas[i] + "-black.jpg")
 		}
 		enquanto(nao t.tecla_pressionada(t.TECLA_ESC)){
+			inteiro segundoAtual = c.segundo_atual()
+			temporizador(segundoAtual)
 			tela()
 			tabuleiro()
 			pecas()
+			atualizar_posicoes_reis()
 			ctrl()
 			g.renderizar()
 		}
+	}
+	funcao temporizador(inteiro segundoAtual){
+		se(segundoAtual != segundoAnterior){
+			segundoAnterior = segundoAtual
+			se(vez == "branco"){
+				se(segB > 0){
+					segB--
+				} senao{
+					segB = 59
+					minB--
+				}
+			} senao{
+				se(segP > 0){
+					segP--
+				} senao{
+					segP = 59
+					minP--
+				}
+			}
+		}
+		mB = ""
+		mP = "" 
+		sB = ""
+		sP = ""
+		se(txt.numero_caracteres(minB + "") == 1){
+			mB += "0"
+		}
+		mB += minB
+		se(txt.numero_caracteres(minP + "") == 1){
+			mP += "0"
+		}
+		mP += minP
+		se(txt.numero_caracteres(segB + "") == 1){
+			sB += "0"
+		}
+		sB += segB
+		se(txt.numero_caracteres(segP + "") == 1){
+			sP += "0"
+		}
+		sP += segP
 	}
 	funcao tela(){
 		g.definir_cor(corTab[3])
 		g.limpar()
 		g.desenhar_imagem(660+97, 40, logoImg)
-		
-		g.definir_tamanho_texto(20.0)
 		g.definir_estilo_texto(falso, falso, falso)
 
 		se(vez == "branco")
@@ -52,7 +101,10 @@ programa
 		g.desenhar_retangulo(660, 120, 330, 90, verdadeiro, verdadeiro)
 		g.definir_opacidade(255)
 		g.definir_cor(corTab[4])
+		g.definir_tamanho_texto(20.0)
 		g.desenhar_texto(750, 120+90/2-20/2, "Jogador 1")
+		g.definir_tamanho_texto(30.0)
+		g.desenhar_texto(890, 120+90/2-30/2, mB + ":" + sB)
 		g.desenhar_imagem(669, 129, imgPecasBrancas[3])
 
 		se(vez == "preto")
@@ -63,7 +115,10 @@ programa
 		g.desenhar_retangulo(660, 220, 330, 90, verdadeiro, verdadeiro)
 		g.definir_opacidade(255)
 		g.definir_cor(corTab[4])
+		g.definir_tamanho_texto(20.0)
 		g.desenhar_texto(750, 220+90/2-20/2, "Jogador 2")
+		g.definir_tamanho_texto(30.0)
+		g.desenhar_texto(890, 220+90/2-30/2, mP + ":" + sP)
 		g.desenhar_imagem(669, 229, imgPecasPretas[3])
 
 		se(esta_em_hover(660, 520, 330, 60)){
@@ -71,6 +126,7 @@ programa
 		} senao {
 			g.definir_cor(corTab[4])
 		}
+		g.definir_tamanho_texto(20.0)
 		g.definir_opacidade(75)
 		g.desenhar_retangulo(660, 520, 330, 60, verdadeiro, verdadeiro)
 		g.definir_opacidade(255)
@@ -155,6 +211,8 @@ programa
      	}
      	g.definir_cor(g.COR_PRETO)
      	g.desenhar_texto(0, 0, clicado[0] +"; "+ clicado[1])
+     	g.desenhar_texto(0, 10, reiP[0] +"; "+ reiP[1])
+     	g.desenhar_texto(0, 20, reiB[0] +"; "+ reiB[1])
 	}
 	funcao pecas(){
 		para(inteiro j = 0; j < 8; j++){
@@ -987,25 +1045,38 @@ programa
 			retorne falso
 		}
 	}
-	funcao logico esta_clicado(inteiro x, inteiro y, inteiro largura, inteiro altura, inteiro botao){
+	funcao logico esta_clicado(inteiro x, inteiro y, inteiro largura, inteiro altura, inteiro btn){
 		se(m.posicao_x() > x e
 		   m.posicao_x() < x + largura e
 		   m.posicao_y() > y e
 		   m.posicao_y() < y + altura e
-		   m.botao_pressionado(botao)){
+		   m.botao_pressionado(btn)){
 		   	retorne verdadeiro
 		} senao {
 			retorne falso
 		}
 	}	
+	funcao atualizar_posicoes_reis(){
+		para(inteiro j = 0; j < 8; j++){
+			para(inteiro i = 0; i < 8; i++){
+				se(posicoes[j][i] == 13){
+					reiB[0] = j
+					reiB[1] = i
+				}
+				se(posicoes[j][i] == 5){
+					reiP[0] = j
+					reiP[1] = i
+				}
+			}
+		}
+	}
 }
 /* $$$ Portugol Studio $$$ 
  * 
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 23694; 
- * @DOBRAMENTO-CODIGO = [20, 37, 90, 158, 210, 282, 342, 451, 524, 641, 858, 912, 921, 937, 979, 989];
+ * @POSICAO-CURSOR = 3390; 
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
