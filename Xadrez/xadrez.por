@@ -7,18 +7,20 @@ programa
 	inclua biblioteca Mouse --> m
 
 	const inteiro XY = 80, IMG_XY = 72
-	cadeia nmPecas[] = {"b", "t", "c", "p", "q", "r", ""}
+	inteiro logoImg = g.carregar_imagem("/logo.png")
+	const cadeia nmPecas[] = {"b", "t", "c", "p", "q", "r", ""}
 	inteiro imgPecasBrancas[6], imgPecasPretas[6]
-	inteiro corTab[3] = {g.criar_cor(232, 237, 249), g.criar_cor(183, 192, 216), g.criar_cor(153, 144, 236)}
+	inteiro corTab[] = {g.criar_cor(232, 237, 249), g.criar_cor(183, 192, 216), g.criar_cor(153, 144, 236), g.criar_cor(52, 54, 76), g.criar_cor(244, 247, 250)}
+	inteiro corBtns[] = {g.criar_cor(255, 100, 100), g.criar_cor(100, 255, 100)}
 	inteiro posicoes[8][8]
 	inteiro possibilidades[8][8]
-	inteiro clicado[2] = {-1, -1}
-	cadeia vez = "branco"
-	logico chequeB = falso, chequeP = falso
+	inteiro clicado[2]
+	cadeia vez = ""
+	logico chequeB, chequeP
 	
 	funcao inicio(){
 		g.iniciar_modo_grafico(verdadeiro)
-		g.definir_dimensoes_janela(1000, 640)
+		g.definir_dimensoes_janela(1000, 660)
 		g.definir_titulo_janela("Xadrez")
 		recomecar()
 		para(inteiro i = 0; i < 6; i++){
@@ -34,8 +36,57 @@ programa
 		}
 	}
 	funcao tela(){
-		g.definir_cor(g.COR_BRANCO)
+		g.definir_cor(corTab[3])
 		g.limpar()
+		g.desenhar_imagem(660+97, 40, logoImg)
+		
+		g.definir_tamanho_texto(20.0)
+		g.definir_estilo_texto(falso, falso, falso)
+
+		se(vez == "branco")
+			g.definir_cor(corTab[4])
+		senao{
+			g.definir_cor(corTab[3])
+		}
+		g.definir_opacidade(15)
+		g.desenhar_retangulo(660, 120, 330, 90, verdadeiro, verdadeiro)
+		g.definir_opacidade(255)
+		g.definir_cor(corTab[4])
+		g.desenhar_texto(750, 120+90/2-20/2, "Jogador 1")
+		g.desenhar_imagem(669, 129, imgPecasBrancas[3])
+
+		se(vez == "preto")
+			g.definir_cor(corTab[4])
+		senao
+			g.definir_cor(corTab[3])
+		g.definir_opacidade(15)
+		g.desenhar_retangulo(660, 220, 330, 90, verdadeiro, verdadeiro)
+		g.definir_opacidade(255)
+		g.definir_cor(corTab[4])
+		g.desenhar_texto(750, 220+90/2-20/2, "Jogador 2")
+		g.desenhar_imagem(669, 229, imgPecasPretas[3])
+
+		se(esta_em_hover(660, 520, 330, 60)){
+			g.definir_cor(corBtns[1])
+		} senao {
+			g.definir_cor(corTab[4])
+		}
+		g.definir_opacidade(75)
+		g.desenhar_retangulo(660, 520, 330, 60, verdadeiro, verdadeiro)
+		g.definir_opacidade(255)
+		g.definir_cor(corTab[4])
+		g.desenhar_texto(660+330/2-g.largura_texto("Recomeçar")/2, 520+60/2-20/2, "Recomeçar")
+		
+		se(esta_em_hover(660, 590, 330, 60)){
+			g.definir_cor(corBtns[0])
+		} senao {
+			g.definir_cor(corTab[4])
+		}
+		g.definir_opacidade(75)
+		g.desenhar_retangulo(660, 590, 330, 60, verdadeiro, verdadeiro)
+		g.definir_cor(corTab[4])
+		g.definir_opacidade(255)
+		g.desenhar_texto(660+330/2-g.largura_texto("Sair do Jogo")/2, 590+60/2-20/2, "Sair do Jogo")
 	}
 	funcao tabuleiro(){
 		cadeia letras[] = {"A", "B", "C", "D", "E", "F", "G", "H"}
@@ -49,13 +100,24 @@ programa
      				} senao{
      					g.definir_cor(corTab[0])
      				}
-     				g.desenhar_retangulo(XY*i, XY*j, XY, XY, falso, verdadeiro)
+     				se(i == 0 e j == 0){
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY, verdadeiro, verdadeiro)
+     					g.desenhar_retangulo(XY*i+50, XY*j+10, XY/2, XY, falso, verdadeiro)
+     					g.desenhar_retangulo(XY*i+10, XY*j+50, XY, XY/2, falso, verdadeiro)
+     				}
+     				senao se(i == 7 e j == 7){
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY, verdadeiro, verdadeiro)
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY/2, XY, falso, verdadeiro)
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY/2, falso, verdadeiro)
+     				}senao{
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY, falso, verdadeiro)
+     				}
      				g.definir_cor(corTab[1])
      				se(i == 0){
-     					g.desenhar_texto(XY*i + 2, XY*j + 2, j+1 + "")
+     					g.desenhar_texto(XY*i + 12, XY*j + 12, j+1 + "")
      				}
      				se(j == 7){
-     					g.desenhar_texto(XY*(i+1)-12, XY*(j+1)-18 + 4, letras[i])
+     					g.desenhar_texto(XY*(i+1)-2, XY*(j+1)-8 + 4, letras[i])
      				}
      			} senao{
      				se(j == clicado[0] e i == clicado[1]){
@@ -63,15 +125,32 @@ programa
      				} senao{
      					g.definir_cor(corTab[1])
      				}
-     				g.desenhar_retangulo(XY*i, XY*j, XY, XY, falso, verdadeiro)
+     				se(i == 7 e j == 0){
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY, verdadeiro, verdadeiro)
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY/2, XY, falso, verdadeiro)
+     					g.desenhar_retangulo(XY*i+10, XY*j+50, XY, XY/2, falso, verdadeiro)
+     				}
+     				senao se(i == 0 e j == 7){
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY, verdadeiro, verdadeiro)
+     					g.desenhar_retangulo(XY*i+50, XY*j+10, XY/2, XY, falso, verdadeiro)
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY/2, falso, verdadeiro)
+     				}senao{
+     					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY, falso, verdadeiro)
+     				}
      				g.definir_cor(corTab[0])
      				se(i == 0){
-     					g.desenhar_texto(XY*i + 2, XY*j + 2, j+1 + "")
+     					g.desenhar_texto(XY*i + 12, XY*j + 12, j+1 + "")
      				}
      				se(j == 7){
-     					g.desenhar_texto(XY*(i+1)-12, XY*(j+1)-18 + 4, letras[i])
+     					g.desenhar_texto(XY*(i+1)-2, XY*(j+1)-8 + 4, letras[i])
      				}
      			}
+     			se(esta_em_hover(XY*i+10, XY*j+10, XY, XY)){
+					g.definir_cor(corTab[2])
+					g.definir_opacidade(75)
+					g.desenhar_retangulo(XY*i+10, XY*j+10, XY, XY, falso, verdadeiro)
+					g.definir_opacidade(255)
+				}
      		}
      	}
      	g.definir_cor(g.COR_PRETO)
@@ -139,11 +218,7 @@ programa
 	funcao ctrl(){
 		para(inteiro j = 0; j < 8; j++){
 			para(inteiro i = 0; i < 8; i++){
-				se(m.posicao_x() > i*XY e
-				   m.posicao_x() < (i+1)*XY e
-				   m.posicao_y() > j*XY e
-				   m.posicao_y() < (j+1)*XY e
-				   m.botao_pressionado(m.BOTAO_ESQUERDO)){
+				se(esta_clicado(i*XY, j*XY, XY, XY, m.BOTAO_ESQUERDO)){
 				   	se(possibilidades[j][i] == 1){
 				   		posicoes[j][i] = posicoes[clicado[0]][clicado[1]]
 				   		posicoes[clicado[0]][clicado[1]] = 7
@@ -160,12 +235,18 @@ programa
 				   			se(posicoes[j][i] > 7){
 				   				clicado[0] = j
 				   				clicado[1] = i
+				   			} senao{
+				   				clicado[0] = -1
+				   				clicado[1] = -1
 				   			}
 				   		}
 				   		senao{
 				   			se(posicoes[j][i] < 7){
 				   				clicado[0] = j
 				   				clicado[1] = i
+				   			} senao{
+				   				clicado[0] = -1
+				   				clicado[1] = -1
 				   			}
 				   		}
 				   	} senao{
@@ -193,12 +274,17 @@ programa
 				}
 			}
 		}
+		se(esta_clicado(660, 520, 330, 60, m.BOTAO_ESQUERDO)){
+			recomecar()
+		} se(esta_clicado(660, 590, 330, 60, m.BOTAO_ESQUERDO)){
+			g.encerrar_modo_grafico()
+		}
 	}
 	funcao peao(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[3])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasBrancas[3])
 		} senao{
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[3])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasPretas[3])
 		}
 		se(click == verdadeiro){
 			se(cor == "branco"){
@@ -256,9 +342,9 @@ programa
 	}
 	funcao torre(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[1])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasBrancas[1])
 		} senao{
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[1])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasPretas[1])
 		}
 		se(click == verdadeiro){
 			inteiro i = y-1
@@ -365,9 +451,9 @@ programa
 	}
 	funcao cavalo(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[2])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasBrancas[2])
 		} senao{
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[2])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasPretas[2])
 		}
 		se(click == verdadeiro){
 			se(x > 0 e y > 1){
@@ -438,9 +524,9 @@ programa
 	}
 	funcao bispo(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[0])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasBrancas[0])
 		} senao{
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[0])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasPretas[0])
 		}
 		se(click == verdadeiro){
 			inteiro i = y-1
@@ -555,9 +641,9 @@ programa
 	}
 	funcao rainha(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[4])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasBrancas[4])
 		} senao{
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[4])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasPretas[4])
 		}
 		se(click == verdadeiro){
 			inteiro i = y-1
@@ -772,9 +858,9 @@ programa
 	}
 	funcao rei(inteiro x, inteiro y, cadeia cor, logico click){
 		se(cor == "branco"){
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasBrancas[5])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasBrancas[5])
 		} senao{
-			g.desenhar_imagem(x*XY+4, y*XY+4, imgPecasPretas[5])
+			g.desenhar_imagem(x*XY+14, y*XY+14, imgPecasPretas[5])
 		}
 		se(click == verdadeiro){
 			se(y > 0){
@@ -827,13 +913,34 @@ programa
 	funcao botao(inteiro x, inteiro y, logico possivelMorte){
 		g.definir_cor(corTab[2])
 		se(possivelMorte == falso){
-			g.desenhar_elipse(x*XY+30, y*XY+30, 20, 20, verdadeiro)
+			g.desenhar_elipse(x*XY+40, y*XY+40, 20, 20, verdadeiro)
 		} senao{
-			g.desenhar_elipse(x*XY+1, y*XY+2, 78, 78, verdadeiro)
+			g.desenhar_elipse(x*XY+11, y*XY+12, 78, 78, verdadeiro)
 		}
 		
 	}
+	funcao logico cheque(inteiro x, inteiro y, cadeia cor){
+		//peoes
+		para(inteiro i = -1; i < 2; i += 2){
+			para(inteiro c = -1; c < 2; c += 2){
+				se (cor == "branco")
+					se(posicoes[y+i][x+c] == 11)
+						chequeB = verdadeiro
+						retorne verdadeiro
+				se (cor == "preto")
+					se(posicoes[y+i][x+c] == 3)
+						chequeB = verdadeiro
+						retorne verdadeiro
+			}
+		}
+		retorne falso
+	}
 	funcao recomecar(){
+		chequeB = falso
+		chequeP = falso
+		clicado[0] = -1
+		clicado[1] = -1
+		vez = "branco"
 		para(inteiro j = 0; j < 8; j++){
 			para(inteiro i = 0; i < 8; i++){
 				se(j == 0){
@@ -870,14 +977,35 @@ programa
 			}
 		}
 	}
+	funcao logico esta_em_hover(inteiro x, inteiro y, inteiro largura, inteiro altura){
+		se(m.posicao_x() > x e
+		   m.posicao_x() < x + largura e
+		   m.posicao_y() > y e
+		   m.posicao_y() < y + altura){
+		   	retorne verdadeiro
+		} senao {
+			retorne falso
+		}
+	}
+	funcao logico esta_clicado(inteiro x, inteiro y, inteiro largura, inteiro altura, inteiro botao){
+		se(m.posicao_x() > x e
+		   m.posicao_x() < x + largura e
+		   m.posicao_y() > y e
+		   m.posicao_y() < y + altura e
+		   m.botao_pressionado(botao)){
+		   	retorne verdadeiro
+		} senao {
+			retorne falso
+		}
+	}	
 }
 /* $$$ Portugol Studio $$$ 
  * 
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 1034; 
- * @DOBRAMENTO-CODIGO = [43, 39, 79, 131, 138, 196, 256, 365, 438, 555, 772, 826, 835];
+ * @POSICAO-CURSOR = 23694; 
+ * @DOBRAMENTO-CODIGO = [20, 37, 90, 158, 210, 282, 342, 451, 524, 641, 858, 912, 921, 937, 979, 989];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
