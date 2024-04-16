@@ -9,8 +9,8 @@ programa
 	inclua biblioteca Mouse --> m
 
 	const inteiro XY = 80, IMG_XY = 72
-	inteiro reiP[] = {0, 3}
-	inteiro reiB[] = {7, 3}
+	const inteiro PEAO_B = 11, TORRE_B = 9, CAVALO_B = 10, BISPO_B = 8, RAINHA_B = 12, REI_B = 13
+	const inteiro PEAO_P = 3, TORRE_P = 1, CAVALO_P = 2, BISPO_P = 0, RAINHA_P = 4, REI_P = 5
 	inteiro logoImg = g.carregar_imagem("/logo.png")
 	const cadeia nmPecas[] = {"b", "t", "c", "p", "q", "r", ""}
 	inteiro imgPecasBrancas[6], imgPecasPretas[6]
@@ -41,7 +41,6 @@ programa
 			tela()
 			tabuleiro()
 			pecas()
-			atualizar_posicoes_reis()
 			ctrl()
 			g.renderizar()
 		}
@@ -211,8 +210,6 @@ programa
      	}
      	g.definir_cor(g.COR_PRETO)
      	g.desenhar_texto(0, 0, clicado[0] +"; "+ clicado[1])
-     	g.desenhar_texto(0, 10, reiP[0] +"; "+ reiP[1])
-     	g.desenhar_texto(0, 20, reiB[0] +"; "+ reiB[1])
 	}
 	funcao pecas(){
 		para(inteiro j = 0; j < 8; j++){
@@ -324,6 +321,7 @@ programa
 			}
 		}
 		se(m.botao_pressionado(m.BOTAO_ESQUERDO)){
+			//cheque(7,4)
 			para(inteiro j = 0; j < 8; j++){
 				para(inteiro i = 0; i < 8; i++){
 					se(possibilidades[j][i] == 1){
@@ -977,59 +975,47 @@ programa
 		}
 		
 	}
-	funcao logico cheque(inteiro x, inteiro y, cadeia cor){
-		//peoes
-		para(inteiro i = -1; i < 2; i += 2){
-			para(inteiro c = -1; c < 2; c += 2){
-				se (cor == "branco")
-					se(posicoes[y+i][x+c] == 11)
-						chequeB = verdadeiro
-						retorne verdadeiro
-				se (cor == "preto")
-					se(posicoes[y+i][x+c] == 3)
-						chequeB = verdadeiro
-						retorne verdadeiro
-			}
-		}
-		retorne falso
-	}
 	funcao recomecar(){
 		chequeB = falso
 		chequeP = falso
 		clicado[0] = -1
 		clicado[1] = -1
+		minP = 10
+		segP = 0
+		minB = 10
+		segB = 0
 		vez = "branco"
 		para(inteiro j = 0; j < 8; j++){
 			para(inteiro i = 0; i < 8; i++){
 				se(j == 0){
 					se(i == 0 ou i == 7)
-						posicoes[j][i] = 1
+						posicoes[j][i] = TORRE_P
 					se(i == 1 ou i == 6)
-						posicoes[j][i] = 2
+						posicoes[j][i] = CAVALO_P
 					se(i == 2 ou i == 5)
-						posicoes[j][i] = 0
+						posicoes[j][i] = BISPO_P
 					se(i == 3)
-						posicoes[j][i] = 5
+						posicoes[j][i] = RAINHA_P
 					se(i == 4)
-						posicoes[j][i] = 4
+						posicoes[j][i] = REI_P
 				}
 				se(j == 1)
-					posicoes[j][i] = 3
+					posicoes[j][i] = PEAO_P
 				se(j > 1 e j < 6)
 					posicoes[j][i] = 7
 				se(j == 6)
-					posicoes[j][i] = 11
+					posicoes[j][i] = PEAO_B
 				se(j == 7){
 					se(i == 0 ou i == 7)
-						posicoes[j][i] = 9
+						posicoes[j][i] = TORRE_B
 					se(i == 1 ou i == 6)
-						posicoes[j][i] = 10
+						posicoes[j][i] = CAVALO_B
 					se(i == 2 ou i == 5)
-						posicoes[j][i] = 8
+						posicoes[j][i] = BISPO_B
 					se(i == 3)
-						posicoes[j][i] = 13
+						posicoes[j][i] = RAINHA_B
 					se(i == 4)
-						posicoes[j][i] = 12
+						posicoes[j][i] = REI_B
 				}
 				possibilidades[j][i] = 0
 			}
@@ -1056,16 +1042,24 @@ programa
 			retorne falso
 		}
 	}	
-	funcao atualizar_posicoes_reis(){
-		para(inteiro j = 0; j < 8; j++){
-			para(inteiro i = 0; i < 8; i++){
-				se(posicoes[j][i] == 13){
-					reiB[0] = j
-					reiB[1] = i
-				}
-				se(posicoes[j][i] == 5){
-					reiP[0] = j
-					reiP[1] = i
+	funcao cheque(inteiro x, inteiro y){
+		inteiro indiceDirecoes = 0
+		inteiro direcoes[8]
+		para(inteiro j = -1; j < 2; j++){
+			para(inteiro i = -1; i < 2; i++){
+				inteiro indicex = x, indicey = y
+				botao(indicex, indicey, verdadeiro)
+				faca{
+					se(indicex < 7 e indicex > 0)
+						indicex += i
+					
+					se(indicey < 7 e indicey > 0)
+						indicey += j
+				}enquanto(posicoes[indicey][indicex] == 7)
+				
+				se(j != 0 ou i != 0){
+					direcoes[indiceDirecoes] = posicoes[indicey][indicex]
+					indiceDirecoes++
 				}
 			}
 		}
@@ -1076,7 +1070,8 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 3390; 
+ * @POSICAO-CURSOR = 9435; 
+ * @DOBRAMENTO-CODIGO = [28, 47, 87, 145, 213, 265, 338, 398, 507, 580, 697, 914, 968, 977, 1023, 1033];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
