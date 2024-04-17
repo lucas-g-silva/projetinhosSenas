@@ -321,7 +321,7 @@ programa
 			}
 		}
 		se(m.botao_pressionado(m.BOTAO_ESQUERDO)){
-			//cheque(7,4)
+			cheque(4,7)
 			para(inteiro j = 0; j < 8; j++){
 				para(inteiro i = 0; i < 8; i++){
 					se(possibilidades[j][i] == 1){
@@ -1043,24 +1043,21 @@ programa
 		}
 	}	
 	funcao cheque(inteiro x, inteiro y){
+		limpa()
 		inteiro indiceDirecoes = 0
 		inteiro direcoes[8]
+		inteiro indicex, indicey
 		para(inteiro j = -1; j < 2; j++){
 			para(inteiro i = -1; i < 2; i++){
-				inteiro indicex = x, indicey = y
-				botao(indicex, indicey, verdadeiro)
+				indicex = x
+				indicey = y
 				faca{
 					se(indicex < 7 e indicex > 0)
 						indicex += i
-					
 					se(indicey < 7 e indicey > 0)
 						indicey += j
 				}enquanto(posicoes[indicey][indicex] == 7)
-				
-				se(j != 0 ou i != 0){
-					direcoes[indiceDirecoes] = posicoes[indicey][indicex]
-					indiceDirecoes++
-				}
+				botao(indicex+i, indicey+j, falso)
 			}
 		}
 	}
@@ -1070,7 +1067,7 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 9435; 
+ * @POSICAO-CURSOR = 26983; 
  * @DOBRAMENTO-CODIGO = [28, 47, 87, 145, 213, 265, 338, 398, 507, 580, 697, 914, 968, 977, 1023, 1033];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
