@@ -321,7 +321,7 @@ programa
 			}
 		}
 		se(m.botao_pressionado(m.BOTAO_ESQUERDO)){
-			cheque(4,7)
+			cheque(x_rei(8), y_rei(8))
 			para(inteiro j = 0; j < 8; j++){
 				para(inteiro i = 0; i < 8; i++){
 					se(possibilidades[j][i] == 1){
@@ -1052,14 +1052,35 @@ programa
 				indicex = x
 				indicey = y
 				faca{
-					se(indicex < 7 e indicex > 0)
+					se(indicex < 7 e indicex > 0 e indicey < 7 e indicey > 0){
 						indicex += i
-					se(indicey < 7 e indicey > 0)
 						indicey += j
-				}enquanto(posicoes[indicey][indicex] == 7)
-				botao(indicex+i, indicey+j, falso)
+					}
+				}enquanto(posicoes[indicey][indicex] == 7
+						e indicex < 7 e indicex > 0 e indicey < 7 e indicey > 0)
+				botao(indicex, indicey, falso)
 			}
 		}
+	}
+	funcao inteiro x_rei(inteiro cor){
+		inteiro x = 0
+		para(inteiro j = 0; j < 8; j++){
+			para(inteiro i = 0; i < 8; i++){
+				se(posicoes[j][i] == REI_P + cor)
+					x = i
+			}
+		}
+		retorne x
+	}
+	funcao inteiro y_rei(inteiro cor){
+		inteiro y = 0
+		para(inteiro j = 0; j < 8; j++){
+			para(inteiro i = 0; i < 8; i++){
+				se(posicoes[j][i] == REI_P + cor)
+					y = j
+			}
+		}
+		retorne y
 	}
 }
 /* $$$ Portugol Studio $$$ 
@@ -1067,8 +1088,8 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 26983; 
- * @DOBRAMENTO-CODIGO = [28, 47, 87, 145, 213, 265, 338, 398, 507, 580, 697, 914, 968, 977, 1023, 1033];
+ * @POSICAO-CURSOR = 27050; 
+ * @DOBRAMENTO-CODIGO = [28, 47, 87, 145, 213, 265, 338, 398, 507, 580, 697, 914, 968, 977, 1023, 1033, 1064, 1074];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
