@@ -16,29 +16,34 @@ programa
 	real x1 = 0.0, x2 = 0.0, xv = 0.0, yv = 0.0, a = caixa_texto[0], b = caixa_texto[1], c = caixa_texto[2]
 	real delta = 0.0
 
-	real xt[8000], fx[8000]
+	//real xt[8000], fx[8000]
 
-	inteiro zoom = 20
+	inteiro zoom = 15
+
+	real xAnt = 0.01
+	real yAnt = (a*m.potencia(0.01, 2.0) + b*0.01 + c)
 
 	const inteiro org_x = 750
 	const inteiro org_y = 350
 
 	funcao eixo(){
-		//definir marcações eixo x
 		g.definir_cor(g.COR_VERMELHO)
-		para(inteiro i = 500; i < 1000; i += zoom){
-			se(i % (zoom*5) == 0){
-				g.desenhar_linha(i, 340, i, 360)
-			}senao se(i != 0){
-				g.desenhar_linha(i, 347, i, 353)
-			}
-		}
-		//definir marcações eixo y
-		para(inteiro i = 100; i < 600; i += zoom){
-			se(i % (zoom*5) == 0){
-				g.desenhar_linha(740, i, 760, i)
-			}senao se(i != 0){
-				g.desenhar_linha(747, i, 753, i)
+		inteiro intervalo = 4
+		para(inteiro i = 0; i <= 250; i += zoom){
+			se(intervalo == 4){
+				g.desenhar_linha(i + org_x, 340, i + org_x, 360)
+				g.desenhar_linha(org_x - i, 340, org_x - i, 360)
+				
+				g.desenhar_linha(740, i + org_y, 760, i + org_y)
+				g.desenhar_linha(740, org_y - i, 760, org_y - i)
+				intervalo = 0
+			}senao{
+				g.desenhar_linha(i + org_x, 347, i + org_x, 353)
+				g.desenhar_linha(org_x - i, 347, org_x - i, 353)
+
+				g.desenhar_linha(747, i + org_y, 753, i + org_y)
+				g.desenhar_linha(747, org_y - i, 753, org_y - i)
+				intervalo++
 			}
 		}
 		g.definir_cor(g.COR_VERMELHO)
@@ -54,22 +59,20 @@ programa
 		inteiro cinza2 = g.criar_cor(230, 230, 230)
 
 		//definir grades y
-		para(inteiro i = 500; i < 1000; i += 10){
-			se(i % 50 == 0){
+		inteiro intervalo = 4
+		para(inteiro i = 0; i <= 250; i += zoom){
+			se(intervalo == 4){
 				g.definir_cor(cinza1)
-			}senao se(i != 0){
+				intervalo = 0
+			}senao{
 				g.definir_cor(cinza2)
+				intervalo++
 			}
-			g.desenhar_linha(i, 100, i, 600)
-		}
-		//definir grades x
-		para(inteiro i = 100; i < 600; i += 10){
-			se(i % 50 == 0){
-				g.definir_cor(cinza1)
-			}senao se(i != 0){
-				g.definir_cor(cinza2)
-			}
-			g.desenhar_linha(500, i, 1000, i)
+			g.desenhar_linha(i + org_x, 100, i + org_x, 600)
+			g.desenhar_linha(org_x - i, 100, org_x - i, 600)
+
+			g.desenhar_linha(500, i + org_y, 1000, i + org_y)
+			g.desenhar_linha(500, org_y - i, 1000, org_y - i)
 		}
 	}
 
@@ -119,22 +122,22 @@ programa
 		auxiliarX = 65 + g.largura_imagem(deltaFormImg)
 		auxiliarY = 190 + g.altura_imagem(deltaFormImg)/2 - 20
 		g.desenhar_retangulo(auxiliarX,  auxiliarY, 80, 40, falso, falso)
-		g.desenhar_texto(auxiliarX + 40 - g.largura_texto(delta+"")/2, auxiliarY + 20 - 25/2, delta+"")
+		g.desenhar_texto(auxiliarX + 40 - g.largura_texto(m.arredondar(delta, 2)+"")/2, auxiliarY + 20 - 25/2, m.arredondar(delta, 2)+"")
 		
 		g.desenhar_imagem(50, 260, xvFormImg)
 		auxiliarX = 65 + g.largura_imagem(xvFormImg)
 		auxiliarY = 260 + g.altura_imagem(xvFormImg)/2 - 40/2
 		g.desenhar_retangulo(auxiliarX,  auxiliarY, 80, 40, falso, falso)
-		g.desenhar_texto(auxiliarX + 40 - g.largura_texto(xv+"")/2, auxiliarY + 20 - 25/2, xv+"")
+		g.desenhar_texto(auxiliarX + 40 - g.largura_texto(m.arredondar(xv, 2)+"")/2, auxiliarY + 20 - 25/2, m.arredondar(xv, 2)+"")
 		
 		g.desenhar_imagem(50, 330, yvFormImg)
 		auxiliarX = 65 + g.largura_imagem(yvFormImg)
 		auxiliarY = 330 + g.altura_imagem(yvFormImg)/2 - 40/2
 		g.desenhar_retangulo(auxiliarX,  auxiliarY, 80, 40, falso, falso)
-		g.desenhar_texto(auxiliarX + 40 - g.largura_texto(yv+"")/2, auxiliarY + 20 - 25/2, yv+"")
+		g.desenhar_texto(auxiliarX + 40 - g.largura_texto(m.arredondar(yv, 2)+"")/2, auxiliarY + 20 - 25/2, m.arredondar(yv, 2)+"")
 
-		g.desenhar_texto(50, 420, "X1 = "+ x1)
-		g.desenhar_texto(50, 480, "X2 = "+ x2)
+		g.desenhar_texto(50, 420, "X1 = "+ m.arredondar(x1, 2))
+		g.desenhar_texto(50, 480, "X2 = "+ m.arredondar(x2, 2))
 	}
 	
 	funcao caixaTexto(inteiro x, inteiro y, inteiro indice){
@@ -147,15 +150,26 @@ programa
 			g.definir_cor(g.COR_VERMELHO)
 			se(t.tecla_pressionada(t.TECLA_ADICAO) e caixa_texto[indice] < 99){
 				caixa_texto[indice]++
-				u.aguarde(100)
+				u.aguarde(150)
 			}
 			se(t.tecla_pressionada(t.TECLA_SUBTRACAO) e caixa_texto[indice] > -99){
 				caixa_texto[indice]--
-				u.aguarde(100)
+				u.aguarde(150)
 			}
 			se(t.tecla_pressionada(t.TECLA_0_NUM)){
 				caixa_texto[indice] = 0
-				u.aguarde(100)
+				u.aguarde(150)
+			}
+			se(t.tecla_pressionada(t.TECLA_ENTER) ou t.tecla_pressionada(t.TECLA_TAB)){
+				se(indice < 2){
+					trava_caixa_texto[indice] = falso
+					trava_caixa_texto[indice+1] = verdadeiro
+				}senao{
+					trava_caixa_texto[indice] = falso
+					trava_caixa_texto[0] = verdadeiro
+				}
+				u.aguarde(150)
+				
 			}
 			
 		}senao{
@@ -189,6 +203,7 @@ programa
 			x2 = (-b - m.raiz(delta, 2.0))/2*a
 		} senao{
 			escreva("A equação não posssui raízes reais!\n")
+			limpa()
 		}
 
 		xv = (-b)/(2*a)
@@ -200,19 +215,20 @@ programa
 	funcao parabula(){
 		real valorX = -zoom*2.5
 
-		real xAnt = 0.01
-		real yAnt = (a*m.potencia(0.01, 2.0) + b*0.01 + c)
+		real xt, fx
 		
-		para(inteiro x = 0; x < 8000; x++){
+		para(inteiro x = 0; x < 10000; x++){
 			valorX += 0.01
-			xt[x] = valorX
-			fx[x] = (a*m.potencia(xt[x], 2.0) + b*xt[x] + c)
 			
-			se(xt[x]*zoom+org_x < 1000 e xt[x]*zoom+org_x > 500 e fx[x]*-zoom+org_y < 600 e fx[x]*-zoom+org_y > 100){
-				g.desenhar_linha(xt[x]*zoom+org_x, fx[x]*-zoom+org_y, xAnt*zoom+org_x, yAnt*-zoom+org_y)
+			xt = valorX
+			fx = (a*m.potencia(xt, 2.0) + b*xt + c)
+			
+			se(xt*zoom <= 250 e xt*zoom >= -250 e fx*-zoom <= 250 e fx*-zoom >= -250
+			   /*e xAnt*zoom+org_x <= 1000 e xAnt*zoom+org_x >= 500 e yAnt*zoom+org_y <= 600 e yAnt*zoom+org_y >= 100*/){
+				g.desenhar_linha(xt*zoom+org_x, fx*-zoom+org_y, xAnt*zoom+org_x, yAnt*-zoom+org_y)
 			}
-			xAnt = xt[x]
-			yAnt = fx[x]
+			xAnt = xt
+			yAnt = fx
 		}
 	}
 
@@ -227,15 +243,30 @@ programa
 		//Definir Retângulo do título
 		g.desenhar_retangulo(20, 10, 980, 80, falso, falso)
 		//Definir retângulo da equação
-		g.desenhar_retangulo(20, 100, 450, 500, falso, falso)
+		g.desenhar_retangulo(20, 100, 470, 500, falso, falso)
 		//Definir retângulo do eixo
 		g.desenhar_retangulo(500, 100, 500, 500, falso, falso)
 		
 		parabula()
 		texto()
 		formulas()
+
+		controle()
+
+		g.desenhar_texto(50, 575, "Zoom: "+ zoom)
 		
 		g.renderizar()
+	}
+
+	funcao controle(){
+		se(t.tecla_pressionada(t.TECLA_CONTROL) e t.tecla_pressionada(t.TECLA_ADICAO) e zoom < 30){
+			zoom++
+			u.aguarde(150)
+		}
+		se(t.tecla_pressionada(t.TECLA_CONTROL) e t.tecla_pressionada(t.TECLA_SUBTRACAO) e zoom > 5){
+			zoom--
+			u.aguarde(150)
+		}
 	}
 	
 	funcao inicio(){
@@ -245,8 +276,6 @@ programa
 		enquanto(nao t.tecla_pressionada(t.TECLA_ESC)){
 			desenhar()
 			calcularPontos()
-			escreva(mo.posicao_x() + ";" + mo.posicao_y())
-			limpa()
 		}
 	}
 }
@@ -255,8 +284,8 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 823; 
- * @DOBRAMENTO-CODIGO = [50, 75, 112, 139, 173, 180, 218];
+ * @POSICAO-CURSOR = 6309; 
+ * @DOBRAMENTO-CODIGO = [28, 55, 78, 115, 142, 187, 194];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
