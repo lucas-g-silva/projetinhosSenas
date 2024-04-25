@@ -28,23 +28,27 @@ programa
 
 	funcao eixo(){
 		g.definir_cor(g.COR_VERMELHO)
-		inteiro intervalo = 4
+		inteiro intervalo = 0
+		g.definir_tamanho_texto(10.0)
 		para(inteiro i = 0; i <= 250; i += zoom){
-			se(intervalo == 4){
+			se(intervalo % 5 == 0 ou intervalo == 0){
 				g.desenhar_linha(i + org_x, 340, i + org_x, 360)
 				g.desenhar_linha(org_x - i, 340, org_x - i, 360)
 				
 				g.desenhar_linha(740, i + org_y, 760, i + org_y)
 				g.desenhar_linha(740, org_y - i, 760, org_y - i)
-				intervalo = 0
+
+				g.desenhar_texto(495 - g.largura_texto(-intervalo+""), i + org_y - 5, -intervalo+"")
+				g.desenhar_texto(495 - g.largura_texto(intervalo+""), org_y - i - 5, intervalo+"")
+				
 			}senao{
 				g.desenhar_linha(i + org_x, 347, i + org_x, 353)
 				g.desenhar_linha(org_x - i, 347, org_x - i, 353)
 
 				g.desenhar_linha(747, i + org_y, 753, i + org_y)
 				g.desenhar_linha(747, org_y - i, 753, org_y - i)
-				intervalo++
 			}
+			intervalo++
 		}
 		g.definir_cor(g.COR_VERMELHO)
 		//definir eixo x
@@ -243,7 +247,7 @@ programa
 		//Definir Retângulo do título
 		g.desenhar_retangulo(20, 10, 980, 80, falso, falso)
 		//Definir retângulo da equação
-		g.desenhar_retangulo(20, 100, 470, 500, falso, falso)
+		g.desenhar_retangulo(20, 100, 450, 500, falso, falso)
 		//Definir retângulo do eixo
 		g.desenhar_retangulo(500, 100, 500, 500, falso, falso)
 		
@@ -284,8 +288,8 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 6309; 
- * @DOBRAMENTO-CODIGO = [28, 55, 78, 115, 142, 187, 194];
+ * @POSICAO-CURSOR = 1342; 
+ * @DOBRAMENTO-CODIGO = [59, 82, 119, 146, 191, 198];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
