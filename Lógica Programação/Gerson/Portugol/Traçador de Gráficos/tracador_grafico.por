@@ -35,6 +35,8 @@ programa
 
 	inteiro destaque = g.criar_cor(21, 138, 12)
 
+	logico pontos = verdadeiro
+
 	funcao eixo(){
 		g.definir_cor(g.COR_PRETO)
 		inteiro intervalo = 0
@@ -303,8 +305,8 @@ programa
 		delta = m.potencia(b, 2) - 4*a*c
 
 		se(delta >= 0){
-			x1 = (-b + m.raiz(delta, 2.0))/2*a
-			x2 = (-b - m.raiz(delta, 2.0))/2*a
+			x1 = (-b - m.raiz(delta, 2.0))/(2*a)
+			x2 = (-b + m.raiz(delta, 2.0))/(2*a)
 		} senao{
 			escreva("A equação não posssui raízes reais!\n")
 			limpa()
@@ -343,8 +345,65 @@ programa
 			xAnt = xt[x]
 			yAnt = fx[x]
 		}
+		se(pontos){
+			g.definir_cor(cinza1)
+			se(delta >= 0){
+				desenhar_ponto(x1, 0, "1")
+				desenhar_ponto(x2, 0, "2")
+			}
+			desenhar_ponto(xv, yv, "V")
+		}
+		
 	}
 
+	funcao desenhar_ponto(real x, real y, cadeia titulo){
+		se(x*zoom + org_x < 1000 e x*zoom + org_x > 500 e org_y - y*zoom < 600 e org_y - y*zoom > 100){
+			g.definir_cor(cinza1)
+			g.desenhar_elipse(x*zoom + org_x - 6, org_y - y*zoom - 6, 12, 12, verdadeiro)
+			g.definir_cor(g.COR_PRETO)
+			g.desenhar_elipse(x*zoom + org_x - 6, org_y - y*zoom - 6, 12, 12, falso)
+			g.desenhar_texto(x*zoom + org_x - g.largura_texto(titulo)/2, org_y - y*zoom - 5, titulo)
+		}
+	}
+	
+	funcao botoes(){
+		g.definir_tamanho_texto(12.0)
+
+		se(esta_clicado(24, 600, 210, 40)) g.definir_cor(cinza1)
+		senao se(esta_hover(24, 600, 210, 40)) g.definir_cor(cinza2)
+		senao g.definir_cor(bg2)
+		g.desenhar_retangulo(24, 600, 210, 40, verdadeiro, verdadeiro)
+		g.definir_cor(g.COR_PRETO)
+		g.desenhar_texto(24 + 210/2 - g.largura_texto("Resetar Gráfico")/2,
+					  600 + 40/2 - 6,
+					  "Resetar Gráfico")
+		se(esta_clicado(24, 600, 210, 40)){
+			org_x = 750
+			org_y = 350
+			zoom = 10
+		}
+		se(esta_clicado(244, 600, 210, 40)) g.definir_cor(cinza1)
+		senao se(esta_hover(244, 600, 210, 40)) g.definir_cor(cinza2)
+		senao g.definir_cor(bg2)
+		g.desenhar_retangulo(244, 600, 210, 40, verdadeiro, verdadeiro)
+		g.definir_opacidade(255)
+		g.definir_cor(g.COR_PRETO)
+		se(pontos){
+			g.desenhar_texto(244 + 210/2 - g.largura_texto("Esconder Pontos")/2,
+					  600 + 40/2 - 6,
+					  "Esconder Pontos")
+		} senao {
+			g.desenhar_texto(244 + 210/2 - g.largura_texto("Mostrar Pontos")/2,
+						  600 + 40/2 - 6,
+						  "Mostrar Pontos")
+		}
+		se(esta_clicado(244, 600, 210, 40)){
+			se(pontos) pontos = falso
+			senao pontos = verdadeiro
+			u.aguarde(200)
+		}
+	}
+	
 	funcao desenhar(){
 		g.desenhar_imagem(0, 0, bg)
 
@@ -353,6 +412,7 @@ programa
 		parabula()
 		texto()
 		formulas()
+		botoes()
 		
 		g.renderizar()
 	}
@@ -366,10 +426,8 @@ programa
 			zoom--
 			u.aguarde(200)
 		}
-		inteiro pxAuxiliar = mo.posicao_x()
-		inteiro pyAuxiliar = mo.posicao_y()
-		inteiro diferencaX = pxAuxiliar - org_x
-		inteiro diferencaY = pyAuxiliar - org_y
+		inteiro diferencaX = mo.posicao_x() - org_x
+		inteiro diferencaY = mo.posicao_y() - org_y
 		se(esta_clicado(500, 100, 500, 500)){
 			enquanto(mo.botao_pressionado(0)){
 				org_x = mo.posicao_x() - diferencaX
@@ -400,8 +458,8 @@ programa
  * Esta seção do arquivo guarda informações do Portugol Studio.
  * Você pode apagá-la se estiver utilizando outro editor.
  * 
- * @POSICAO-CURSOR = 1115; 
- * @DOBRAMENTO-CODIGO = [37, 86, 134, 236, 284, 291, 298, 318, 347, 359, 386];
+ * @POSICAO-CURSOR = 9564; 
+ * @DOBRAMENTO-CODIGO = [39, 88, 136, 165, 238, 286, 293, 358, 406, 419, 444];
  * @PONTOS-DE-PARADA = ;
  * @SIMBOLOS-INSPECIONADOS = ;
  * @FILTRO-ARVORE-TIPOS-DE-DADO = inteiro, real, logico, cadeia, caracter, vazio;
