@@ -1,0 +1,15 @@
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\bin\Debug\net8.0\ola.exe
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\bin\Debug\net8.0\ola.deps.json
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\bin\Debug\net8.0\ola.runtimeconfig.json
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\bin\Debug\net8.0\ola.dll
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\bin\Debug\net8.0\ola.pdb
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.AssemblyInfoInputs.cache
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.AssemblyInfo.cs
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.csproj.CoreCompileInputs.cache
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.sourcelink.json
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.dll
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\refint\ola.dll
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.pdb
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ola.genruntimeconfig.cache
+C:\Users\lucas\OneDrive\Documentos\GitHub\projetinhosSenas\Lógica Programação\Gerson\C#\ola\ola\obj\Debug\net8.0\ref\ola.dll
