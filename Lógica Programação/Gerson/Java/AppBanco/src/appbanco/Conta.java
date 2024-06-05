@@ -1,0 +1,63 @@
+package appbanco;
+
+/**
+ *
+ * @author lucas-gabreil_silva
+ */
+public class Conta {
+    //atributos da classe
+    //tipo => (0 - corrente   1 - poupança   2 - salário)
+    char tipo;
+    int numero;
+    String titular;
+    float saldo = 0.0f;
+    float limite = 1000.0f;
+        
+    //métodos da classe
+    public void sacar(float valor){
+        if(this.saldo >= valor){
+            this.saldo -= valor;
+            System.out.println("Saque de "+valor+" realizado com sucesso!");
+            System.out.println("Saldo atual: "+this.saldo);
+        }
+        else if(this.tipo == '0' && this.saldo + this.limite >= valor){
+            float limite_utilizado = this.saldo - valor;
+            this.limite += limite_utilizado;
+            this.saldo = 0.0f;
+            System.out.println("Saque de "+valor+" realizado com sucesso!");
+            System.out.println("Saldo atual: "+this.saldo);
+            System.out.println("Limite atual: "+this.limite);
+            System.out.println("Limite utilizado: " + limite_utilizado);
+        }
+        else{
+            System.out.println("Voce nao tem saldo suficiente para esta operacao!");
+        }
+    }
+    public void depositar(float valor){
+        this.saldo += valor;
+    }
+    public void transferir(float valor, Conta destino){
+        if(this.saldo >= valor){
+            this.saldo -= valor;
+            destino.saldo += valor;
+            System.out.println("Tranferencia realizada com sucesso!");
+            System.out.println("Saldo atual: "+this.saldo);
+        }
+        else{
+            System.out.println("Voce nao tem saldo suficiente para esta operacao!");
+        }
+    }
+    public float verificar_saldo(){
+        return this.saldo;
+    }
+    public void status(String nome_da_conta){
+        System.out.println("INFORMACOES DA CONTA - "+nome_da_conta);
+        System.out.println("Tipo......: "+this.tipo);
+        System.out.println("Numero....: "+this.numero);
+        System.out.println("Titular...: "+this.titular);
+        System.out.println("Saldo.....: "+this.saldo);
+        System.out.println("Limite....: "+this.limite);
+        System.out.println("---------------------------------------");
+    }
+}
+
