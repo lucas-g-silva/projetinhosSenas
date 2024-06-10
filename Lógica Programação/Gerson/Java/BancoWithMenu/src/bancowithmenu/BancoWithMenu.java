@@ -3,6 +3,8 @@ package bancowithmenu;
 import java.awt.AWTException;
 import java.awt.Robot;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 /**
@@ -14,7 +16,41 @@ public class BancoWithMenu {
     static Conta contas[] = new Conta[100];
     static int auxNumContas = -1;
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
+
+        File file = new File("C:/Users/lucas-gabreil_silva/Documents/GitHub/projetinhosSenas/Lógica Programação/Gerson/Java/BancoWithMenu/src/bancowithmenu/contas.txt");
+
+        Scanner fileScan = new Scanner(file);
+
+        int i = 1;
+        while (fileScan.hasNextLine()) {
+            switch (i) {
+                case 1:
+                    auxNumContas++;
+                    contas[auxNumContas] = new Conta();
+                    contas[auxNumContas].tipo = fileScan.nextInt();
+                    i++;
+                    break;
+                case 2:
+                    contas[auxNumContas].numero = fileScan.nextInt();
+                    i++;
+                    break;
+                case 3:
+                    contas[auxNumContas].titular = fileScan.nextLine();
+                    i++;
+                    break;
+                case 4:
+                    contas[auxNumContas].saldo = fileScan.nextFloat();
+                    i++;
+                    break;
+                case 5:
+                    contas[auxNumContas].limite = fileScan.nextFloat();
+                    contas[auxNumContas].limite_max = 1000.0f;
+                    i = 1;
+                    break;
+            }
+        }
+
         boolean rodando = true;
         while (rodando) {
             int next = menuInicial();
@@ -85,27 +121,27 @@ public class BancoWithMenu {
         System.out.println("Conta Criada com sucesso!");
         System.out.println("");
         contas[auxNumContas].status();
-        
+
         menuInicialOpcao();
-        
+
         clearConsole();
     }
-    
-    public static void menuStatus(){
+
+    public static void menuStatus() {
         clearConsole();
         System.out.println("|==============================================|");
         System.out.println("|       Aplicativo Gerenciador de Contas       |");
         System.out.println("|----------------------------------------------|");
         System.out.println("|                    CONTAS                    |");
         System.out.println("|----------------------------------------------|");
-        for(var i = 0; i <= auxNumContas; i++){
+        for (var i = 0; i <= auxNumContas; i++) {
             contas[i].status();
             System.out.println("");
         }
         menuInicialOpcao();
     }
-    
-    public static void menuSacar(){
+
+    public static void menuSacar() {
         clearConsole();
         Scanner read = new Scanner(System.in);
         System.out.println("|==============================================|");
@@ -117,13 +153,13 @@ public class BancoWithMenu {
         int num = read.nextInt();
         System.out.print("  - Valor: ");
         float valor = read.nextFloat();
-        
-        contas[num-1].sacar(valor);
-        
+
+        contas[num - 1].sacar(valor);
+
         menuInicialOpcao();
     }
-    
-    public static void menuDepositar(){
+
+    public static void menuDepositar() {
         clearConsole();
         Scanner read = new Scanner(System.in);
         System.out.println("|==============================================|");
@@ -135,9 +171,9 @@ public class BancoWithMenu {
         int num = read.nextInt();
         System.out.print("  - Valor: ");
         float valor = read.nextFloat();
-        
-        contas[num-1].depositar(valor);
-        
+
+        contas[num - 1].depositar(valor);
+
         menuInicialOpcao();
     }
 
@@ -148,7 +184,7 @@ public class BancoWithMenu {
         System.out.print("Digite para voltar para o menu Inicial ");
         String voltar = read.next();
     }
-    
+
     public final static void clearConsole() {
         try {
             Robot robot = new Robot();
