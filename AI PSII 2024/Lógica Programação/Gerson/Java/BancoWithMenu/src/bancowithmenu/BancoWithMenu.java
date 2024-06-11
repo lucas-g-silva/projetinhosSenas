@@ -17,58 +17,14 @@ public class BancoWithMenu {
     static int auxNumContas = -1;
 
     public static void main(String[] args) throws FileNotFoundException {
-
-        File file = new File("C:/Users/lucas-gabreil_silva/Documents/GitHub/projetinhosSenas/Lógica Programação/Gerson/Java/BancoWithMenu/src/bancowithmenu/contas.txt");
-
-        Scanner fileScan = new Scanner(file);
-
-        int i = 1;
-        while (fileScan.hasNextLine()) {
-            switch (i) {
-                case 1:
-                    auxNumContas++;
-                    contas[auxNumContas] = new Conta();
-                    contas[auxNumContas].tipo = fileScan.nextInt();
-                    i++;
-                    break;
-                case 2:
-                    contas[auxNumContas].numero = fileScan.nextInt();
-                    i++;
-                    break;
-                case 3:
-                    contas[auxNumContas].titular = fileScan.nextLine();
-                    i++;
-                    break;
-                case 4:
-                    contas[auxNumContas].saldo = fileScan.nextFloat();
-                    i++;
-                    break;
-                case 5:
-                    contas[auxNumContas].limite = fileScan.nextFloat();
-                    contas[auxNumContas].limite_max = 1000.0f;
-                    i = 1;
-                    break;
-            }
-        }
-
         boolean rodando = true;
         while (rodando) {
             int next = menuInicial();
-            if (next == 1) {
-                menuCriarConta();
-            }
-            if (next == 2 && auxNumContas != -1) {
-                menuStatus();
-            }
-            if (next == 3 && auxNumContas != -1) {
-                menuSacar();
-            }
-            if (next == 4 && auxNumContas != -1) {
-                menuDepositar();
-            }
-            if (next == 5) {
-                rodando = false;
-            }
+            if (next == 1) menuCriarConta();
+            if (next == 2 && auxNumContas != -1) menuStatus();
+            if (next == 3 && auxNumContas != -1) menuSacar();
+            if (next == 4 && auxNumContas != -1) menuDepositar();
+            if (next == 5) rodando = false;
         }
     }
 
@@ -123,12 +79,9 @@ public class BancoWithMenu {
         contas[auxNumContas].status();
 
         menuInicialOpcao();
-
-        clearConsole();
     }
 
     public static void menuStatus() {
-        clearConsole();
         System.out.println("|==============================================|");
         System.out.println("|       Aplicativo Gerenciador de Contas       |");
         System.out.println("|----------------------------------------------|");
@@ -142,37 +95,37 @@ public class BancoWithMenu {
     }
 
     public static void menuSacar() {
-        clearConsole();
         Scanner read = new Scanner(System.in);
         System.out.println("|==============================================|");
         System.out.println("|       Aplicativo Gerenciador de Contas       |");
         System.out.println("|----------------------------------------------|");
         System.out.println("|                     SACAR                    |");
         System.out.println("|----------------------------------------------|");
-        System.out.print("  - Número da conta: ");
+        System.out.print("  - Numero da conta: ");
         int num = read.nextInt();
         System.out.print("  - Valor: ");
         float valor = read.nextFloat();
-
-        contas[num - 1].sacar(valor);
+        
+        if(num <= auxNumContas + 1 && num > 0) contas[num - 1].sacar(valor);
+        else System.out.println("Conta inexistente!");
 
         menuInicialOpcao();
     }
 
     public static void menuDepositar() {
-        clearConsole();
         Scanner read = new Scanner(System.in);
         System.out.println("|==============================================|");
         System.out.println("|       Aplicativo Gerenciador de Contas       |");
         System.out.println("|----------------------------------------------|");
         System.out.println("|                   DEPOSITAR                  |");
         System.out.println("|----------------------------------------------|");
-        System.out.print("  - Número da conta: ");
+        System.out.print("  - Numero da conta: ");
         int num = read.nextInt();
         System.out.print("  - Valor: ");
         float valor = read.nextFloat();
-
-        contas[num - 1].depositar(valor);
+        
+        if(num <= auxNumContas + 1 && num > 0) contas[num - 1].depositar(valor);
+        else System.out.println("Conta inexistente!");
 
         menuInicialOpcao();
     }
@@ -183,6 +136,8 @@ public class BancoWithMenu {
         System.out.println("");
         System.out.print("Digite para voltar para o menu Inicial ");
         String voltar = read.next();
+        
+        clearConsole();
     }
 
     public final static void clearConsole() {
