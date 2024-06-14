@@ -1,5 +1,4 @@
 package appbanco;
-
 /**
  *
  * @author lucas-gabreil_silva
@@ -8,13 +7,37 @@ public class Conta {
 
     //atributos da classe
     //tipo => (0 - corrente   1 - poupança   2 - salário)
-    char tipo;
-    int numero;
-    String titular;
-    float saldo = 0.0f;
-    float limite = 1000.0f;
-    float limite_max = 1000.0f;
+    private char tipo;
+    private int numero;
+    private String titular;
+    private float saldo;
+    private float limite;
+    private float limite_max;
+    
+    //construtor
+    public Conta(char tipo, int numero, String titular) {
+        this.tipo = tipo;
+        this.numero = numero;
+        this.titular = titular;
+        this.saldo = 0.0f;
+        this.limite = 500.0f;
+        this.limite_max = 1000.0f;
+    }
+    
+    //definindo getters
+    public char getTipo() {
+        return tipo;
+    }
 
+    public int getNumero() {
+        return numero;
+    }
+
+    public float getSaldo() {
+        return saldo;
+    }
+    
+    
     //métodos da classe
     public void sacar(float valor) {
         if (this.saldo >= valor) {
