@@ -13,7 +13,6 @@ import javax.swing.SwingConstants;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.Border;
-import javax.xml.transform.OutputKeys;
 
 /**
  *
@@ -22,11 +21,11 @@ import javax.xml.transform.OutputKeys;
 public class AppCalculator {
 
     public static void main(String[] args) {
-        
+
         int OUTPUT_FONT_SIZE = 20;
         int BUTTON_FONT_SIZE = 14;
         int BUTTON_SIZE = 70;
-        
+
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
                 if ("Windows".equals(info.getName())) {
@@ -34,7 +33,7 @@ public class AppCalculator {
                     break;
                 }
             }
-            
+
         } catch (UnsupportedLookAndFeelException exc) {
             exc.printStackTrace();
         } catch (ClassNotFoundException exc) {
@@ -63,7 +62,7 @@ public class AppCalculator {
         Border tfBorder = UIManager.getBorder("TextField.border");
         Border newBorder = BorderFactory.createCompoundBorder(tfBorder,
                 BorderFactory.createEmptyBorder(5, 5, 5, 10));
-        
+
         output.setBorder(newBorder);
         output.setHorizontalAlignment(SwingConstants.RIGHT);
         form.add(output);
@@ -72,54 +71,54 @@ public class AppCalculator {
         btnC.setBounds(20, 120, BUTTON_SIZE, BUTTON_SIZE);
         btnC.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnC);
-        
-        btnC.addActionListener(new ActionListener(){
+
+        btnC.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 output.setText("");
             }
-        
+
         });
 
         JButton btnBack = new JButton("<");
         btnBack.setBounds(100, 120, BUTTON_SIZE, BUTTON_SIZE);
         btnBack.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnBack);
-        
-        btnBack.addActionListener(new ActionListener(){
+
+        btnBack.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(output.getText().length() > 0){
-                     output.setText(output.getText().substring(0, output.getText().length() - 1));
+                if (output.getText().length() > 0) {
+                    output.setText(output.getText().substring(0, output.getText().length() - 1));
                 }
             }
-        
+
         });
 
         JButton btnAPar = new JButton("(");
         btnAPar.setBounds(180, 120, BUTTON_SIZE, BUTTON_SIZE);
         btnAPar.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnAPar);
-        
-        btnAPar.addActionListener(new ActionListener(){
+
+        btnAPar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"(");
+                output.setText(output.getText() + "(");
             }
-        
+
         });
 
         JButton btnFPar = new JButton(")");
         btnFPar.setBounds(260, 120, BUTTON_SIZE, BUTTON_SIZE);
         btnFPar.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnFPar);
-        
-        btnFPar.addActionListener(new ActionListener(){
+
+        btnFPar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+")");
+                output.setText(output.getText() + ")");
             }
-        
+
         });
 
         //Fila 2
@@ -127,52 +126,52 @@ public class AppCalculator {
         btn7.setBounds(20, 200, BUTTON_SIZE, BUTTON_SIZE);
         btn7.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn7);
-        
-        btn7.addActionListener(new ActionListener(){
+
+        btn7.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"7");
+                output.setText(output.getText() + "7");
             }
-        
+
         });
 
         JButton btn8 = new JButton("8");
         btn8.setBounds(100, 200, BUTTON_SIZE, BUTTON_SIZE);
         btn8.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn8);
-        
-        btn8.addActionListener(new ActionListener(){
+
+        btn8.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"8");
+                output.setText(output.getText() + "8");
             }
-        
+
         });
 
         JButton btn9 = new JButton("9");
         btn9.setBounds(180, 200, BUTTON_SIZE, BUTTON_SIZE);
         btn9.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn9);
-        
-        btn9.addActionListener(new ActionListener(){
+
+        btn9.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"9");
+                output.setText(output.getText() + "9");
             }
-        
+
         });
 
         JButton btnDiv = new JButton("/");
         btnDiv.setBounds(260, 200, BUTTON_SIZE, BUTTON_SIZE);
         btnDiv.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnDiv);
-        
-        btnDiv.addActionListener(new ActionListener(){
+
+        btnDiv.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"/");
+                output.setText(output.getText() + "/");
             }
-        
+
         });
 
         //Fila 3
@@ -180,52 +179,52 @@ public class AppCalculator {
         btn4.setBounds(20, 280, BUTTON_SIZE, BUTTON_SIZE);
         btn4.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn4);
-        
-        btn4.addActionListener(new ActionListener(){
+
+        btn4.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"4");
+                output.setText(output.getText() + "4");
             }
-        
+
         });
 
         JButton btn5 = new JButton("5");
         btn5.setBounds(100, 280, BUTTON_SIZE, BUTTON_SIZE);
         btn5.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn5);
-        
-        btn5.addActionListener(new ActionListener(){
+
+        btn5.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"5");
+                output.setText(output.getText() + "5");
             }
-        
+
         });
 
         JButton btn6 = new JButton("6");
         btn6.setBounds(180, 280, BUTTON_SIZE, BUTTON_SIZE);
         btn6.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn6);
-        
-        btn6.addActionListener(new ActionListener(){
+
+        btn6.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"6");
+                output.setText(output.getText() + "6");
             }
-        
+
         });
 
         JButton btnMult = new JButton("X");
         btnMult.setBounds(260, 280, BUTTON_SIZE, BUTTON_SIZE);
         btnMult.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnMult);
-        
-        btnMult.addActionListener(new ActionListener(){
+
+        btnMult.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"*");
+                output.setText(output.getText() + "*");
             }
-        
+
         });
 
         //Fila 4
@@ -233,52 +232,52 @@ public class AppCalculator {
         btn1.setBounds(20, 360, BUTTON_SIZE, BUTTON_SIZE);
         btn1.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn1);
-        
-        btn1.addActionListener(new ActionListener(){
+
+        btn1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"1");
+                output.setText(output.getText() + "1");
             }
-        
+
         });
 
         JButton btn2 = new JButton("2");
         btn2.setBounds(100, 360, BUTTON_SIZE, BUTTON_SIZE);
         btn2.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn2);
-        
-        btn2.addActionListener(new ActionListener(){
+
+        btn2.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"2");
+                output.setText(output.getText() + "2");
             }
-        
+
         });
 
         JButton btn3 = new JButton("3");
         btn3.setBounds(180, 360, BUTTON_SIZE, BUTTON_SIZE);
         btn3.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn3);
-        
-        btn3.addActionListener(new ActionListener(){
+
+        btn3.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"3");
+                output.setText(output.getText() + "3");
             }
-        
+
         });
 
         JButton btnSub = new JButton("-");
         btnSub.setBounds(260, 360, BUTTON_SIZE, BUTTON_SIZE);
         btnSub.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnSub);
-        
-        btnSub.addActionListener(new ActionListener(){
+
+        btnSub.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"-");
+                output.setText(output.getText() + "-");
             }
-        
+
         });
 
         //Fila 5
@@ -286,26 +285,26 @@ public class AppCalculator {
         btn0.setBounds(20, 440, BUTTON_SIZE, BUTTON_SIZE);
         btn0.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btn0);
-        
-        btn0.addActionListener(new ActionListener(){
+
+        btn0.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"0");
+                output.setText(output.getText() + "0");
             }
-        
+
         });
 
         JButton btnDot = new JButton(".");
         btnDot.setBounds(100, 440, BUTTON_SIZE, BUTTON_SIZE);
         btnDot.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnDot);
-        
-        btnDot.addActionListener(new ActionListener(){
+
+        btnDot.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+".");
+                output.setText(output.getText() + ".");
             }
-        
+
         });
 
         JButton btnIgual = new JButton("=");
@@ -313,19 +312,113 @@ public class AppCalculator {
         btnIgual.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnIgual);
 
+        btnIgual.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                output.setText(eval(output.getText())+"");
+            }
+
+        });
+
         JButton btnMais = new JButton("+");
         btnMais.setBounds(260, 440, BUTTON_SIZE, BUTTON_SIZE);
         btnMais.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
         form.add(btnMais);
-        
-        btnMais.addActionListener(new ActionListener(){
+
+        btnMais.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText()+"+");
+                output.setText(output.getText() + "+");
             }
-        
+
         });
 
         form.setVisible(true);
     }
+    
+    public static double eval(final String str) {
+    return new Object() {
+        int pos = -1, ch;
+        
+        void nextChar() {
+            ch = (++pos < str.length()) ? str.charAt(pos) : -1;
+        }
+        
+        boolean eat(int charToEat) {
+            while (ch == ' ') nextChar();
+            if (ch == charToEat) {
+                nextChar();
+                return true;
+            }
+            return false;
+        }
+        
+        double parse() {
+            nextChar();
+            double x = parseExpression();
+            if (pos < str.length()) throw new RuntimeException("Unexpected: " + (char)ch);
+            return x;
+        }
+        
+        // Grammar:
+        // expression = term | expression `+` term | expression `-` term
+        // term = factor | term `*` factor | term `/` factor
+        // factor = `+` factor | `-` factor | `(` expression `)` | number
+        //        | functionName `(` expression `)` | functionName factor
+        //        | factor `^` factor
+        
+        double parseExpression() {
+            double x = parseTerm();
+            for (;;) {
+                if      (eat('+')) x += parseTerm(); // addition
+                else if (eat('-')) x -= parseTerm(); // subtraction
+                else return x;
+            }
+        }
+        
+        double parseTerm() {
+            double x = parseFactor();
+            for (;;) {
+                if      (eat('*')) x *= parseFactor(); // multiplication
+                else if (eat('/')) x /= parseFactor(); // division
+                else return x;
+            }
+        }
+        
+        double parseFactor() {
+            if (eat('+')) return +parseFactor(); // unary plus
+            if (eat('-')) return -parseFactor(); // unary minus
+            
+            double x;
+            int startPos = this.pos;
+            if (eat('(')) { // parentheses
+                x = parseExpression();
+                if (!eat(')')) throw new RuntimeException("Missing ')'");
+            } else if ((ch >= '0' && ch <= '9') || ch == '.') { // numbers
+                while ((ch >= '0' && ch <= '9') || ch == '.') nextChar();
+                x = Double.parseDouble(str.substring(startPos, this.pos));
+            } else if (ch >= 'a' && ch <= 'z') { // functions
+                while (ch >= 'a' && ch <= 'z') nextChar();
+                String func = str.substring(startPos, this.pos);
+                if (eat('(')) {
+                    x = parseExpression();
+                    if (!eat(')')) throw new RuntimeException("Missing ')' after argument to " + func);
+                } else {
+                    x = parseFactor();
+                }
+                if (func.equals("sqrt")) x = Math.sqrt(x);
+                else if (func.equals("sin")) x = Math.sin(Math.toRadians(x));
+                else if (func.equals("cos")) x = Math.cos(Math.toRadians(x));
+                else if (func.equals("tan")) x = Math.tan(Math.toRadians(x));
+                else throw new RuntimeException("Unknown function: " + func);
+            } else {
+                throw new RuntimeException("Unexpected: " + (char)ch);
+            }
+            
+            if (eat('^')) x = Math.pow(x, parseFactor()); // exponentiation
+            
+            return x;
+        }
+    }.parse();
+}
 }
