@@ -27,7 +27,7 @@ public class Calculator {
             System.out.println("The expression is balenced!");
             
             for(int i = 0; rpn[i] != null; i++){
-                System.out.println(rpn[i] + " ");
+                System.out.print(rpn[i] + " ");
             }
             this.result = calculate();
         } else {
@@ -80,7 +80,7 @@ public class Calculator {
                     endOperating = false;
                 }
             }
-            if(operating  && endOperating){
+            if(operating && endOperating){
                 arrayInfix[indexArray] = infix.substring(indexIni, x);
                 indexArray++;
                 operating = false;
@@ -129,5 +129,92 @@ public class Calculator {
                 indexArray++;
             }
         }
+        while (!s.isEmpty()){
+            arrayRpn[indexArray] = s.pop().toString();
+            indexArray++;
+        }
+        return arrayRpn;
+    }
+    
+    public double calculate(){
+        Stack s = new Stack();
+        double res = 0;
+        for (int i = 0; rpn[i] != null; i++){
+            input = rpn[i];
+            
+            if(isOperand(input)) {
+                s.push(Double.parseDouble(input));
+            } else if (isOperator(input)){
+                double current = doOperation(input, s);
+                s.push(current);
+                res = current;
+            }
+        }
+        return res;
+    }
+    
+    public double doOperation(String oparator, Stack s){
+        double temp;
+        if(s.isEmpty()) {
+            temp = 0;
+        } else {
+            temp = Double.parseDouble(s.pop().toString());
+        }
+        if (!s.isEmpty()){
+            temp = calcValues(oparator, Double.parseDouble(s.pop().toString()), temp);
+        }
+        return temp;
+    }
+    
+    public double calcValues(String operator, double left, double right){
+        if (operator.equals("+")){
+            return left + right;
+        } else if (operator.equals("-")){
+            return left - right;
+        } else if (operator.equals("*")){
+            return left * right;
+        } else if (operator.equals("/")){
+            if(right == 0){
+                System.out.println("Error: Dividing by 0 isn't possible!");
+                return left;
+            }
+            return left / right;
+        } else {
+            return left;
+        }
+    }
+    
+    public boolean isOperator(String input){
+        if (input == null){
+            return false;
+        }
+        return input.equals("+") || input.equals("-") || input.equals("*") || input.equals("/");
+    }
+    
+    public boolean isOperand(String input){
+        if (input == null) {
+            return false;
+        }
+        
+        try {
+            Double.parseDouble(input);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
+    }
+    
+    public int pri(char op){
+        int nPri = 0;
+        if(op == '/' || op == '*'){
+            nPri = 3;
+        }
+        if(op == '+' || op == '-'){
+            nPri = 2;
+        }
+        if(op == '('){
+            nPri = 1;
+        }
+        return nPri;
     }
 }

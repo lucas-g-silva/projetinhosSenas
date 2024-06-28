@@ -16,8 +16,8 @@ public class Stack {
         stack = new Object[items];
     }
 
-    public Stack(int items) {
-        this.items = items;
+    public Stack(int i) {
+        this.items = i;
         stack = new Object[items];
     }
 
@@ -49,10 +49,10 @@ public class Stack {
         }
     }
     
-    public void push(Object object){
+    public void push(Object obj){
         if(top < items - 1){
             top++;
-            stack[top] = object;
+            stack[top] = obj;
         } else {
             System.out.println("Stack's full!");
         }

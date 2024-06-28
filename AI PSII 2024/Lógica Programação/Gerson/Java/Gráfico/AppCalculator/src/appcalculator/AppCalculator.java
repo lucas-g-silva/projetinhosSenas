@@ -1,7 +1,6 @@
 package appcalculator;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,12 +18,16 @@ import javax.swing.border.Border;
  * @author lucas-gabreil_silva
  */
 public class AppCalculator {
+    
+    public static final int BUTTON_SIZE = 80;
+    public static final int MARGIN = 0;
+    public static final int GAP = 0;
+    public static final int OUTPUT_WIDTH = BUTTON_SIZE * 4 + GAP * 3;
+    public static final int OUTPUT_HEIGHT = (int)(BUTTON_SIZE * 1.29);
+    public static final int OUTPUT_FONT_SIZE = (int)(BUTTON_SIZE * 0.33);
+    public static final int BUTTON_FONT_SIZE = (int)(BUTTON_SIZE * 0.20);
 
     public static void main(String[] args) {
-
-        int OUTPUT_FONT_SIZE = 20;
-        int BUTTON_FONT_SIZE = 14;
-        int BUTTON_SIZE = 70;
 
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
@@ -45,15 +48,16 @@ public class AppCalculator {
         }
 
         JFrame form = new JFrame();
-        form.setSize(365, 570);
+        form.setSize(MARGIN * 2 + 15 + GAP * 3 + BUTTON_SIZE * 4, MARGIN * 2 + 40 + OUTPUT_HEIGHT + GAP * 5 + BUTTON_SIZE * 5);
         form.setLocationRelativeTo(null);
         form.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         form.setTitle("Calculator");
         form.setLayout(null);
+        form.setResizable(false);
 
         //Fila 1
         JTextField output = new JTextField();
-        output.setBounds(20, 20, 310, 90);
+        output.setBounds(MARGIN, MARGIN, OUTPUT_WIDTH, OUTPUT_HEIGHT);
         output.setFont(new Font("Inter", Font.PLAIN, OUTPUT_FONT_SIZE));
         output.setEditable(false);
         output.setCursor(null);
@@ -68,8 +72,7 @@ public class AppCalculator {
         form.add(output);
 
         JButton btnC = new JButton("C");
-        btnC.setBounds(20, 120, BUTTON_SIZE, BUTTON_SIZE);
-        btnC.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnC, 0, 0);
         form.add(btnC);
 
         btnC.addActionListener(new ActionListener() {
@@ -81,8 +84,7 @@ public class AppCalculator {
         });
 
         JButton btnBack = new JButton("<");
-        btnBack.setBounds(100, 120, BUTTON_SIZE, BUTTON_SIZE);
-        btnBack.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnBack, 1, 0);
         form.add(btnBack);
 
         btnBack.addActionListener(new ActionListener() {
@@ -96,8 +98,7 @@ public class AppCalculator {
         });
 
         JButton btnAPar = new JButton("(");
-        btnAPar.setBounds(180, 120, BUTTON_SIZE, BUTTON_SIZE);
-        btnAPar.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnAPar, 2, 0);
         form.add(btnAPar);
 
         btnAPar.addActionListener(new ActionListener() {
@@ -109,8 +110,7 @@ public class AppCalculator {
         });
 
         JButton btnFPar = new JButton(")");
-        btnFPar.setBounds(260, 120, BUTTON_SIZE, BUTTON_SIZE);
-        btnFPar.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnFPar, 3, 0);
         form.add(btnFPar);
 
         btnFPar.addActionListener(new ActionListener() {
@@ -123,8 +123,7 @@ public class AppCalculator {
 
         //Fila 2
         JButton btn7 = new JButton("7");
-        btn7.setBounds(20, 200, BUTTON_SIZE, BUTTON_SIZE);
-        btn7.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn7, 0, 1);
         form.add(btn7);
 
         btn7.addActionListener(new ActionListener() {
@@ -136,8 +135,7 @@ public class AppCalculator {
         });
 
         JButton btn8 = new JButton("8");
-        btn8.setBounds(100, 200, BUTTON_SIZE, BUTTON_SIZE);
-        btn8.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn8, 1, 1);
         form.add(btn8);
 
         btn8.addActionListener(new ActionListener() {
@@ -149,8 +147,7 @@ public class AppCalculator {
         });
 
         JButton btn9 = new JButton("9");
-        btn9.setBounds(180, 200, BUTTON_SIZE, BUTTON_SIZE);
-        btn9.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn9, 2, 1);
         form.add(btn9);
 
         btn9.addActionListener(new ActionListener() {
@@ -162,8 +159,7 @@ public class AppCalculator {
         });
 
         JButton btnDiv = new JButton("/");
-        btnDiv.setBounds(260, 200, BUTTON_SIZE, BUTTON_SIZE);
-        btnDiv.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnDiv, 3, 1);
         form.add(btnDiv);
 
         btnDiv.addActionListener(new ActionListener() {
@@ -176,8 +172,7 @@ public class AppCalculator {
 
         //Fila 3
         JButton btn4 = new JButton("4");
-        btn4.setBounds(20, 280, BUTTON_SIZE, BUTTON_SIZE);
-        btn4.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn4, 0, 2);
         form.add(btn4);
 
         btn4.addActionListener(new ActionListener() {
@@ -189,8 +184,7 @@ public class AppCalculator {
         });
 
         JButton btn5 = new JButton("5");
-        btn5.setBounds(100, 280, BUTTON_SIZE, BUTTON_SIZE);
-        btn5.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn5, 1, 2);
         form.add(btn5);
 
         btn5.addActionListener(new ActionListener() {
@@ -202,8 +196,7 @@ public class AppCalculator {
         });
 
         JButton btn6 = new JButton("6");
-        btn6.setBounds(180, 280, BUTTON_SIZE, BUTTON_SIZE);
-        btn6.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn6, 2, 2);
         form.add(btn6);
 
         btn6.addActionListener(new ActionListener() {
@@ -215,8 +208,7 @@ public class AppCalculator {
         });
 
         JButton btnMult = new JButton("X");
-        btnMult.setBounds(260, 280, BUTTON_SIZE, BUTTON_SIZE);
-        btnMult.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnMult, 3, 2);
         form.add(btnMult);
 
         btnMult.addActionListener(new ActionListener() {
@@ -229,8 +221,7 @@ public class AppCalculator {
 
         //Fila 4
         JButton btn1 = new JButton("1");
-        btn1.setBounds(20, 360, BUTTON_SIZE, BUTTON_SIZE);
-        btn1.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn1, 0, 3);
         form.add(btn1);
 
         btn1.addActionListener(new ActionListener() {
@@ -242,8 +233,7 @@ public class AppCalculator {
         });
 
         JButton btn2 = new JButton("2");
-        btn2.setBounds(100, 360, BUTTON_SIZE, BUTTON_SIZE);
-        btn2.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn2, 1, 3);
         form.add(btn2);
 
         btn2.addActionListener(new ActionListener() {
@@ -255,8 +245,7 @@ public class AppCalculator {
         });
 
         JButton btn3 = new JButton("3");
-        btn3.setBounds(180, 360, BUTTON_SIZE, BUTTON_SIZE);
-        btn3.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn3, 2, 3);
         form.add(btn3);
 
         btn3.addActionListener(new ActionListener() {
@@ -268,8 +257,7 @@ public class AppCalculator {
         });
 
         JButton btnSub = new JButton("-");
-        btnSub.setBounds(260, 360, BUTTON_SIZE, BUTTON_SIZE);
-        btnSub.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnSub, 3, 3);
         form.add(btnSub);
 
         btnSub.addActionListener(new ActionListener() {
@@ -281,9 +269,20 @@ public class AppCalculator {
         });
 
         //Fila 5
+        JButton btnDot = new JButton(".");
+        configBtn(btnDot, 0, 4);
+        form.add(btnDot);
+
+        btnDot.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                output.setText(output.getText() + ".");
+            }
+
+        });
+        
         JButton btn0 = new JButton("0");
-        btn0.setBounds(20, 440, BUTTON_SIZE, BUTTON_SIZE);
-        btn0.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btn0, 1, 4);
         form.add(btn0);
 
         btn0.addActionListener(new ActionListener() {
@@ -294,35 +293,25 @@ public class AppCalculator {
 
         });
 
-        JButton btnDot = new JButton(".");
-        btnDot.setBounds(100, 440, BUTTON_SIZE, BUTTON_SIZE);
-        btnDot.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
-        form.add(btnDot);
-
-        btnDot.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                output.setText(output.getText() + ".");
-            }
-
-        });
-
         JButton btnIgual = new JButton("=");
-        btnIgual.setBounds(180, 440, BUTTON_SIZE, BUTTON_SIZE);
-        btnIgual.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnIgual, 2, 4);
         form.add(btnIgual);
 
         btnIgual.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String exp = output.getText();
                 
+                System.out.println(">>>"+exp);
+                Calculator calc = new Calculator();
+                String result = calc.evalExp(exp);
+                output.setText(result);
             }
 
         });
 
         JButton btnMais = new JButton("+");
-        btnMais.setBounds(260, 440, BUTTON_SIZE, BUTTON_SIZE);
-        btnMais.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
+        configBtn(btnMais, 3, 4);
         form.add(btnMais);
 
         btnMais.addActionListener(new ActionListener() {
@@ -334,5 +323,10 @@ public class AppCalculator {
         });
 
         form.setVisible(true);
+    }
+
+    public static void configBtn(JButton btn, int px, int py) {
+        btn.setBounds(MARGIN + GAP * px + BUTTON_SIZE * px, MARGIN + OUTPUT_HEIGHT + GAP * (py + 1) + BUTTON_SIZE * py, BUTTON_SIZE, BUTTON_SIZE);
+        btn.setFont(new Font("Inter", Font.PLAIN, BUTTON_FONT_SIZE));
     }
 }
