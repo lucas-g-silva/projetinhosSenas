@@ -1,0 +1,135 @@
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+body{
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    height: 100vh;
+    background-color: whitesmoke;
+    padding: 50px;
+}
+main, section{
+    background-color: white;
+    border: 1px solid #c4c4c4;
+    padding: 50px;
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    border-radius: 20px;
+}
+main{
+    position: fixed;
+    left: 50px;
+}
+section{
+    width: 950px;
+    position: relative;
+}
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+input{
+    padding: 10px 12px;
+    border: 1px solid #c4c4c4;
+    background-color: whitesmoke;
+    width: 300px;
+    border-radius: 5px;
+    transition-duration: 0.2s;
+}
+.inputs div{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button{
+    border: 1px solid #c4c4c4;
+    background-color: rgb(238, 237, 237);
+    padding: 10px;
+    border-radius: 5px;
+    transition-duration: 0.2s;
+    outline: none;
+}
+button:hover, input:hover{
+    transform: scale(1.02);
+}
+
+#addButton:hover, #addButton:focus{
+    background-color: rgb(143, 202, 143);
+}
+
+#clearButton:hover, #clearButton:focus{
+    background-color: rgb(202, 143, 143);
+}
+
+section{
+    display: flex;
+}
+
+.container{
+    display: flex;
+    gap: 50px;
+}
+
+.table{
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid #c4c4c4;
+}
+
+tbody{
+    color: gray;
+    font-weight: 300;
+}
+
+table{
+    border-radius: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+td, th {
+    padding: 12px 17px;
+    text-align: left;
+}
+tr:nth-child(even){
+    background-color: whitesmoke;
+}
+
+tr{
+    transition-duration: 0.2s;
+    background-color: white;
+}
+
+tr:hover{
+    filter: brightness(0.92);
+}
+
+thead tr{
+    background-color: rgb(226, 226, 226);
+}
+thead tr th{
+    font-weight: normal;
+}
