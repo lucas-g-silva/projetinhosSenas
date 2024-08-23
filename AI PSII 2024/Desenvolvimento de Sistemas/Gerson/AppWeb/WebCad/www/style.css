@@ -12,11 +12,14 @@ body{
     background-color: whitesmoke;
     padding: 50px;
 }
+h1{
+    font-size: x-large;
+}
 main, section{
     background-color: white;
     border: 1px solid #c4c4c4;
     padding: 50px;
-    width: 500px;
+    width: 400px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -28,7 +31,7 @@ main{
     left: 50px;
 }
 section{
-    width: 950px;
+    width: 1080px;
     position: relative;
 }
 .inputs{
@@ -47,15 +50,38 @@ input{
     padding: 10px 12px;
     border: 1px solid #c4c4c4;
     background-color: whitesmoke;
-    width: 300px;
+    width: 100%;
     border-radius: 5px;
     transition-duration: 0.2s;
+    outline: none;
+}
+input:hover{
+    background-color: transparent;
+}
+input:focus{
+    background-color: transparent;
+    border: black 1px solid;
+}
+input:focus + label, input.has-value + label{
+    transform: translateY(-20px);
+    background-color: white;
 }
 .inputs div{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     width: 100%;
+}
+.inputs div label{
+    position: absolute;
+    color: gray;
+    font-size: small;
+    left: 7px;
+    z-index: 99;
+    transition-duration: 0.5s;
+    padding: 0px 5px;
+    border-radius: 2px;
 }
 
 .buttons {
@@ -72,7 +98,7 @@ button{
     transition-duration: 0.2s;
     outline: none;
 }
-button:hover, input:hover{
+button:hover{
     transform: scale(1.02);
 }
 
@@ -132,4 +158,43 @@ thead tr{
 }
 thead tr th{
     font-weight: normal;
+}
+
+tbody tr{
+    position: relative;
+}
+
+
+section header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+span.material-symbols-outlined{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+section header .icons button, tbody tr td button{
+    background-color: transparent;
+    border-radius: 50%;
+    border: none;
+}
+tbody tr td button{
+    opacity: 0;
+}
+tbody tr:hover td button{
+    opacity: 1;
+}
+
+section header .icons button:hover, tbody tr td button:hover{
+    background-color: whitesmoke;
+    transform: none;
+}
+
+tbody tr:nth-child(even) td button:hover{
+    background-color: rgb(230, 230, 230);
 }
