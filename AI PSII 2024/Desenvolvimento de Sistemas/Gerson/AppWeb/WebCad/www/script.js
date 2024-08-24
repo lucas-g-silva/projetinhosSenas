@@ -1,6 +1,7 @@
 const inputs = document.querySelectorAll(".input");
 const tbody = document.querySelector("tbody");
 const form = document.querySelector("main");
+const body = document.body;
 
 function add() {
     if (isSet()) {
@@ -95,4 +96,10 @@ function openForm(){
 
 function closeForm(){
     form.style.display = "none";
+}
+
+function toggleTheme(){
+    const icon = document.querySelector(".theme").firstElementChild;
+    body.classList.toggle('dark');
+    icon.innerHTML = body.classList.contains("dark") ? "dark_mode" : "light_mode";
 }

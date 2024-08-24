@@ -1,3 +1,14 @@
+:root{
+    --bg-color: #e4e4e7;
+    --section-color: #fafafa;
+    --border-color: #9ca3af;
+    --text-color: #09090b;
+    --sec-text-color: #404040;
+    --head-table-color: #d4d4d8;
+    --table-even-color: #e4e4e7;
+    --input-color: #e4e4e7;
+}
+
 *{
     margin: 0;
     box-sizing: border-box;
@@ -9,15 +20,16 @@ body{
     align-items: start;
     justify-content: end;
     height: 100vh;
-    background-color: whitesmoke;
+    background-color: var(--bg-color);
     padding: 50px;
+    color: var(--text-color);
 }
 h1{
     font-size: x-large;
 }
 main, section{
-    background-color: white;
-    border: 1px solid #c4c4c4;
+    background-color: var(--section-color);
+    border: 1px solid var(--border-color);
     padding: 50px;
     display: flex;
     flex-direction: column;
@@ -52,23 +64,24 @@ form{
 }
 input{
     padding: 10px 12px;
-    border: 1px solid #c4c4c4;
-    background-color: whitesmoke;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-color);
     width: 100%;
     border-radius: 5px;
     transition-duration: 0.2s;
     outline: none;
+    color: var(--text-color);
 }
 input:hover{
     background-color: transparent;
 }
 input:focus{
     background-color: transparent;
-    border: black 1px solid;
+    border: var(--text-color) 1px solid;
 }
 input:focus + label, input.has-value + label{
     transform: translateY(-20px);
-    background-color: white;
+    background-color: var(--section-color);
 }
 .inputs div{
     position: relative;
@@ -79,7 +92,7 @@ input:focus + label, input.has-value + label{
 }
 .inputs div label{
     position: absolute;
-    color: gray;
+    color: var(--sec-text-color);
     font-size: small;
     left: 7px;
     z-index: 99;
@@ -94,13 +107,20 @@ input:focus + label, input.has-value + label{
     gap: 10px;
 }
 
+.buttons button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 button{
-    border: 1px solid #c4c4c4;
-    background-color: rgb(238, 237, 237);
+    border: 1px solid var(--border-color);
+    background-color: var(--input-color);
     padding: 10px;
     border-radius: 5px;
     transition-duration: 0.2s;
     outline: none;
+    color: var(--text-color);
 }
 button:hover{
     transform: scale(1.02);
@@ -119,11 +139,11 @@ section{
     width: 100%;
     border-radius: 10px;
     overflow: hidden;
-    border: 1px solid #c4c4c4;
+    border: 1px solid var(--border-color);
 }
 
 tbody{
-    color: gray;
+    color: var(--sec-text-color);
     font-weight: 300;
 }
 
@@ -137,20 +157,20 @@ td, th {
     text-align: left;
 }
 tr:nth-child(even){
-    background-color: whitesmoke;
+    background-color: var(--table-even-color);
 }
 
 tr{
     transition-duration: 0.2s;
-    background-color: white;
+    background-color: var(--section-color);
 }
 
 tr:hover{
-    filter: brightness(0.92);
+    filter: brightness(0.95);
 }
 
 thead tr{
-    background-color: rgb(226, 226, 226);
+    background-color: var(--head-table-color);
 }
 thead tr th{
     font-weight: normal;
@@ -172,6 +192,7 @@ span.material-symbols-outlined{
     display: flex;
     align-items: center;
     justify-content: center;
+    color: var(--sec-text-color);
 }
 
 section header .icons button, tbody tr td button{
@@ -187,15 +208,37 @@ tbody tr:hover td button{
 }
 
 section header .icons button:hover, tbody tr td button:hover{
-    background-color: whitesmoke;
+    background-color: var(--bg-color);
     transform: none;
 }
 
 tbody tr:nth-child(even) td button:hover{
-    background-color: rgb(230, 230, 230);
+    background-color: var(--head-table-color);
 }
 
 tbody tr td:nth-child(7){
     display: flex;
     justify-content: end;
+}
+
+body.dark{
+    --bg-color: #18181b;
+    --section-color: #27272a;
+    --border-color: #3f3f46;
+    --text-color: #e4e4e7;
+    --sec-text-color: #a1a1aa;
+    --head-table-color: #18181b;
+    --table-even-color: #1d1d1f;
+    --input-color: #18181b;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--input-color);
+}
+input:-webkit-autofill{
+    -webkit-text-fill-color: var(--text-color) !important;
 }

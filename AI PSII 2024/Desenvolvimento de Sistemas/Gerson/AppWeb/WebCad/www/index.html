@@ -15,7 +15,7 @@
     <title>Cadastro Web </title>
 </head>
 
-<body>
+<body class="dark">
     <main>
         <h1>Cadastro de usuários</h1>
         <form id="userForm">
@@ -46,9 +46,15 @@
                 </div>
             </div>
             <div class="buttons">
-                <button type="button" id="addButton" onclick="add()">Adicionar</button>
-                <button type="reset" id="clearButton" onclick="resetInputs()">Limpar</button>
-                <button type="reset" id="cancelButton" onclick="closeForm()">Cancelar</button>
+                <button type="button" id="addButton" onclick="add()">
+                    Adicionar <span class="material-symbols-outlined">add</span>
+                </button>
+                <button type="reset" id="clearButton" onclick="resetInputs()">
+                    Limpar <span class="material-symbols-outlined">clear_all</span>
+                </button>
+                <button type="reset" id="cancelButton" onclick="closeForm()">
+                    Cancelar
+                </button>
             </div>
         </form>
     </main>
@@ -56,14 +62,14 @@
         <header>
             <h1>Registros</h1>
             <div class="icons">
-                <button class="select" title="Novo Registro">
-                    <span class="material-symbols-outlined" onclick="openForm()">check_box</span>
+                <button class="delete" title="Excluir Tudo" onclick="del()">
+                    <span class="material-symbols-outlined">delete</span>
                 </button>
-                <button class="delete" title="Excluir Tudo">
-                    <span class="material-symbols-outlined" onclick="del()">delete</span>
+                <button class="new" title="Novo Registro" onclick="openForm()">
+                    <span class="material-symbols-outlined">add</span>
                 </button>
-                <button class="new" title="Novo Registro">
-                    <span class="material-symbols-outlined" onclick="openForm()">add</span>
+                <button class="theme" title="Mudar Tema" onclick="toggleTheme()">
+                    <span class="material-symbols-outlined">light_mode</span>
                 </button>
             </div>
         </header>
