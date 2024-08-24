@@ -19,7 +19,6 @@ main, section{
     background-color: white;
     border: 1px solid #c4c4c4;
     padding: 50px;
-    width: 400px;
     display: flex;
     flex-direction: column;
     gap: 30px;
@@ -27,11 +26,16 @@ main, section{
     border-radius: 20px;
 }
 main{
-    position: fixed;
-    left: 50px;
+    display: none;
+    position: absolute;
+    z-index: 99;
+    width: 500px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 section{
-    width: 1080px;
+    width: 100%;
     position: relative;
 }
 .inputs{
@@ -81,7 +85,7 @@ input:focus + label, input.has-value + label{
     z-index: 99;
     transition-duration: 0.5s;
     padding: 0px 5px;
-    border-radius: 2px;
+    border-radius: 5px;
 }
 
 .buttons {
@@ -100,14 +104,6 @@ button{
 }
 button:hover{
     transform: scale(1.02);
-}
-
-#addButton:hover, #addButton:focus{
-    background-color: rgb(143, 202, 143);
-}
-
-#clearButton:hover, #clearButton:focus{
-    background-color: rgb(202, 143, 143);
 }
 
 section{
@@ -197,4 +193,9 @@ section header .icons button:hover, tbody tr td button:hover{
 
 tbody tr:nth-child(even) td button:hover{
     background-color: rgb(230, 230, 230);
+}
+
+tbody tr td:nth-child(7){
+    display: flex;
+    justify-content: end;
 }
