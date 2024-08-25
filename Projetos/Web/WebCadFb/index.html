@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Cadastro Web </title>
+</head>
+
+<body class="dark">
+    <div class="blackout"></div>
+    <main>
+        <h1>Cadastro de usuários</h1>
+        <form id="userForm">
+            <div class="inputs">
+                <div>
+                    <input class="input" type="text" id="name" name="name" required autocomplete>
+                    <label for="name">Nome</label>
+                </div>
+                <div>
+                    <input class="input" type="email" id="email" name="email" required autocomplete>
+                    <label for="email">E-mail</label>
+                </div>
+                <div>
+                    <input class="input" type="text" id="phone" name="phone" required autocomplete>
+                    <label for="phone">Telefone</label>
+                </div>
+                <div>
+                    <input class="input" type="text" id="address" name="address" required autocomplete>
+                    <label for="address">Endereço</label>
+                </div>
+                <div>
+                    <input class="input" type="text" id="city" name="city" required autocomplete>
+                    <label for="city">Cidade</label>
+                </div>
+                <div>
+                    <input class="input" type="text" id="state" name="state" required autocomplete>
+                    <label for="state">Estado</label>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="button" id="addButton" onclick="add()">Adicionar</button>
+                <button type="reset" id="clearButton" onclick="resetInputs()">Limpar</button>
+                <button type="reset" id="cancelButton" onclick="closeForm()">Cancelar</button>
+            </div>
+        </form>
+    </main>
+    <section>
+        <header>
+            <h1>Registros</h1>
+            <div class="icons">
+                <button class="delete" title="Excluir Tudo" onclick="del()">
+                    <span class="material-symbols-outlined">delete</span>
+                </button>
+                <button class="new" title="Novo Registro" onclick="openForm()">
+                    <span class="material-symbols-outlined">add</span>
+                </button>
+                <button class="theme" title="Mudar Tema" onclick="toggleTheme()">
+                    <span class="material-symbols-outlined">light_mode</span>
+                </button>
+            </div>
+        </header>
+        <div class="table">
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>Nº</th>
+                        <th>Nome</th>
+                        <th>E-mail</th>
+                        <th>Telefone</th>
+                        <th>Endereço</th>
+                        <th>Cidade</th>
+                        <th>Estado</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </section>
+      <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-app-compat.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/10.4.0/firebase-database-compat.js"></script>
+      <script src="firebase-init.js"></script>
+      <script src="script.js"></script>
+</body>
+
+</html>

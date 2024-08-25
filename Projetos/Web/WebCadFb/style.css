@@ -1,0 +1,281 @@
+:root{
+    --bg-color: #e4e4e7;
+    --section-color: #fafafa;
+    --border-color: #9ca3af;
+    --text-color: #09090b;
+    --sec-text-color: #404040;
+    --head-table-color: #d4d4d8;
+    --table-even-color: #e4e4e7;
+    --input-color: #e4e4e7;
+}
+
+*{
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins";
+}
+
+body{
+    display: flex;
+    align-items: start;
+    justify-content: end;
+    height: 100vh;
+    background-color: var(--bg-color);
+    padding: 50px;
+    color: var(--text-color);
+}
+h1{
+    font-size: x-large;
+}
+main, section{
+    background-color: var(--section-color);
+    border: 1px solid var(--border-color);
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: center;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 50px;
+}
+main{
+    display: none;
+    position: absolute;
+    z-index: 99;
+    width: 500px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    animation: drop-in ease-in-out 0.5s;
+}
+section{
+    width: 100%;
+    position: relative;
+}
+.inputs{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+}
+form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+input{
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    background-color: var(--input-color);
+    width: 100%;
+    border-radius: 5px;
+    transition-duration: 0.2s;
+    outline: none;
+    color: var(--text-color);
+}
+input:hover{
+    background-color: transparent;
+}
+input:focus{
+    background-color: transparent;
+    border: var(--text-color) 1px solid;
+}
+input:focus + label, input.has-value + label{
+    transform: translateY(-20px);
+    background-color: var(--section-color);
+}
+.inputs div{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.inputs div label{
+    position: absolute;
+    color: var(--sec-text-color);
+    font-size: small;
+    left: 7px;
+    z-index: 99;
+    transition-duration: 0.5s;
+    padding: 0px 5px;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.buttons button{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+button{
+    border: 1px solid var(--border-color);
+    background-color: var(--input-color);
+    padding: 10px;
+    border-radius: 5px;
+    transition-duration: 0.2s;
+    outline: none;
+    color: var(--text-color);
+}
+button:hover{
+    transform: scale(1.02);
+}
+
+section{
+    display: flex;
+}
+
+.container{
+    display: flex;
+    gap: 50px;
+}
+
+.table{
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+}
+
+tbody{
+    color: var(--sec-text-color);
+    font-weight: 300;
+}
+
+table{
+    border-radius: 10px;
+    width: 100%;
+    border-collapse: collapse;
+}
+td, th {
+    padding: 12px 17px;
+    text-align: left;
+}
+tr:nth-child(even){
+    background-color: var(--table-even-color);
+}
+
+tr{
+    transition-duration: 0.2s;
+    background-color: var(--section-color);
+}
+
+tr:hover{
+    filter: brightness(0.95);
+}
+
+thead tr{
+    background-color: var(--head-table-color);
+}
+thead tr th{
+    font-weight: normal;
+}
+
+tbody tr{
+    position: relative;
+}
+
+
+section header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+span.material-symbols-outlined{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sec-text-color);
+}
+
+section header .icons button, tbody tr td button{
+    background-color: transparent;
+    border-radius: 50%;
+    border: none;
+}
+tbody tr td button{
+    opacity: 0;
+}
+tbody tr:hover td button{
+    opacity: 1;
+}
+
+section header .icons button:hover, tbody tr td button:hover{
+    background-color: var(--bg-color);
+    transform: none;
+}
+
+tbody tr:nth-child(even) td button:hover{
+    background-color: var(--head-table-color);
+}
+
+tbody tr td:nth-child(8){
+    display: flex;
+    justify-content: end;
+}
+
+body.dark{
+    --bg-color: #18181b;
+    --section-color: #27272a;
+    --border-color: #3f3f46;
+    --text-color: #e4e4e7;
+    --sec-text-color: #a1a1aa;
+    --head-table-color: #18181b;
+    --table-even-color: #1d1d1f;
+    --input-color: #18181b;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus, 
+input:-webkit-autofill:active{
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: var(--input-color);
+}
+input:-webkit-autofill{
+    -webkit-text-fill-color: var(--text-color) !important;
+}
+
+.blackout {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    z-index: 98;
+    left: 0;
+    top: 0;
+    animation: fade-in 0.5s ease-in-out alternate;
+    background: rgba( 0, 0, 0, 0.35 );
+    backdrop-filter: blur( 5px );
+    -webkit-backdrop-filter: blur( 5px );
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.5s;
+}
+
+@keyframes fade-in{
+    from{
+        opacity: 0;
+    }
+    to{
+        opacity: 1;
+    }  
+}
+
+@keyframes drop-in {
+    from{
+        top: 0;
+        transform: translate(-50%, -100%);
+    } to{
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+}
