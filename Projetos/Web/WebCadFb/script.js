@@ -6,6 +6,12 @@ const body = document.body;
 
 refreshData();
 
+$(document).ready(function () {
+    var $phoneMask = $("#phone");
+    $phoneMask.mask('(00) 00000-0000', { reverse: false });
+});
+
+
 async function add() {
     if (isSet()) {
         let num = 0
@@ -52,7 +58,7 @@ function refreshData() {
                 createTd(cad.val().estado, tr);
                 let td = tr.insertCell(tr.cells.length);
                 td.innerHTML = '<button class="delete" title="Remover"><span class="material-symbols-outlined">remove</span></button>' +
-                            '<button class="edit" title="Editar"><span class="material-symbols-outlined">edit</span></button>';
+                    '<button class="edit" title="Editar"><span class="material-symbols-outlined">edit</span></button>';
                 td.firstElementChild.addEventListener("click", () => delTr(tr));
                 td.lastElementChild.addEventListener("click", () => editTr(tr));
             });
@@ -93,7 +99,6 @@ function saveEdit(e) {
         endereco: e[4].firstElementChild.value,
         cidade: e[5].firstElementChild.value,
         estado: e[6].firstElementChild.value
-    }).then(() => {
     }).catch((error) => {
         alert(error);
     });
@@ -104,7 +109,20 @@ function del() {
     db.ref('cadastros').remove().then(refreshData());
 }
 function delTr(tr) {
-    db.ref('cadastros/' + tr.firstElementChild.innerHTML).remove().then(refreshData());
+    var index = tr.firstElementChild.innerHTML
+    var last = table.lastElementChild.firstElementChild.innerHTML;
+    for (let i = index + 1; i < last; i++) {
+        db.ref().child("cadastros" + i).get().then((snapshot) => {
+            if (snapshot.exists()) {
+                db.ref('cadastros/' + i-1).update(snapshot).catch((error) => {alert(error);});
+            } else {
+                console.log("No data available");
+            }
+        }).catch((error) => {
+            console.error(error);
+        });
+    }
+    db.ref('cadastros/' + last).remove().then(refreshData());
 }
 
 function isSet() {
