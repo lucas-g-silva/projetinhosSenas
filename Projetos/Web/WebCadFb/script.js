@@ -1,5 +1,6 @@
 const inputs = document.querySelectorAll(".input");
 const tbody = document.querySelector("tbody");
+const table = document.querySelector("tbody");
 const form = document.querySelector("main");
 const body = document.body;
 
@@ -41,7 +42,7 @@ function refreshData() {
     db.ref().child("cadastros").get().then((snapshot) => {
         if (snapshot.exists()) {
             snapshot.forEach(cad => {
-                const tr = document.createElement("tr");
+                const tr = table.insertRow(table.rows.length);
                 createTd(cad.val().num, tr);
                 createTd(cad.val().nome, tr);
                 createTd(cad.val().email, tr);
@@ -49,13 +50,11 @@ function refreshData() {
                 createTd(cad.val().endereco, tr);
                 createTd(cad.val().cidade, tr);
                 createTd(cad.val().estado, tr);
-                let td = document.createElement("td");
+                let td = tr.insertCell(tr.cells.length);
                 td.innerHTML = '<button class="delete" title="Remover"><span class="material-symbols-outlined">remove</span></button>' +
-                    '<button class="edit" title="Editar"><span class="material-symbols-outlined">edit</span></button>';
+                            '<button class="edit" title="Editar"><span class="material-symbols-outlined">edit</span></button>';
                 td.firstElementChild.addEventListener("click", () => delTr(tr));
                 td.lastElementChild.addEventListener("click", () => editTr(tr));
-                tr.appendChild(td);
-                tbody.appendChild(tr);
             });
         } else {
             console.log("No data available");
@@ -66,9 +65,8 @@ function refreshData() {
 }
 
 function createTd(value, tr) {
-    const td = document.createElement("td");
+    const td = tr.insertCell(tr.cells.length);
     td.innerHTML = value;
-    tr.appendChild(td);
 }
 
 function editTr(e) {
