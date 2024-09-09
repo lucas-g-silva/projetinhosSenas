@@ -13,10 +13,10 @@ function send() {
     const outputs = document.querySelectorAll(".shInput");
 
     if (inputText.trim() !== "" && textArea.trim() !== "") {
-        outputs[0].innerHTML = "Caixa de Texto: " + inputText;
-        outputs[1].innerHTML = "Textarea: " + textArea;
-        outputs[2].innerHTML = "Checkboxes selecionadas: " + (checkValues.length > 0 ? checkValues.join(", ") : "Nenhum");
-        outputs[3].innerHTML = "Radio selecionado: " + radioValue;
+        outputs[0].textContent = "Caixa de Texto: " + inputText;
+        outputs[1].textContent = "Textarea: " + textArea;
+        outputs[2].textContent = "Checkboxes selecionadas: " + (checkValues.length > 0 ? checkValues.join(", ") : "Nenhum");
+        outputs[3].textContent = "Radio selecionado: " + radioValue;
     } else {
         alert("Preencha todos os campos!");
     }
