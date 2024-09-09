@@ -132,6 +132,30 @@ input[type="number"]::-webkit-outer-spin-button {
     height: 1px;
 }
 
+.zoomMsg {
+    opacity: 0;
+    position: absolute;
+    left: 25px;
+    bottom: 25px;
+    background-color: rgb(33, 33, 33);
+    border-radius: 5px;
+    padding: 10px;
+    transition-duration: 0.5s;
+}
+
+.confGrapghic{
+    position: absolute;
+    right: 25px;
+    top: 25px;
+    background-color: rgb(33, 33, 33);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.confGrapghic span{
+    color: rgb(100, 100, 100);
+}
+
 .zoom-box {
     display: flex;
     align-items: center;
@@ -159,7 +183,7 @@ input[type="number"]::-webkit-outer-spin-button {
 }
 
 .zoom-box button span {
-    color: rgb(67, 67, 67);
+    color: rgb(100, 100, 100);
 }
 
 .accordion-box {

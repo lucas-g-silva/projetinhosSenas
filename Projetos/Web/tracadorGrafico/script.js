@@ -5,7 +5,7 @@ canvas.width = canvas.clientWidth * dpr;
 canvas.height = canvas.clientHeight * dpr;
 ctx.scale(dpr, dpr);
 
-var scale = 20;
+var zoom = 20;
 var click = false;
 var org = {
     x: canvas.clientWidth / 2,
@@ -20,6 +20,9 @@ function draw() {
 
     ctx.clearRect(0, 0, width, height);
 
+    ctx.fillStyle = "rgb(25, 25, 25)"
+    ctx.fillRect(0, 0, width, height);
+
     graphic(ctx, width, height);
     parabol(ctx, width, height);
     calc();
@@ -30,47 +33,47 @@ function graphic(ctx, width, height) {
     ctx.font = "10px Inter";
     ctx.fillStyle = "rgb(100, 100, 100)";
 
-    for (let i = org.x + scale; i <= width; i += scale) {
-        ctx.strokeStyle = (i - org.x) % (5 * scale) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+    for (let i = org.x + zoom; i <= width; i += zoom) {
+        ctx.strokeStyle = (i - org.x) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, height);
         ctx.stroke();
 
-        if ((i - org.x) % (5 * scale) == 0) {
-            ctx.fillText((i - org.x) / scale, i - ctx.measureText((i - org.x) / scale).width / 2, org.y + 15);
+        if ((i - org.x) % (5 * zoom) == 0) {
+            ctx.fillText((i - org.x) / zoom, i - ctx.measureText((i - org.x) / zoom).width / 2, org.y + 15);
         }
     }
-    for (let i = org.x - scale; i >= 0; i -= scale) {
-        ctx.strokeStyle = (i - org.x) % (5 * scale) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+    for (let i = org.x - zoom; i >= 0; i -= zoom) {
+        ctx.strokeStyle = (i - org.x) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
         ctx.beginPath();
         ctx.moveTo(i, 0);
         ctx.lineTo(i, height);
         ctx.stroke();
 
-        if ((i - org.x) % (5 * scale) == 0) {
-            ctx.fillText((i - org.x) / scale, i - ctx.measureText((i - org.x) / scale).width / 2, org.y + 15);
+        if ((i - org.x) % (5 * zoom) == 0) {
+            ctx.fillText((i - org.x) / zoom, i - ctx.measureText((i - org.x) / zoom).width / 2, org.y + 15);
         }
     }
-    for (let i = org.y + scale; i <= height; i += scale) {
-        ctx.strokeStyle = (i - org.y) % (5 * scale) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+    for (let i = org.y + zoom; i <= height; i += zoom) {
+        ctx.strokeStyle = (i - org.y) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
         ctx.beginPath();
         ctx.moveTo(0, i);
         ctx.lineTo(width, i);
         ctx.stroke();
-        if ((i - org.y) % (5 * scale) == 0) {
-            ctx.fillText((i - org.y) / -scale, org.x - ctx.measureText((i - org.y) / -scale).width - 5, i + 5);
+        if ((i - org.y) % (5 * zoom) == 0) {
+            ctx.fillText((i - org.y) / -zoom, org.x - ctx.measureText((i - org.y) / -zoom).width - 5, i + 5);
         }
     }
-    for (let i = org.y - scale; i >= 0; i -= scale) {
-        ctx.strokeStyle = (i - org.y) % (5 * scale) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+    for (let i = org.y - zoom; i >= 0; i -= zoom) {
+        ctx.strokeStyle = (i - org.y) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
         ctx.beginPath();
         ctx.moveTo(0, i);
         ctx.lineTo(width, i);
         ctx.stroke();
 
-        if ((i - org.y) % (5 * scale) == 0) {
-            ctx.fillText((i - org.y) / -scale, org.x - ctx.measureText((i - org.y) / -scale).width - 5, i + 5);
+        if ((i - org.y) % (5 * zoom) == 0) {
+            ctx.fillText((i - org.y) / -zoom, org.x - ctx.measureText((i - org.y) / -zoom).width - 5, i + 5);
         }
     }
     ctx.fillText("0", org.x - ctx.measureText("0").width - 5, org.y + 15)
@@ -86,7 +89,7 @@ function graphic(ctx, width, height) {
     ctx.stroke();
 }
 
-function parabol(ctx, width, height) {
+function parabol(ctx) {
     var a = document.getElementById("a").value;
     var b = document.getElementById("b").value;
     var c = document.getElementById("c").value;
@@ -100,8 +103,8 @@ function parabol(ctx, width, height) {
         for (let x = -org.x; x <= org.x; x += 0.01) {
             var y = (a * x * x) + (b * x) + (c);
 
-            const canvasX = org.x + x * scale;
-            const canvasY = org.y - y * scale;
+            const canvasX = org.x + x * zoom;
+            const canvasY = org.y - y * zoom;
 
             if (x === -org.x) {
                 ctx.moveTo(canvasX, canvasY);
@@ -109,7 +112,23 @@ function parabol(ctx, width, height) {
                 ctx.lineTo(canvasX, canvasY);
             }
         }
+        const x1 = ((-b - (Math.sqrt(b * b - 4 * a * c))) / (2 * a));
+        const x2 = ((Math.sqrt(b * b - 4 * a * c) - b) / (2 * a));
+        const v = {
+            x: (-b) / (2*a),
+            y: (-(b*b - 4*a*c)) / (4*a)
+        }
         ctx.stroke();
+        ctx.fillStyle = "white";
+        ctx.beginPath();
+        ctx.arc(org.x + x1 * zoom, org.y, 7, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(org.x + x2 * zoom, org.y, 7, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(org.x + v.x * zoom, org.y - v.y * zoom, 7, 0, 2 * Math.PI);
+        ctx.fill();
     }
 }
 
@@ -146,7 +165,7 @@ function calc() {
         createCalcStep(x1Box, "x1", (-b - (Math.sqrt(b * b - 4 * a * c).toFixed(2))).toFixed(2), (2 * a));
         createCalcStep(x1Box, "x1", ((-b - (Math.sqrt(b * b - 4 * a * c).toFixed(2))) / (2 * a)).toFixed(2));
         raizes.appendChild(x1Box);
-        
+
         const x2Box = document.createElement("div");
         x2Box.classList.add("x-box");
 
@@ -223,15 +242,54 @@ canvas.addEventListener("mouseout", () => {
 });
 
 function zoomIn() {
-    if (scale < 30) scale += 2;
-    draw();
+    if (zoom < 30) {
+        zoom += 2;
+        draw();
+    }
+    showZoomPercentage();
 }
 
 function zoomOut() {
-    if (scale > 10) scale -= 2;
-    draw();
+    if (zoom > 10) {
+        zoom -= 2;
+        draw();
+    }
+    showZoomPercentage();
 }
 
-function toggleAccordion(id){
+canvas.addEventListener('wheel', (event) => {
+    if (event.deltaY < 0) {
+        zoomIn()
+    } else if (event.deltaY > 0) {
+        zoomOut()
+    }
+});
+
+function homePosition() {
+    zoom = 20;
+    org = {
+        x: canvas.clientWidth / 2,
+        y: canvas.clientHeight / 2
+    };
+    draw();
+    showZoomPercentage();
+}
+
+
+let timeoutId;
+
+function showZoomPercentage() {
+    const msg = document.querySelector(".zoomMsg");
+    msg.innerHTML = (zoom * 5) + "%";
+    msg.style.opacity = "1";
+    if (timeoutId) {
+        clearTimeout(timeoutId);
+    }
+    timeoutId = setTimeout(() => {
+        msg.style.opacity = "0";
+    }, 2000);
+}
+
+function toggleAccordion(id) {
     document.getElementById(id).classList.toggle("active");
 }

@@ -1,0 +1,108 @@
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter";
+    outline: none;
+}
+
+body{
+    display: flex;
+    padding: 20px;
+    justify-content: center;
+    background-color: rgb(228, 228, 228);
+}
+
+main{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    background-color: white;
+    padding: 30px 20px;
+    width: 850px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+    gap: 30px;
+}
+
+form, section, .showInputs{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+form{
+    gap: 20px;
+}
+
+form .inputTextBox {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+form .inputTextBox input, form .inputTextBox textarea{
+    width: 100%;
+    padding: 10px;
+    border: solid 1px rgb(200, 200, 200);
+    border-radius: 5px;
+    resize: vertical;
+}
+
+form .inputCheckBox{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border: solid 1px rgb(200, 200, 200);
+    border-radius: 5px;
+    padding: 15px;
+    position: relative;
+}
+
+form .inputCheckBox b{
+    position: absolute;
+    top: 0;
+    transform: translate(-5px, -50%);
+    background-color: white;
+    padding: 0px 5px;
+}
+
+form button{
+    background-color: rgb(0, 123, 255);
+    color: white;
+    width: auto;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+section{
+    gap: 20px;
+}
+
+section table{
+    width: 100%;
+    border-collapse: collapse;
+}
+table thead{
+    background-color: rgb(228, 228, 228);
+}
+
+th, td{
+    padding: 10px;
+    text-align: left;
+    border: 1px solid rgb(200, 200, 200);
+}
+
+.showInputs{
+    gap: 10px;
+    word-break: break-all;
+}
+
+.showInputs .shInput{
+    width: 100%;
+    padding: 10px;
+    background-color: rgb(228, 228, 228);
+    border-radius: 5px;
+}

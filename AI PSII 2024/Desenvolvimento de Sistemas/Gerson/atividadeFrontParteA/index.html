@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exercício de Interação com Componentes</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <main>
+        <h1>Exercício de Interação com Componentes</h1>
+        <form action="">
+            <div class="inputTextBox">
+                <label for="inputText">Caixa de Texto:</label>
+                <input type="text" name="inputText" id="inputText" placeholder="Digite algo aqui">
+            </div>
+            <div class="inputTextBox">
+                <label for="textArea">Textarea:</label>
+                <textarea name="textArea" id="textArea" placeholder="Digite mais informações aqui..."></textarea>
+            </div>
+            <div class="inputCheckBox">
+                <b>Checkboxes:</b>
+                <div><input type="checkbox" name="checkbox" id="opc1" value="Opção 1"> Opção 1</div>
+                <div><input type="checkbox" name="checkbox" id="opc2" value="Opção 2"> Opção 2</div>
+                <div><input type="checkbox" name="checkbox" id="opc3" value="Opção 3"> Opção 3</div>
+            </div>
+            <div class="inputCheckBox">
+                <b>Radio Buttons:</b>
+                <div><input type="radio" name="radioButtons" id="rad1" value="Opção 1"> Opção 1</div>
+                <div><input type="radio" name="radioButtons" id="rad2" value="Opção 2"> Opção 2</div>
+                <div><input type="radio" name="radioButtons" id="rad3" value="Opção 3"> Opção 3</div>
+            </div>
+            <div><button type="button" onclick="send()">Enviar</button></div>
+        </form>
+        <h2>Adicionar Linha à Tabela</h2>
+        <form action="">
+            <div class="inputTextBox">
+                <label for="inputName">Nome:</label>
+                <input type="name" name="Name" id="inputName" placeholder="Nome">
+            </div>
+            <div class="inputTextBox">
+                <label for="inputAge">Idade:</label>
+                <input type="number" name="Idade" id="inputAge" placeholder="Idade" min="0">
+            </div>
+            <div class="inputTextBox">
+                <label for="inputEmail">Email:</label>
+                <input type="email" name="Email" id="inputEmail" placeholder="Email">
+            </div>
+            <div><button type="button" onclick="addRow()">Adicionar Linha</button></div>
+        </form>
+        <section class="result-box">
+            <table id="table">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Idade</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>João</td>
+                        <td>30</td>
+                        <td>joao@example.com</td>
+                    </tr>
+                    <tr>
+                        <td>Maria</td>
+                        <td>25</td>
+                        <td>maria@example.com</td>
+                    </tr>
+                    <tr>
+                        <td>Pedro</td>
+                        <td>35</td>
+                        <td>pedro@example.com</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="showInputs">
+                <div class="shInput"></div>
+                <div class="shInput"></div>
+                <div class="shInput"></div>
+                <div class="shInput"></div>
+            </div>
+        </section>
+    </main>
+    <script src="script.js"></script>
+</body>
+
+</html>

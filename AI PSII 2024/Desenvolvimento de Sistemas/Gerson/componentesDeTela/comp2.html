@@ -128,7 +128,7 @@
             output.innerHTML = "<strong>Navegadores Selecionados: </strong>" +
                                 (checkValues.length > 0 ? checkValues.join(",") : "Nenhum") +
                                 "<br><strong>Nível de Experiência: </strong>" +
-                                radioValue +
+                                (checkValues.length > 0 ? checkValues.join(",") : "Nenhum") +
                                 "<br><strong>País Selecionado: </strong>" +
                                 selectValue;
         }
