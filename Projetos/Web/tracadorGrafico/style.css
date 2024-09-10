@@ -143,13 +143,111 @@ input[type="number"]::-webkit-outer-spin-button {
     transition-duration: 0.5s;
 }
 
-.confGrapghic{
+.option-box{
     position: absolute;
     right: 25px;
     top: 25px;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 10px;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.option-box button{
+    background-color: rgb(33, 33, 33);
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.option-box .option{
+    padding: 20px;
+    text-align: start;
+    color: rgb(100, 100, 100);
+    font-size: small;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+.option-box .option:hover{
+    background-color: rgb(39, 39, 39);
+}
+
+
+.option-box.active .options{
+    display: flex;
+}
+
+.option-box .options{
+    display: none;
     background-color: rgb(33, 33, 33);
     border-radius: 5px;
-    padding: 10px;
+    flex-direction: column;
+    width: 250px;
+    overflow: hidden;
+}
+
+#rangeOption{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: start;
+    gap: 15px;
+}
+
+.range-option label{
+    text-align: left;
+}
+
+.range{
+    -webkit-appearance: none;
+    width: 100%;
+    background: transparent;
+    display: flex;
+    position: relative;
+}
+
+.range::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 10px;
+    background: rgb(26, 26, 26);
+    border-radius: 5px;
+}
+
+.range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: rgb(67, 67, 67);
+    border-radius: 50%;
+    cursor: pointer;
+    transform: translateY(-20%);
+}
+
+.toggle-box{
+    position: relative;
+    padding: 2px;
+    background-color: rgb(25, 25, 25);
+    border-radius: 15px;
+    width: 34px;
+    transition-duration: 0.2s;
+}
+
+.toggle-box.active{
+    background-color: rgb(100, 100, 100);
+}
+
+.toggle-box .toggle{
+    display: flex;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background-color: rgb(67, 67, 67);
+    transition-duration: 0.2s;
+}
+.toggle-box.active .toggle{
+    transform: translateX(100%);
+    background-color: rgb(30, 30, 30);
 }
 
 .confGrapghic span{

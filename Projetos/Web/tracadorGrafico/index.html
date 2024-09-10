@@ -28,27 +28,16 @@
         </div>
         <div class="accordion-box">
             <article id="acc-raizes" class="accordion">
-                <button class="accordion-btn" onclick="toggleAccordion('acc-raizes')">
+                <button class="accordion-btn" onclick="toggle('acc-raizes')">
                     <span class="material-symbols-outlined">
                         keyboard_arrow_up
                     </span>
-                    Raízes
+                    Cálculo
                 </button>
                 <div class="accordion-content">
                     <div id="calcRaizes">
                         <label>Ola</label>
                     </div>
-                </div>
-            </article>
-            <article id="acc-delta" class="accordion">
-                <button class="accordion-btn" onclick="toggleAccordion('acc-delta')">
-                    <span class="material-symbols-outlined">
-                        keyboard_arrow_up
-                    </span>
-                    Delta
-                </button>
-                <div class="accordion-content">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore in, ratione facere ex sunt iste natus, quia voluptatum ipsa ipsum assumenda atque reprehenderit laudantium odit eius totam consectetur officia asperiores?
                 </div>
             </article>
         </div>
@@ -67,9 +56,29 @@
             </button>
         </div>
         <div class="zoomMsg"></div>
-        <button title="config" class="confGrapghic">
-            <span class="material-symbols-outlined">settings</span>
-        </button>
+        <div class="option-box" id="optionBox">
+            <button title="config" class="confGrapghic" onclick="openConf()">
+                <span class="material-symbols-outlined" id="confBtnIcon">settings</span>
+            </button>
+            <div class="options">
+                <div class="option">
+                    <span class="toggle-box" id="togglePoints" onclick="togglePoints()">
+                        <span class="toggle"></span>
+                    </span>
+                    <label>Mostrar Pontos</label>
+                </div>
+                <div class="option">
+                    <span class="toggle-box active" id="toggleGrid" onclick="toggleGrid()">
+                        <span class="toggle"></span>
+                    </span>
+                    <label>Mostrar Grade</label>
+                </div>
+                <div class="option" id="rangeOption">
+                    <label>Intervalo da Grade: 5</label>
+                    <input type="range" class="range" id="inputGridStep" min="0" max="20" step="1" value="5" oninput="changeGridStep()">
+                </div>
+            </div>
+        </div>
     </section>
     <script src="script.js"></script>
 </body>

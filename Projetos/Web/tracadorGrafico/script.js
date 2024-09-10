@@ -11,6 +11,12 @@ var org = {
     x: canvas.clientWidth / 2,
     y: canvas.clientHeight / 2
 }
+
+var shPoints = false;
+var shGrid = true;
+
+var gridStep = 5;
+
 draw();
 
 function draw() {
@@ -34,45 +40,53 @@ function graphic(ctx, width, height) {
     ctx.fillStyle = "rgb(100, 100, 100)";
 
     for (let i = org.x + zoom; i <= width; i += zoom) {
-        ctx.strokeStyle = (i - org.x) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, height);
-        ctx.stroke();
+        if (shGrid) {
+            ctx.strokeStyle = (i - org.x) % (gridStep * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, height);
+            ctx.stroke();
+        }
 
-        if ((i - org.x) % (5 * zoom) == 0) {
+        if ((i - org.x) % (gridStep * zoom) == 0) {
             ctx.fillText((i - org.x) / zoom, i - ctx.measureText((i - org.x) / zoom).width / 2, org.y + 15);
         }
     }
     for (let i = org.x - zoom; i >= 0; i -= zoom) {
-        ctx.strokeStyle = (i - org.x) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
-        ctx.beginPath();
-        ctx.moveTo(i, 0);
-        ctx.lineTo(i, height);
-        ctx.stroke();
+        if (shGrid) {
+            ctx.strokeStyle = (i - org.x) % (gridStep * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+            ctx.beginPath();
+            ctx.moveTo(i, 0);
+            ctx.lineTo(i, height);
+            ctx.stroke();
+        }
 
-        if ((i - org.x) % (5 * zoom) == 0) {
+        if ((i - org.x) % (gridStep * zoom) == 0) {
             ctx.fillText((i - org.x) / zoom, i - ctx.measureText((i - org.x) / zoom).width / 2, org.y + 15);
         }
     }
     for (let i = org.y + zoom; i <= height; i += zoom) {
-        ctx.strokeStyle = (i - org.y) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(width, i);
-        ctx.stroke();
-        if ((i - org.y) % (5 * zoom) == 0) {
+        if (shGrid) {
+            ctx.strokeStyle = (i - org.y) % (gridStep * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(width, i);
+            ctx.stroke();
+        }
+        if ((i - org.y) % (gridStep * zoom) == 0) {
             ctx.fillText((i - org.y) / -zoom, org.x - ctx.measureText((i - org.y) / -zoom).width - 5, i + 5);
         }
     }
     for (let i = org.y - zoom; i >= 0; i -= zoom) {
-        ctx.strokeStyle = (i - org.y) % (5 * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
-        ctx.beginPath();
-        ctx.moveTo(0, i);
-        ctx.lineTo(width, i);
-        ctx.stroke();
+        if (shGrid) {
+            ctx.strokeStyle = (i - org.y) % (gridStep * zoom) == 0 ? "rgb(35, 35, 35)" : "rgb(30, 30, 30)";
+            ctx.beginPath();
+            ctx.moveTo(0, i);
+            ctx.lineTo(width, i);
+            ctx.stroke();
+        }
 
-        if ((i - org.y) % (5 * zoom) == 0) {
+        if ((i - org.y) % (gridStep * zoom) == 0) {
             ctx.fillText((i - org.y) / -zoom, org.x - ctx.measureText((i - org.y) / -zoom).width - 5, i + 5);
         }
     }
@@ -115,20 +129,22 @@ function parabol(ctx) {
         const x1 = ((-b - (Math.sqrt(b * b - 4 * a * c))) / (2 * a));
         const x2 = ((Math.sqrt(b * b - 4 * a * c) - b) / (2 * a));
         const v = {
-            x: (-b) / (2*a),
-            y: (-(b*b - 4*a*c)) / (4*a)
+            x: (-b) / (2 * a),
+            y: (-(b * b - 4 * a * c)) / (4 * a)
         }
         ctx.stroke();
-        ctx.fillStyle = "white";
-        ctx.beginPath();
-        ctx.arc(org.x + x1 * zoom, org.y, 7, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(org.x + x2 * zoom, org.y, 7, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.beginPath();
-        ctx.arc(org.x + v.x * zoom, org.y - v.y * zoom, 7, 0, 2 * Math.PI);
-        ctx.fill();
+        if (shPoints) {
+            ctx.fillStyle = "white";
+            ctx.beginPath();
+            ctx.arc(org.x + x1 * zoom, org.y, 7, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(org.x + x2 * zoom, org.y, 7, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(org.x + v.x * zoom, org.y - v.y * zoom, 7, 0, 2 * Math.PI);
+            ctx.fill();
+        }
     }
 }
 
@@ -271,6 +287,9 @@ function homePosition() {
         x: canvas.clientWidth / 2,
         y: canvas.clientHeight / 2
     };
+    gridStep = 5;
+    shGrid = true;
+    shPoints = false
     draw();
     showZoomPercentage();
 }
@@ -290,6 +309,30 @@ function showZoomPercentage() {
     }, 2000);
 }
 
-function toggleAccordion(id) {
+function toggle(id) {
     document.getElementById(id).classList.toggle("active");
+}
+
+function togglePoints() {
+    toggle('togglePoints');
+    shPoints = !shPoints;
+    draw();
+}
+function toggleGrid() {
+    toggle('toggleGrid');
+    shGrid = !shGrid;
+    draw();
+}
+
+function openConf(){
+    toggle('optionBox');
+    const icon = document.getElementById("confBtnIcon")
+    icon.innerHTML = icon.innerHTML == "close" ? "settings" : "close";
+}
+
+function changeGridStep(){
+    const range = document.getElementById("inputGridStep");
+    gridStep = Number(range.value);
+    range.previousElementSibling.innerHTML = "Intervalo da Grade: " + gridStep;
+    draw();
 }
