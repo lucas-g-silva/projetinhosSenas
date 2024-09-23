@@ -4,7 +4,7 @@
  */
 public class Cliente {
 
-    private int codigo;
+    private int cod;
     private String nome;
     private String fone;
     private String email;
@@ -18,12 +18,12 @@ public class Cliente {
         this.fone = fone;
     }
 
-    public int getCodigo() {
-        return codigo;
+    public int getCod() {
+        return cod;
     }
 
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setCod(int cod) {
+        this.cod = cod;
     }
 
     public String getNome() {
