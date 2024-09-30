@@ -13,10 +13,14 @@ public class Cliente {
     public Cliente() {
     }
 
-    public Cliente(String nome, String fone) {
+    public Cliente(int cod, String nome, String fone, String email, String endereco) {
+        this.cod = cod;
         this.nome = nome;
         this.fone = fone;
+        this.email = email;
+        this.endereco = endereco;
     }
+    
 
     public int getCod() {
         return cod;
