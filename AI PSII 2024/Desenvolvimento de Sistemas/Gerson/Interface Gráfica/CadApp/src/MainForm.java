@@ -42,11 +42,12 @@ public class MainForm extends javax.swing.JFrame {
             modelCli.addRow(linhaCli);
         }
         jTbCli.setModel(modelCli);
-        jTbCli.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTbCli.getColumnModel().getColumn(1).setPreferredWidth(250);
+        //Total de 500
+        jTbCli.getColumnModel().getColumn(0).setPreferredWidth(60);
+        jTbCli.getColumnModel().getColumn(1).setPreferredWidth(80);
         jTbCli.getColumnModel().getColumn(2).setPreferredWidth(80);
         jTbCli.getColumnModel().getColumn(3).setPreferredWidth(80);
-        jTbCli.getColumnModel().getColumn(4).setPreferredWidth(80);
+        jTbCli.getColumnModel().getColumn(4).setPreferredWidth(200);
     }
 
     public void tblProduto() {
@@ -67,11 +68,12 @@ public class MainForm extends javax.swing.JFrame {
             modelPro.addRow(linhaPro);
         }
         jTbPro.setModel(modelPro);
-        jTbPro.getColumnModel().getColumn(0).setPreferredWidth(50);
-        jTbPro.getColumnModel().getColumn(1).setPreferredWidth(80);
+        //Total de 500
+        jTbPro.getColumnModel().getColumn(0).setPreferredWidth(60);
+        jTbPro.getColumnModel().getColumn(1).setPreferredWidth(60);
         jTbPro.getColumnModel().getColumn(2).setPreferredWidth(80);
-        jTbPro.getColumnModel().getColumn(3).setPreferredWidth(80);
-        jTbPro.getColumnModel().getColumn(4).setPreferredWidth(250);
+        jTbPro.getColumnModel().getColumn(3).setPreferredWidth(70);
+        jTbPro.getColumnModel().getColumn(4).setPreferredWidth(230);
     }
 
     public void tblFornecedor() {
@@ -92,11 +94,12 @@ public class MainForm extends javax.swing.JFrame {
             modelFor.addRow(linhaFor);
         }
         jTbFor.setModel(modelFor);
-        jTbFor.getColumnModel().getColumn(0).setPreferredWidth(50);
+        //Total de 500
+        jTbFor.getColumnModel().getColumn(0).setPreferredWidth(60);
         jTbFor.getColumnModel().getColumn(1).setPreferredWidth(100);
         jTbFor.getColumnModel().getColumn(2).setPreferredWidth(100);
-        jTbFor.getColumnModel().getColumn(3).setPreferredWidth(120);
-        jTbFor.getColumnModel().getColumn(4).setPreferredWidth(170);
+        jTbFor.getColumnModel().getColumn(3).setPreferredWidth(140);
+        jTbFor.getColumnModel().getColumn(4).setPreferredWidth(100);
     }
     //</editor-fold>
     
@@ -561,7 +564,7 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(formCliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(formCliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane4)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 320, Short.MAX_VALUE)
                     .addGroup(formCliLayout.createSequentialGroup()
                         .addGroup(formCliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
@@ -632,15 +635,15 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jpnCliLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jpnCliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                    .addComponent(formCli, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(formCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addContainerGap())
         );
         jpnCliLayout.setVerticalGroup(
             jpnCliLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnCliLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formCli, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -870,7 +873,7 @@ public class MainForm extends javax.swing.JFrame {
             jpnProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnProLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formPro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -1098,7 +1101,7 @@ public class MainForm extends javax.swing.JFrame {
             jpnForLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jpnForLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(formFor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
