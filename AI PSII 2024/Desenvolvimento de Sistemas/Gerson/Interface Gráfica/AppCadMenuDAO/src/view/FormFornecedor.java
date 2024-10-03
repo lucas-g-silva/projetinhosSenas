@@ -93,19 +93,7 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Email:");
 
-        jtfEmailFor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfEmailForActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Fone:");
-
-        jtfFoneFor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfFoneForActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Empresa");
 
@@ -114,39 +102,14 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtaEmpresaFor);
 
         btnNovoFor.setText("Novo");
-        btnNovoFor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoForActionPerformed(evt);
-            }
-        });
 
         btnEditarFor.setText("Editar");
-        btnEditarFor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarForActionPerformed(evt);
-            }
-        });
 
         btnExcluirFor.setText("Excluir");
-        btnExcluirFor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirForActionPerformed(evt);
-            }
-        });
 
         btnCancelarFor.setText("Cancelar");
-        btnCancelarFor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarForActionPerformed(evt);
-            }
-        });
 
         btnSalvarFor.setText("Salvar");
-        btnSalvarFor.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarForActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,34 +182,6 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jtfEmailForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfEmailForActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfEmailForActionPerformed
-
-    private void btnNovoForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoForActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNovoForActionPerformed
-
-    private void btnExcluirForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirForActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnExcluirForActionPerformed
-
-    private void jtfFoneForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfFoneForActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfFoneForActionPerformed
-
-    private void btnSalvarForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarForActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalvarForActionPerformed
-
-    private void btnCancelarForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarForActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarForActionPerformed
-
-    private void btnEditarForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarForActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarForActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

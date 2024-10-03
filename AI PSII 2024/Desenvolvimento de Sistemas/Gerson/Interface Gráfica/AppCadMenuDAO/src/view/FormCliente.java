@@ -109,19 +109,7 @@ public class FormCliente extends javax.swing.JInternalFrame {
 
         jLabel3.setText("Fone:");
 
-        jtfFoneCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfFoneCliActionPerformed(evt);
-            }
-        });
-
         jLabel4.setText("Email:");
-
-        jtfEmailCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jtfEmailCliActionPerformed(evt);
-            }
-        });
 
         jLabel5.setText("Endereço:");
 
@@ -130,39 +118,14 @@ public class FormCliente extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jtaEnderecoCli);
 
         btnNovoCli.setText("Novo");
-        btnNovoCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNovoCliActionPerformed(evt);
-            }
-        });
 
         btnEditarCli.setText("Editar");
-        btnEditarCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarCliActionPerformed(evt);
-            }
-        });
 
         btnExcluirCli.setText("Excluir");
-        btnExcluirCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnExcluirCliActionPerformed(evt);
-            }
-        });
 
         btnCancelarCli.setText("Cancelar");
-        btnCancelarCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarCliActionPerformed(evt);
-            }
-        });
 
         btnSalvarCli.setText("Salvar");
-        btnSalvarCli.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalvarCliActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -236,34 +199,6 @@ public class FormCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
     
-    private void jtfFoneCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfFoneCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfFoneCliActionPerformed
-
-    private void jtfEmailCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jtfEmailCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfEmailCliActionPerformed
-
-    private void btnNovoCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNovoCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnNovoCliActionPerformed
-
-    private void btnExcluirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnExcluirCliActionPerformed
-
-    private void btnSalvarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSalvarCliActionPerformed
-
-    private void btnCancelarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarCliActionPerformed
-
-    private void btnEditarCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarCliActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarCliActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarCli;
