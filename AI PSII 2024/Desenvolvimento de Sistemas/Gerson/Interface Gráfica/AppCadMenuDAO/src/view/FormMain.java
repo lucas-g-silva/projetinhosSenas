@@ -4,17 +4,47 @@
  */
 package view;
 
+import dao.DBManeger;
+import java.sql.*;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author lucas-gabreil_silva
  */
 public class FormMain extends javax.swing.JFrame {
 
-    /**
-     * Creates new form FormMain
-     */
+    private DBManeger maneger = new DBManeger();
+    ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private final ImageIcon IconDBOK = new ImageIcon(getClass().getResource("/icones/dbok.png"));
+    private final ImageIcon IconDBERROR = new ImageIcon(getClass().getResource("/icones/dberror.png"));
+
     public FormMain() {
         initComponents();
+        scheduler.scheduleAtFixedRate(() -> {
+            try {
+                if (maneger.isConnected()) {
+                    jlblStatusDB.setIcon(IconDBOK);
+                    jlblMain.setText(DBManeger.DB_NAME);
+                    jlblDesc.setText("Conexão bem-sucedida!");
+                    jMenuItemCli.setEnabled(true);
+                    jMenuItemPro.setEnabled(true);
+                    jMenuItemFor.setEnabled(true);
+                } else {
+                    jlblStatusDB.setIcon(IconDBERROR);
+                    jlblMain.setText("Error!");
+                    jlblDesc.setText("Falha ao conectar-se com o banco");
+                    jMenuItemCli.setEnabled(false);
+                    jMenuItemPro.setEnabled(false);
+                    jMenuItemFor.setEnabled(false);
+                }
+            } catch (Exception e) {
+                System.out.println("Erro ao testar conexão com o banco de dados: " + e.getMessage());
+            }
+        }, 0, 1, TimeUnit.SECONDS);
     }
 
     /**
@@ -27,54 +57,100 @@ public class FormMain extends javax.swing.JFrame {
     private void initComponents() {
 
         jdskPane = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        jlblMain = new javax.swing.JLabel();
+        jlblStatusDB = new javax.swing.JLabel();
+        jlblDesc = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
-        jMenuItem1 = new javax.swing.JMenuItem();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItemCli = new javax.swing.JMenuItem();
+        jMenuItemPro = new javax.swing.JMenuItem();
+        jMenuItemFor = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("SCCPF - Sistema de Cadastro Cliente Produto Fornecedor");
-        setResizable(false);
+
+        jlblMain.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jlblMain.setToolTipText("");
+
+        jlblStatusDB.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        jlblDesc.setFont(new java.awt.Font("Segoe UI", 0, 8)); // NOI18N
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jlblStatusDB, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jlblDesc, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(jlblMain, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(16, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jlblStatusDB, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jlblMain, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jlblDesc)
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+
+        jdskPane.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout jdskPaneLayout = new javax.swing.GroupLayout(jdskPane);
         jdskPane.setLayout(jdskPaneLayout);
         jdskPaneLayout.setHorizontalGroup(
             jdskPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdskPaneLayout.createSequentialGroup()
+                .addContainerGap(545, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jdskPaneLayout.setVerticalGroup(
             jdskPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 577, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jdskPaneLayout.createSequentialGroup()
+                .addContainerGap(511, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         jMenu1.setText("Cadastro");
 
-        jMenuItem1.setText("Clientes");
-        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemCli.setText("Clientes");
+        jMenuItemCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem1ActionPerformed(evt);
+                jMenuItemCliActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem1);
+        jMenu1.add(jMenuItemCli);
 
-        jMenuItem2.setText("Produtos");
-        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemPro.setText("Produtos");
+        jMenuItemPro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem2ActionPerformed(evt);
+                jMenuItemProActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem2);
+        jMenu1.add(jMenuItemPro);
 
-        jMenuItem3.setText("Fornecedores");
-        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+        jMenuItemFor.setText("Fornecedores");
+        jMenuItemFor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem3ActionPerformed(evt);
+                jMenuItemForActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem3);
+        jMenu1.add(jMenuItemFor);
 
         jMenuBar1.add(jMenu1);
 
@@ -101,24 +177,24 @@ public class FormMain extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+    private void jMenuItemCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemCliActionPerformed
         FormCliente ClienteWindow = new FormCliente();
         jdskPane.add(ClienteWindow);
         ClienteWindow.setVisible(true);
-        
-    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItemCliActionPerformed
+
+    private void jMenuItemProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemProActionPerformed
         FormProduto ProdutoWindow = new FormProduto();
         jdskPane.add(ProdutoWindow);
         ProdutoWindow.setVisible(true);
-    }//GEN-LAST:event_jMenuItem2ActionPerformed
+    }//GEN-LAST:event_jMenuItemProActionPerformed
 
-    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+    private void jMenuItemForActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItemForActionPerformed
         FormFornecedor FornecedorWindow = new FormFornecedor();
         jdskPane.add(FornecedorWindow);
         FornecedorWindow.setVisible(true);
-    }//GEN-LAST:event_jMenuItem3ActionPerformed
+    }//GEN-LAST:event_jMenuItemForActionPerformed
 
     /**
      * @param args the command line arguments
@@ -171,14 +247,29 @@ public class FormMain extends javax.swing.JFrame {
         });
     }
 
+    private void testDatabaseConnection() throws SQLException {
+        try (Connection connection = DriverManager.getConnection(DBManeger.URL, DBManeger.USER, DBManeger.PASSWORD)) {
+            if (connection != null && !connection.isClosed()) {
+
+            }
+        } catch (SQLException e) {
+            System.out.println("Falha ao conectar ao banco de dados: " + e.getMessage());
+            throw e;
+        }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItemCli;
+    private javax.swing.JMenuItem jMenuItemFor;
+    private javax.swing.JMenuItem jMenuItemPro;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JDesktopPane jdskPane;
+    private javax.swing.JLabel jlblDesc;
+    private javax.swing.JLabel jlblMain;
+    private javax.swing.JLabel jlblStatusDB;
     // End of variables declaration//GEN-END:variables
 }

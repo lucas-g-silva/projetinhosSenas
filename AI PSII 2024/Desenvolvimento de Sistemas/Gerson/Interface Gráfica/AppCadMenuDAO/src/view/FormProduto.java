@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
@@ -83,7 +84,7 @@ public class FormProduto extends javax.swing.JInternalFrame {
     }
 
     private void setFormEnabled(boolean enabled, boolean editMode) {
-        if(!editMode){
+        if (!editMode) {
             newPro = enabled;
         }
         for (Object input : inputs) {
@@ -105,10 +106,10 @@ public class FormProduto extends javax.swing.JInternalFrame {
             btnExcluirPro.setEnabled(false);
             btnCancelarPro.setEnabled(true);
             btnSalvarPro.setEnabled(editMode);
-            
+
             jtfCodPro.setEnabled(false);
             if (!editMode) {
-                jtfCodPro.setText((tblPro.getSize().height + 1) + "");
+                jtfCodPro.setText(produtoDao.getNextCod() + "");
             }
         } else {
             btnNovoPro.setEnabled(true);
@@ -144,10 +145,13 @@ public class FormProduto extends javax.swing.JInternalFrame {
 
         setClosable(true);
         setIconifiable(true);
+        setResizable(true);
+        setTitle("Formulário - Produto");
+        setMinimumSize(new java.awt.Dimension(750, 550));
 
         tblPro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {"1", "1", "1", "1", "1"}
+
             },
             new String [] {
                 "Código", "Preço", "Unidade", "Quantidade", "Descrição"
@@ -239,16 +243,16 @@ public class FormProduto extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(30, 30, 30)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnNovoPro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                         .addComponent(btnEditarPro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(btnExcluirPro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                         .addComponent(btnCancelarPro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(45, 45, 45)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addComponent(btnSalvarPro, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -263,8 +267,8 @@ public class FormProduto extends javax.swing.JInternalFrame {
                             .addComponent(jtfCodPro)
                             .addComponent(jScrollPane1))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 410, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(30, Short.MAX_VALUE))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -272,7 +276,7 @@ public class FormProduto extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jtfCodPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -290,7 +294,7 @@ public class FormProduto extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -299,7 +303,7 @@ public class FormProduto extends javax.swing.JInternalFrame {
                     .addComponent(btnSalvarPro)
                     .addComponent(btnCancelarPro)
                     .addComponent(btnEditarPro))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -314,7 +318,17 @@ public class FormProduto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnEditarProActionPerformed
 
     private void btnExcluirProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirProActionPerformed
-        setFormEnabled(false, false);
+        int cod = Integer.parseInt(jtfCodPro.getText());
+        int opt = JOptionPane.showConfirmDialog(null,
+                "Deseja mesmo excluir esse produto?",
+                "Comfirmar",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (opt == JOptionPane.YES_OPTION) {
+            produtoDao.deleteProduto(cod);
+            loadProdutos();
+            setFormEnabled(false, false);
+        }
     }//GEN-LAST:event_btnExcluirProActionPerformed
 
     private void btnCancelarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarProActionPerformed
@@ -322,11 +336,25 @@ public class FormProduto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnCancelarProActionPerformed
 
     private void btnSalvarProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProActionPerformed
-        setFormEnabled(false, false);
-        if(newPro){
-            int cod = Integer.parseInt(jtfCodPro.getText());
-            Produto produto = new Produto(cod, desc,unidade, qtd, preco);
-            produtoDao.addProduto(produto);
+        int cod = Integer.parseInt(jtfCodPro.getText());
+        String desc = jtaDescPro.getText();
+        String unidade = jtfUnidadePro.getText();
+        float qtd = Float.parseFloat(jtfQtdPro.getText());
+        float preco = Float.parseFloat(jtfPrecoPro.getText());
+        Produto produto = new Produto(cod, desc, unidade, qtd, preco);
+        int opt = JOptionPane.showConfirmDialog(null,
+                "Deseja mesmo salvar esse produto?",
+                "Comfirmar",
+                JOptionPane.YES_NO_OPTION
+        );
+        if (opt == JOptionPane.YES_OPTION) {
+            if (newPro) {
+                produtoDao.addProduto(produto);
+            } else {
+                produtoDao.updateProduto(produto);
+            }
+            loadProdutos();
+            setFormEnabled(false, false);
         }
     }//GEN-LAST:event_btnSalvarProActionPerformed
 

@@ -6,16 +6,13 @@ import java.util.*;
 
 import model.Produto;
 
-public class ProdutoDaoImpl implements ProdutoDao{
+public class ProdutoDaoImpl implements ProdutoDao {
 
     private Connection connection;
 
     public ProdutoDaoImpl() {
         try {
-            String url = "jdbc:mysql://localhost:3306/db_cad_lucas";
-            String user = "root";
-            String password = "";
-            connection = DriverManager.getConnection(url, user, password);
+            connection = DriverManager.getConnection(DBManeger.URL, DBManeger.USER, DBManeger.PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -46,11 +43,11 @@ public class ProdutoDaoImpl implements ProdutoDao{
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 produto = new Produto(
-                    resultSet.getInt("cod"),
-                    resultSet.getString("descricao"),
-                    resultSet.getString("unidade"),
-                    resultSet.getFloat("qtd"),
-                    resultSet.getFloat("preco")
+                        resultSet.getInt("cod"),
+                        resultSet.getString("descricao"),
+                        resultSet.getString("unidade"),
+                        resultSet.getFloat("qtd"),
+                        resultSet.getFloat("preco")
                 );
             }
         } catch (SQLException e) {
@@ -68,11 +65,11 @@ public class ProdutoDaoImpl implements ProdutoDao{
             ResultSet resultSet = statement.executeQuery(query);
             while (resultSet.next()) {
                 produtos.add(new Produto(
-                    resultSet.getInt("cod"),
-                    resultSet.getString("descricao"),
-                    resultSet.getString("unidade"),
-                    resultSet.getFloat("qtd"),
-                    resultSet.getFloat("preco")
+                        resultSet.getInt("cod"),
+                        resultSet.getString("descricao"),
+                        resultSet.getString("unidade"),
+                        resultSet.getFloat("qtd"),
+                        resultSet.getFloat("preco")
                 ));
             }
         } catch (SQLException e) {
@@ -109,5 +106,20 @@ public class ProdutoDaoImpl implements ProdutoDao{
         }
     }
 
-    
+    @Override
+    public int getNextCod() {
+        int nextCod = 0;
+        try {
+            String query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '"+DBManeger.DB_NAME+"' AND TABLE_NAME = 'produto';";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                nextCod = resultSet.getInt("AUTO_INCREMENT");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nextCod;
+    }
+
 }

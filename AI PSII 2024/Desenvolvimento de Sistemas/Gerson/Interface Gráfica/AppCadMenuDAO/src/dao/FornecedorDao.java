@@ -17,4 +17,6 @@ public interface FornecedorDao {
     List<Fornecedor> getAllFornecedores();
     void updateFornecedor(Fornecedor fornecedor);
     void deleteFornecedor(int id);
+    int getNextCod();
+    
 }

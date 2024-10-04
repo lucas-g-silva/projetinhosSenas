@@ -12,10 +12,7 @@ public class FornecedorDaoImpl implements FornecedorDao{
 
     public FornecedorDaoImpl() {
         try {
-            String url = "jdbc:mysql://localhost:3306/db_cad_lucas";
-            String user = "root";
-            String password = "";
-            connection = DriverManager.getConnection(url, user, password);
+            connection = DriverManager.getConnection(DBManeger.URL, DBManeger.USER, DBManeger.PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -24,13 +21,12 @@ public class FornecedorDaoImpl implements FornecedorDao{
     @Override
     public void addFornecedor(Fornecedor fornecedor) {
         try {
-            String query = "INSERT INTO fornecedor (cod, empresa, contato, fone, email) VALUES (?, ?, ?, ?, ?)";
+            String query = "INSERT INTO fornecedor (empresa, contato, fone, email) VALUES (?, ?, ?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setInt(1, fornecedor.getCod());
-            statement.setString(2, fornecedor.getEmpresa());
-            statement.setString(3, fornecedor.getContato());
-            statement.setString(4, fornecedor.getFone());
-            statement.setString(5, fornecedor.getEmail());
+            statement.setString(1, fornecedor.getEmpresa());
+            statement.setString(2, fornecedor.getContato());
+            statement.setString(3, fornecedor.getFone());
+            statement.setString(4, fornecedor.getEmail());
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -109,6 +105,20 @@ public class FornecedorDaoImpl implements FornecedorDao{
             e.printStackTrace();
         }
     }
-
     
+    @Override
+    public int getNextCod() {
+        int nextCod = 0;
+        try {
+            String query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '"+DBManeger.DB_NAME+"' AND TABLE_NAME = 'fornecedor';";
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                nextCod = resultSet.getInt("AUTO_INCREMENT");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return nextCod;
+    } 
 }
