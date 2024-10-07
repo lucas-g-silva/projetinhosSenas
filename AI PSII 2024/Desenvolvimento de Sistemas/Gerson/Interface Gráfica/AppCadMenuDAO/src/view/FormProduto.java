@@ -6,15 +6,19 @@ package view;
 
 import dao.ProdutoDao;
 import dao.ProdutoDaoImpl;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import model.Produto;
 
 /**
@@ -58,6 +62,23 @@ public class FormProduto extends javax.swing.JInternalFrame {
             modelPro.addRow(linhaPro);
         }
         tblPro.setModel(modelPro);
+        resizeColumnWidth(tblPro);
+    }
+    
+    public void resizeColumnWidth(JTable table) {
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 70; // Min width
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            if (width > 300) {
+                width = 300;
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
     }
 
     private void addInputsToTheList() {
@@ -135,7 +156,6 @@ public class FormProduto extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jtfQtdPro = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jtaDescPro = new javax.swing.JTextArea();
         btnNovoPro = new javax.swing.JButton();
         btnEditarPro = new javax.swing.JButton();
@@ -187,11 +207,13 @@ public class FormProduto extends javax.swing.JInternalFrame {
         jLabel5.setText("Descrição:");
 
         jtaDescPro.setColumns(20);
+        jtaDescPro.setLineWrap(true);
         jtaDescPro.setRows(5);
         jtaDescPro.setTabSize(0);
+        jtaDescPro.setWrapStyleWord(true);
+        jtaDescPro.setBorder(jtfCodPro.getBorder());
         jtaDescPro.setEnabled(false);
         jtaDescPro.setNextFocusableComponent(btnCancelarPro);
-        jScrollPane1.setViewportView(jtaDescPro);
 
         btnNovoPro.setText("Novo");
         btnNovoPro.setNextFocusableComponent(btnEditarPro);
@@ -257,15 +279,15 @@ public class FormProduto extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5)
-                            .addComponent(jtfQtdPro, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfQtdPro)
                             .addComponent(jLabel4)
-                            .addComponent(jtfUnidadePro, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfUnidadePro)
                             .addComponent(jLabel3)
-                            .addComponent(jtfPrecoPro, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfPrecoPro)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(jtfCodPro)
-                            .addComponent(jScrollPane1))
+                            .addComponent(jtaDescPro))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
@@ -276,7 +298,7 @@ public class FormProduto extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jtfCodPro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -294,7 +316,7 @@ public class FormProduto extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                        .addComponent(jtaDescPro, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -412,7 +434,6 @@ public class FormProduto extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jtaDescPro;
     private javax.swing.JTextField jtfCodPro;

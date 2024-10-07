@@ -1,5 +1,6 @@
 package dao;
 
+import static dao.DBManeger.*;
 import java.sql.*;
 import java.util.*;
 
@@ -11,7 +12,7 @@ public class ClienteDaoImpl implements ClienteDao{
 
     public ClienteDaoImpl() {
         try {
-            connection = DriverManager.getConnection(DBManeger.URL, DBManeger.USER, DBManeger.PASSWORD);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,7 +110,7 @@ public class ClienteDaoImpl implements ClienteDao{
     public int getNextCod() {
         int nextCod = 0;
         try {
-            String query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '"+DBManeger.DB_NAME+"' AND TABLE_NAME = 'cliente';";
+            String query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '"+DB_NAME+"' AND TABLE_NAME = 'cliente';";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             if (resultSet.next()) {

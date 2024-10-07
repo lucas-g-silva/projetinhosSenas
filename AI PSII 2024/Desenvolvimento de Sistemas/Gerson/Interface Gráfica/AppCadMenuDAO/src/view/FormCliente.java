@@ -6,15 +6,18 @@ package view;
 
 import dao.ClienteDao;
 import dao.ClienteDaoImpl;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
-import javax.swing.JInternalFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import model.Cliente;
 
 /**
@@ -55,6 +58,23 @@ public class FormCliente extends javax.swing.JInternalFrame {
             modelCli.addRow(linhaPro);
         }
         tblCli.setModel(modelCli);
+        resizeColumnWidth(tblCli);
+    }
+
+    public void resizeColumnWidth(JTable table) {
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 70; // Min width
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            if (width > 300) {
+                width = 300;
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
     }
 
     private void addInputsToTheList() {
@@ -134,7 +154,6 @@ public class FormCliente extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jtfEmailCli = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jtaEnderecoCli = new javax.swing.JTextArea();
         btnNovoCli = new javax.swing.JButton();
         btnEditarCli = new javax.swing.JButton();
@@ -198,7 +217,15 @@ public class FormCliente extends javax.swing.JInternalFrame {
             new String [] {
                 "Código", "Nome", "Fone", "Email", "Endereço"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         tblCli.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 tblCliMouseClicked(evt);
@@ -225,9 +252,11 @@ public class FormCliente extends javax.swing.JInternalFrame {
         jLabel5.setText("Endereço:");
 
         jtaEnderecoCli.setColumns(20);
+        jtaEnderecoCli.setLineWrap(true);
         jtaEnderecoCli.setRows(5);
+        jtaEnderecoCli.setWrapStyleWord(true);
+        jtaEnderecoCli.setBorder(jtfCodCli.getBorder());
         jtaEnderecoCli.setEnabled(false);
-        jScrollPane1.setViewportView(jtaEnderecoCli);
 
         btnNovoCli.setText("Novo");
         btnNovoCli.addActionListener(new java.awt.event.ActionListener() {
@@ -288,17 +317,17 @@ public class FormCliente extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5)
-                            .addComponent(jtfEmailCli, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfEmailCli)
                             .addComponent(jLabel4)
-                            .addComponent(jtfFoneCli, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfFoneCli)
                             .addComponent(jLabel3)
-                            .addComponent(jtfNomeCli, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfNomeCli)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(jtfCodCli)
-                            .addComponent(jScrollPane1))
+                            .addComponent(jtaEnderecoCli))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 408, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
         );
         layout.setVerticalGroup(
@@ -325,7 +354,8 @@ public class FormCliente extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                        .addComponent(jtaEnderecoCli, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)
+                        .addGap(2, 2, 2))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -443,7 +473,6 @@ public class FormCliente extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTable jTable1;

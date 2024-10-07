@@ -6,15 +6,18 @@ package view;
 
 import dao.FornecedorDao;
 import dao.FornecedorDaoImpl;
+import java.awt.Component;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import model.Cliente;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumnModel;
 import model.Fornecedor;
 
 /**
@@ -22,12 +25,12 @@ import model.Fornecedor;
  * @author lucas-gabreil_silva
  */
 public class FormFornecedor extends javax.swing.JInternalFrame {
-    
+
     public ArrayList<Object> inputs = new ArrayList<>();
     public boolean newFor = false;
     public int selectedFor;
     private FornecedorDao fornecedorDao;
-    
+
     public FormFornecedor() {
         fornecedorDao = new FornecedorDaoImpl();
         initComponents();
@@ -36,7 +39,7 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
         loadClientes();
     }
 
-     private void loadClientes() {
+    private void loadClientes() {
         List<Fornecedor> fornecedores = fornecedorDao.getAllFornecedores();
         DefaultTableModel modelFor = new DefaultTableModel(new Object[]{
             "Código",
@@ -55,6 +58,23 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
             modelFor.addRow(linhaPro);
         }
         tblFor.setModel(modelFor);
+        resizeColumnWidth(tblFor);
+    }
+
+    public void resizeColumnWidth(JTable table) {
+        final TableColumnModel columnModel = table.getColumnModel();
+        for (int column = 0; column < table.getColumnCount(); column++) {
+            int width = 70; // Min width
+            for (int row = 0; row < table.getRowCount(); row++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                width = Math.max(comp.getPreferredSize().width + 1, width);
+            }
+            if (width > 300) {
+                width = 300;
+            }
+            columnModel.getColumn(column).setPreferredWidth(width);
+        }
     }
 
     private void addInputsToTheList() {
@@ -116,7 +136,7 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
             btnSalvarFor.setEnabled(false);
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -132,7 +152,6 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
         jLabel4 = new javax.swing.JLabel();
         jtfFoneFor = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
         jtaEmpresaFor = new javax.swing.JTextArea();
         btnNovoFor = new javax.swing.JButton();
         btnEditarFor = new javax.swing.JButton();
@@ -214,10 +233,12 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
         jLabel5.setText("Empresa");
 
         jtaEmpresaFor.setColumns(20);
+        jtaEmpresaFor.setLineWrap(true);
         jtaEmpresaFor.setRows(5);
         jtaEmpresaFor.setToolTipText("");
+        jtaEmpresaFor.setWrapStyleWord(true);
+        jtaEmpresaFor.setBorder(jtfCodFor.getBorder());
         jtaEmpresaFor.setEnabled(false);
-        jScrollPane1.setViewportView(jtaEmpresaFor);
 
         btnNovoFor.setText("Novo");
         btnNovoFor.addActionListener(new java.awt.event.ActionListener() {
@@ -282,15 +303,15 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel5)
-                            .addComponent(jtfFoneFor, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfFoneFor)
                             .addComponent(jLabel4)
-                            .addComponent(jtfEmailFor, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfEmailFor)
                             .addComponent(jLabel3)
-                            .addComponent(jtfContatoFor, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                            .addComponent(jtfContatoFor)
                             .addComponent(jLabel2)
                             .addComponent(jLabel1)
                             .addComponent(jtfCodFor)
-                            .addComponent(jScrollPane1))
+                            .addComponent(jtaEmpresaFor))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
@@ -319,7 +340,7 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
+                        .addComponent(jtaEmpresaFor, javax.swing.GroupLayout.DEFAULT_SIZE, 112, Short.MAX_VALUE))
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -397,7 +418,7 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
             btnExcluirFor.setEnabled(true);
         }
     }//GEN-LAST:event_tblForMouseClicked
-    
+
     private void evtListenerInputs() {
 
         KeyListener keyRealesed = new KeyListener() {
@@ -437,7 +458,6 @@ public class FormFornecedor extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextArea jtaEmpresaFor;
     private javax.swing.JTextField jtfCodFor;
