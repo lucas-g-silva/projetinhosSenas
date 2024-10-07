@@ -28,6 +28,13 @@ public class DBManeger {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        } finally {
+            try {
+                connection.close();
+            } catch (Exception e) {
+                 e.printStackTrace();
+            }
+            
         }
     }
 }

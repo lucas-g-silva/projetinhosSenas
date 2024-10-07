@@ -25,6 +25,21 @@ create table fornecedor (
     empresa varchar(250) not null
 );
 
+create table pedido (
+	cod int primary key auto_increment,
+    dataEmissao date not null,
+    codCliente int not null,
+    constraint pedido_codCliente_fk foreign key (codCliente) references cliente (cod)
+);
+
+create table lista_produtos (
+	codPedido int,
+    codProduto int,
+    constraint primary key (codPedido, codProduto),
+    constraint lista_produtos_codPedido_fk foreign key (codPedido) references pedido (cod),
+    constraint lista_produtos_codProduto_fk foreign key (codProduto) references produto (cod)
+);
+
 INSERT INTO produto (descricao, unidade, qtd, preco) VALUES
 ('Caderno 100 folhas', 'unidade', 50, 12.99),
 ('Lápis HB', 'unidade', 200, 1.50),

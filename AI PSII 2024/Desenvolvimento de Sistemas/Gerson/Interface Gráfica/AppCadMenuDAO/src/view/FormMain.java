@@ -66,6 +66,7 @@ public class FormMain extends javax.swing.JFrame {
         jMenuItemCli = new javax.swing.JMenuItem();
         jMenuItemPro = new javax.swing.JMenuItem();
         jMenuItemFor = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenu3 = new javax.swing.JMenu();
 
@@ -152,6 +153,14 @@ public class FormMain extends javax.swing.JFrame {
         });
         jMenu1.add(jMenuItemFor);
 
+        jMenuItem1.setText("Pedido");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Relatório");
@@ -195,6 +204,12 @@ public class FormMain extends javax.swing.JFrame {
         jdskPane.add(FornecedorWindow);
         FornecedorWindow.setVisible(true);
     }//GEN-LAST:event_jMenuItemForActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        FormPedido PedidoWindow = new FormPedido();
+        jdskPane.add(PedidoWindow);
+        PedidoWindow.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,6 +278,7 @@ public class FormMain extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItemCli;
     private javax.swing.JMenuItem jMenuItemFor;
     private javax.swing.JMenuItem jMenuItemPro;

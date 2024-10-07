@@ -1,5 +1,4 @@
 package dao;
-
 import static dao.DBManeger.*;
 import java.sql.*;
 import java.util.*;
