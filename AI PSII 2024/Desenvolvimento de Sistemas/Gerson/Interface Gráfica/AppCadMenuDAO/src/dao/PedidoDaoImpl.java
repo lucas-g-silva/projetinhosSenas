@@ -47,7 +47,7 @@ public class PedidoDaoImpl implements PedidoDao {
             for (int i = 0; i < pedido.getIdProdutos().size(); i++) {
                 PreparedStatement statement1 = connection.prepareStatement(query);
                 statement1.setInt(1, pedido.getCod());
-                statement1.setInt(2, pedido.getIdProdutos().indexOf(i));
+                statement1.setInt(2, pedido.getIdProdutos().get(i));
                 statement1.executeUpdate();
             }
         } catch (SQLException e) {
@@ -122,13 +122,19 @@ public class PedidoDaoImpl implements PedidoDao {
     @Override
     public void deletePedido(int id) {
         try {
-            String query = "DELETE FROM pedido WHERE cod = ?";
+            String query = "SET FOREIGN_KEY_CHECKS=0;";
             PreparedStatement statement = connection.prepareStatement(query);
+            statement.executeUpdate();
+            query = "DELETE FROM pedido WHERE cod = ?";
+            statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
             query = "DELETE FROM lista_produtos WHERE codPedido = ?";
-            PreparedStatement statement1 = connection.prepareStatement(query);
+            statement = connection.prepareStatement(query);
             statement.setInt(1, id);
+            statement.executeUpdate();
+            query = "SET FOREIGN_KEY_CHECKS=1;";
+            statement = connection.prepareStatement(query);
             statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

@@ -14,6 +14,8 @@ import java.awt.BorderLayout;
 import java.awt.Checkbox;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.text.DateFormat;
@@ -26,6 +28,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
@@ -43,9 +47,16 @@ public class FormPedido extends javax.swing.JInternalFrame {
     private ClienteDao clienteDao;
     private ProdutoDao produtoDao;
     private PedidoDao pedidoDao;
+
     private List<JCheckBox> checkBoxes = new ArrayList<>();
     private List<Cliente> clienteInput = new ArrayList<>();
     private List<Produto> produtoInput = new ArrayList<>();
+
+    private List<Cliente> clientesTabela = new ArrayList<>();
+    private List<List<Produto>> produtosTabela = new ArrayList<>();
+
+    private boolean newPed = false;
+    private int selectedPed;
 
     /**
      * Creates new form FormPedido
@@ -59,8 +70,19 @@ public class FormPedido extends javax.swing.JInternalFrame {
         loadPedidos();
     }
 
+    private boolean isAllSelected() {
+        boolean res = false;
+        for (JCheckBox checkBox : checkBoxes) {
+            if (checkBox.isSelected()) {
+                res = true;
+            }
+        }
+        return jcbClientePed.getSelectedIndex() != 0 && res;
+    }
+
     private void loadPedidos() {
-        List<Integer> heights = new ArrayList<>();
+        clientesTabela = new ArrayList<>();
+        produtosTabela = new ArrayList<>();
         List<Pedido> pedidos = pedidoDao.getAllPedidos();
         DefaultTableModel modelPed = new DefaultTableModel(new Object[]{
             "Código",
@@ -69,44 +91,58 @@ public class FormPedido extends javax.swing.JInternalFrame {
             "Produtos"}, 0);
 
         for (Pedido pedido : pedidos) {
-            int rowHeight = 14;
             List<Integer> idProdutos = pedido.getIdProdutos();
             StringBuilder produtos = new StringBuilder();
+            List<Produto> listaPro = new ArrayList<>();
             produtos.append("<html>");
             for (Integer id : idProdutos) {
-                produtos.append(produtoDao.getProduto(id).getDesc());
+                Produto produto = produtoDao.getProduto(id);
+                listaPro.add(produto);
+                produtos.append(produto.getDesc());
                 produtos.append("<br>");
-                rowHeight += 14;
             }
+            produtosTabela.add(listaPro);
             produtos.append("</html>");
+            Cliente cliente = clienteDao.getCliente(pedido.getIdCliente());
             Object linhaPed[] = new Object[]{
                 pedido.getCod(),
                 pedido.getDataEmissao(),
-                clienteDao.getCliente(pedido.getIdCliente()).getNome(),
+                cliente.getNome(),
                 produtos.toString(),};
+            clientesTabela.add(cliente);
             modelPed.addRow(linhaPed);
-            heights.add(rowHeight);
         }
+
         tblPed.setModel(modelPed);
-        resizeColumnWidth(tblPed);
-        for (Integer h : heights) {
-            tblPed.setRowHeight(heights.indexOf(h), h);
-        }
+
+        resizeColumnWidthAndHeight(tblPed);
     }
 
-    public void resizeColumnWidth(JTable table) {
+    public void resizeColumnWidthAndHeight(JTable table) {
         final TableColumnModel columnModel = table.getColumnModel();
+
         for (int column = 0; column < table.getColumnCount(); column++) {
-            int width = 70; // Min width
+            int width = 70; // Largura mínima
             for (int row = 0; row < table.getRowCount(); row++) {
                 TableCellRenderer renderer = table.getCellRenderer(row, column);
                 Component comp = table.prepareRenderer(renderer, row, column);
                 width = Math.max(comp.getPreferredSize().width + 1, width);
             }
-            if (width > 300) {
+            if (width > 300) { // Largura máxima
                 width = 300;
             }
             columnModel.getColumn(column).setPreferredWidth(width);
+        }
+
+        // Ajusta a altura das linhas
+        for (int row = 0; row < table.getRowCount(); row++) {
+            int rowHeight = table.getRowHeight(); // Altura atual
+            for (int column = 0; column < table.getColumnCount(); column++) {
+                TableCellRenderer renderer = table.getCellRenderer(row, column);
+                Component comp = table.prepareRenderer(renderer, row, column);
+                rowHeight = Math.max(comp.getPreferredSize().height + 1, rowHeight);
+            }
+            table.setRowHeight(row, rowHeight); // Define a nova altura para a linha
         }
     }
 
@@ -123,12 +159,19 @@ public class FormPedido extends javax.swing.JInternalFrame {
             int i = produtos.indexOf(produto);
             checkBoxes.add(new JCheckBox(produto.getDesc()));
             checkBoxes.get(i).setEnabled(false);
+            checkBoxes.get(i).addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    btnSalvarPed.setEnabled(isAllSelected());
+                }
+            });
             jpProdutosPed.add(checkBoxes.get(i));
             produtoInput.add(produto);
         }
     }
 
     private void setFormEnabled(boolean enabled) {
+        newPed = enabled;
         jcbClientePed.setEnabled(enabled);
         jcbClientePed.setSelectedIndex(0);
         for (JCheckBox checkbox : checkBoxes) {
@@ -139,7 +182,7 @@ public class FormPedido extends javax.swing.JInternalFrame {
             btnNovoPed.setEnabled(false);
             btnExcluirPed.setEnabled(false);
             btnCancelarPed.setEnabled(true);
-            //btnSalvarPed.setEnabled(false);
+            btnSalvarPed.setEnabled(false);
 
             long milis = System.currentTimeMillis();
             Date data = new Date(milis);
@@ -149,7 +192,7 @@ public class FormPedido extends javax.swing.JInternalFrame {
             btnNovoPed.setEnabled(true);
             btnExcluirPed.setEnabled(false);
             btnCancelarPed.setEnabled(false);
-            //btnSalvarPed.setEnabled(false);
+            btnSalvarPed.setEnabled(false);
         }
     }
 
@@ -176,6 +219,7 @@ public class FormPedido extends javax.swing.JInternalFrame {
         setClosable(true);
         setIconifiable(true);
         setResizable(true);
+        setTitle("Formulário - Pedido");
         setMinimumSize(new java.awt.Dimension(750, 550));
         setPreferredSize(new java.awt.Dimension(750, 550));
 
@@ -187,30 +231,30 @@ public class FormPedido extends javax.swing.JInternalFrame {
                 "Código", "Data", "Cliente", "Produtos"
             }
         ));
+        tblPed.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblPedMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(tblPed);
 
         jLabel1.setText("Código:");
 
         jtfCodPed.setEnabled(false);
-        jtfCodPed.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtfCodPedKeyReleased(evt);
-            }
-        });
 
         jLabel2.setText("Data de Emissão:");
 
         jtfDataPed.setEnabled(false);
-        jtfDataPed.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jtfDataPedKeyReleased(evt);
-            }
-        });
 
         jLabel3.setText("Cliente:");
 
         jcbClientePed.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione" }));
         jcbClientePed.setEnabled(false);
+        jcbClientePed.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jcbClientePedActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Produtos:");
 
@@ -255,6 +299,7 @@ public class FormPedido extends javax.swing.JInternalFrame {
         });
 
         btnSalvarPed.setText("Salvar");
+        btnSalvarPed.setEnabled(false);
         btnSalvarPed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSalvarPedActionPerformed(evt);
@@ -274,19 +319,19 @@ public class FormPedido extends javax.swing.JInternalFrame {
                         .addComponent(btnExcluirPed, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
                         .addComponent(btnCancelarPed, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 93, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                         .addComponent(btnSalvarPed, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jtfDataPed, javax.swing.GroupLayout.PREFERRED_SIZE, 239, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jcbClientePed, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jcbClientePed, javax.swing.GroupLayout.Alignment.LEADING, 0, 239, Short.MAX_VALUE)
                                 .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jtfCodPed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)))
+                                .addComponent(jtfCodPed, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                 .addGap(30, 30, 30))
@@ -312,7 +357,7 @@ public class FormPedido extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE))
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE))
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNovoPed)
@@ -370,14 +415,46 @@ public class FormPedido extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_btnSalvarPedActionPerformed
 
-    private void jtfCodPedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfCodPedKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfCodPedKeyReleased
+    private void jcbClientePedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jcbClientePedActionPerformed
+        btnSalvarPed.setEnabled(isAllSelected());
+    }//GEN-LAST:event_jcbClientePedActionPerformed
 
-    private void jtfDataPedKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jtfDataPedKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jtfDataPedKeyReleased
+    private void tblPedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblPedMouseClicked
+        if (!newPed) {
+            selectedPed = tblPed.getSelectedRow();
+            jtfCodPed.setText(tblPed.getValueAt(selectedPed, 0).toString());
+            jtfDataPed.setText(tblPed.getValueAt(selectedPed, 1).toString());
+            int indexCli = 0;
+            for (Cliente cli : clienteInput) {
+                if (isItTheSameCliente(cli, clientesTabela.get(selectedPed))) {
+                    indexCli = clienteInput.indexOf(cli);
+                }
+            }
+            
+            for (JCheckBox checkBox : checkBoxes){
+                checkBox.setSelected(false);
+            }
+            
+            for (Produto pro : produtosTabela.get(selectedPed)) {
+                for(Produto proInput : produtoInput){
+                    if(isItTheSameProduto(pro, proInput)){
+                        checkBoxes.get(produtoInput.indexOf(proInput)).setSelected(true);
+                    }
+                }
+            }
 
+            jcbClientePed.setSelectedIndex(indexCli + 1);
+            btnExcluirPed.setEnabled(true);
+        }
+    }//GEN-LAST:event_tblPedMouseClicked
+
+    private boolean isItTheSameCliente(Cliente cli1, Cliente cli2) {
+        return cli1.getCod() == cli2.getCod();
+    }
+    
+    private boolean isItTheSameProduto(Produto pro1, Produto pro2) {
+        return pro1.getCod() == pro2.getCod();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelarPed;
