@@ -37,13 +37,13 @@ public class PedidoDaoImpl implements PedidoDao {
     @Override
     public void addPedido(Pedido pedido) {
         try {
-            String query = "INSERT INTO pedido (dataEmissao, idCliente) VALUES (?, ?)";
+            String query = "INSERT INTO pedido (dataEmissao, codCliente) VALUES (?, ?)";
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setDate(1, pedido.getDataEmissao());
             statement.setInt(2, pedido.getIdCliente());
             statement.executeUpdate();
 
-            query = "INSERT INTO lista_pedidos (codPedido, codProduto) VALUES (?, ?)";
+            query = "INSERT INTO lista_produtos (codPedido, codProduto) VALUES (?, ?)";
             for (int i = 0; i < pedido.getIdProdutos().size(); i++) {
                 PreparedStatement statement1 = connection.prepareStatement(query);
                 statement1.setInt(1, pedido.getCod());
@@ -65,7 +65,7 @@ public class PedidoDaoImpl implements PedidoDao {
             statement.setInt(1, id);
             ResultSet resultSetPedido = statement.executeQuery();
 
-            query = "SELECT codProduto FROM lista_pedidos WHERE codPedido = ?";
+            query = "SELECT codProduto FROM lista_produtos WHERE codPedido = ?";
             PreparedStatement statement1 = connection.prepareStatement(query);
             statement1.setInt(1, id);
             ResultSet resultSetProdutos = statement1.executeQuery();
@@ -98,7 +98,7 @@ public class PedidoDaoImpl implements PedidoDao {
             while (resultSetPedido.next()) {
                 List<Integer> idProdutos = new ArrayList<Integer>();
                 
-                query = "SELECT codProduto FROM lista_pedidos WHERE codPedido = ?";
+                query = "SELECT codProduto FROM lista_produtos WHERE codPedido = ?";
                 PreparedStatement statement1 = connection.prepareStatement(query);
                 statement1.setInt(1, resultSetPedido.getInt("cod"));
                 ResultSet resultSetProdutos = statement1.executeQuery();
@@ -108,8 +108,8 @@ public class PedidoDaoImpl implements PedidoDao {
                 }
                 pedidos.add( new Pedido(
                         resultSetPedido.getInt("cod"),
-                        resultSetPedido.getDate("dataEmisssao"),
-                        resultSetPedido.getInt("idCliente"),
+                        resultSetPedido.getDate("dataEmissao"),
+                        resultSetPedido.getInt("codCliente"),
                         idProdutos
                 ));
             }
@@ -126,6 +126,10 @@ public class PedidoDaoImpl implements PedidoDao {
             PreparedStatement statement = connection.prepareStatement(query);
             statement.setInt(1, id);
             statement.executeUpdate();
+            query = "DELETE FROM lista_produtos WHERE codPedido = ?";
+            PreparedStatement statement1 = connection.prepareStatement(query);
+            statement.setInt(1, id);
+            statement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -133,7 +137,7 @@ public class PedidoDaoImpl implements PedidoDao {
 
     @Override
     public int getNextCod() {
-        int nextCod = 0;
+        int nextCod = 1;
         try {
             String query = "SELECT AUTO_INCREMENT FROM information_schema.TABLES WHERE TABLE_SCHEMA = '" + DB_NAME + "' AND TABLE_NAME = 'pedido';";
             Statement statement = connection.createStatement();

@@ -381,7 +381,7 @@ public class FormCliente extends javax.swing.JInternalFrame {
     private void btnExcluirCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirCliActionPerformed
         int cod = Integer.parseInt(jtfCodCli.getText());
         int opt = JOptionPane.showConfirmDialog(null,
-                "Deseja mesmo excluir esse produto?",
+                "Deseja mesmo excluir esse cliente?",
                 "Comfirmar",
                 JOptionPane.YES_NO_OPTION
         );

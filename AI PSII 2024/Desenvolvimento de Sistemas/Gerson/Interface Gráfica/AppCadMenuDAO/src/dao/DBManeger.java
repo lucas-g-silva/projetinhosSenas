@@ -12,7 +12,7 @@ import java.sql.*;
  */
 public class DBManeger {
     public static final String USER = "root";
-    public static final String PASSWORD = "";
+    public static final String PASSWORD = "log29jul";
     public static final String DB_NAME = "db_cad_lucas";
     public static final String URL = "jdbc:mysql://localhost:3306/" + DB_NAME;
 
