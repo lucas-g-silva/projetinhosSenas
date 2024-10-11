@@ -7,16 +7,27 @@
     <title>Cadastro de Produto</title>
 </head>
 <style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
     body {
         font-family: Arial, sans-serif;
         background-color: #f0f0f0;
         margin: 0;
         padding: 20px;
+        display: flex;
+        gap: 25px;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
     }
 
     h2 {
         color: #333;
         text-align: center;
+        margin-bottom: 20px;
     }
 
     form {
@@ -24,7 +35,7 @@
         padding: 20px;
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        max-width: 400px;
+        width: 400px;
         margin: auto;
     }
 
@@ -35,7 +46,8 @@
     }
 
     input[type="text"],
-    input[type="number"] {
+    input[type="number"],
+    input[type="date"] {
         width: calc(100% - 20px);
         padding: 10px;
         margin-bottom: 12px;
@@ -56,17 +68,32 @@
         background-color: #45a049;
     }
 </style>
+
 <body>
-    <h2>Cadastro Produto</h2>
-    <form action="/save" method="post">
-        <label for="descricao">Descrição:</label>
-        <input type="text" name="descricao" id="descricao" required><br>
+    <div>
+        <form action="/save-produto" method="post">
+            <h2>Cadastro Produto</h2>
+            <label for="descricao">Descrição:</label>
+            <input type="text" name="descricao" id="descricao" required><br>
 
-        <label for="preco">Preço: </label>
-        <input type="number" name="preco" id="preco" step="0.01" required><br>
+            <label for="preco">Preço: </label>
+            <input type="number" name="preco" id="preco" step="0.01" required><br>
 
-        <input type="submit" value="Cadastrar Produto">
-    </form>
+            <input type="submit" value="Cadastrar Produto">
+        </form>
+    </div>
+    <div>
+        <form action="/save-pedido" method="post">
+            <h2>Cadastro Pedido</h2>
+            <label for="dataPedido">Data:</label>
+            <input type="date" name="dataPedido" id="dataPedido" required><br>
+
+            <label for="idProduto">ID do produto: </label>
+            <input type="number" name="idProduto" id="idProduto" step="1" required><br>
+
+            <input type="submit" value="Cadastrar Pedido">
+        </form>
+    </div>
 </body>
 
 </html>

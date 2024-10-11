@@ -6,8 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.psii.appproduto.model.Pedido;
-import com.psii.appproduto.model.Produto;
-import com.psii.appproduto.repository.ProdutoRepository;
+import com.psii.appproduto.repository.PedidoRepository;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,19 +15,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/")
-public class ProdutoController {
+public class PedidoController {
     @Autowired
-    private ProdutoRepository produtoRepository;
+    private PedidoRepository pedidoRepository;
 
-    @GetMapping("/produto")
+    @GetMapping("/pedido")
     public String showForm(Model model) {
-        model.addAttribute("produto", new Produto());
+        model.addAttribute("pedido", new Pedido());
         return "index.html";
     }
 
-    @PostMapping("/save-produto")
-    public String saveProduct(@ModelAttribute Produto produto) {
-        produtoRepository.save(produto);
+    @PostMapping("/save-pedido")
+    public String savePedido(@ModelAttribute Pedido pedido) {
+        pedidoRepository.save(pedido);
         return "redirect:/index.html";
     }
 }
