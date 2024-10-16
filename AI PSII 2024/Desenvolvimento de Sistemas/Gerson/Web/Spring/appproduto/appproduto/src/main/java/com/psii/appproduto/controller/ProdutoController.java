@@ -5,7 +5,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.psii.appproduto.model.Pedido;
 import com.psii.appproduto.model.Produto;
 import com.psii.appproduto.repository.ProdutoRepository;
 
@@ -20,15 +19,16 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    @GetMapping("/produto")
+    @GetMapping("/produtos/")
     public String showForm(Model model) {
-        model.addAttribute("produto", new Produto());
-        return "index.html";
+        model.addAttribute("produtos", produtoRepository.findAll());
+        model.addAttribute("novoPedido", new Produto());
+        return "index";
     }
 
-    @PostMapping("/save-produto")
-    public String saveProduct(@ModelAttribute Produto produto) {
+    @PostMapping("/produtos/salvar")
+    public String salvarProduct(@ModelAttribute Produto produto) {
         produtoRepository.save(produto);
-        return "redirect:/index.html";
+        return "redirect:/";
     }
 }

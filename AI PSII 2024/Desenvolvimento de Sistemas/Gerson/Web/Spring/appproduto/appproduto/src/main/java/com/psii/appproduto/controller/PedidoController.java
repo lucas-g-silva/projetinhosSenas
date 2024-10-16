@@ -19,15 +19,16 @@ public class PedidoController {
     @Autowired
     private PedidoRepository pedidoRepository;
 
-    @GetMapping("/pedido")
+    @GetMapping("/pedidos/")
     public String showForm(Model model) {
-        model.addAttribute("pedido", new Pedido());
+        model.addAttribute("pedidos", pedidoRepository.findAll());
+        model.addAttribute("novoPedido", new Pedido());
         return "index.html";
     }
 
-    @PostMapping("/save-pedido")
-    public String savePedido(@ModelAttribute Pedido pedido) {
+    @PostMapping("/pedidos/salvar")
+    public String salvarPedido(@ModelAttribute Pedido pedido) {
         pedidoRepository.save(pedido);
-        return "redirect:/index.html";
+        return "redirect:/";
     }
 }
