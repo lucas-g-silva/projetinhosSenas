@@ -70,11 +70,6 @@
                             <td>${pedido.dataPedido}</td>
                             <td>${pedido.produto.id}</td>
                         </tr>
-                        <tr>
-                            <td>${pedido.id}</td>
-                            <td>${pedido.dataPedido}</td>
-                            <td>${pedido.produto.id}</td>
-                        </tr>
                     </c:forEach>
                 </table>
             </main>
