@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!-- xmlns:th define o namespace do Thymeleaf, permitindo o uso dos atributos "th:*" no HTML -->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/list.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Lista de Produtos</title>
+</head>
+
+<body>
+    <header>
+        <h1>Lista de Produtos</h1>
+        <!-- th:href define a URL para onde o link vai redirecionar, no caso, para "/cadastrar" -->
+        <a th:href="@{/cadastrar}">
+            Novo Produto
+            <span class="material-symbols-outlined">
+                add
+            </span>
+        </a>
+    </header>
+    <div class="scroll">
+        <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Categoria</th>
+                    <th>Fornecedor</th>
+                    <th>Imagem</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- th:each itera sobre a lista "produtos", criando uma variável "produto" para cada item da lista -->
+                <tr th:each="produto : ${produtos}">
+                    <!-- th:text define o conteúdo de texto de cada célula da tabela, exibindo o valor do respectivo atributo do objeto "produto" -->
+                    <td th:text="${produto.id}"></td>
+                    <td th:text="${produto.nome}"></td>
+                    <td th:text="${produto.descricao}"></td>
+                    <td th:text="${produto.preco}"></td>
+                    <td th:text="${produto.quantidade}"></td>
+                    <td th:text="${produto.categoria}"></td>
+                    <td th:text="${produto.fornecedor}"></td>
+                    <td>
+                        <!-- th:src define o caminho da imagem, passando o ID do produto como parâmetro -->
+                         <!-- th:attr define o atributo onclick para a função JavaScript
+                            openImage(), passando o ID do produto -->
+                        <img th:src="@{/produto/imagem/{id}(id=${produto.id})}" alt="Imagem do Produto"
+                            class="produto-imagem" th:attr="onclick=|openImage('${produto.id}')|">
+                    </td>
+                    <td>
+                        <div class="acao">
+                            <!-- th:href cria um link de edição para o produto com base no ID do produto -->
+                            <a th:href="@{/produto/editar/{id}(id=${produto.id})}">
+                                <span class="material-symbols-outlined">
+                                    edit
+                                </span>
+                            </a>
+                            <!-- th:action define a URL para o envio do formulário de exclusão do produto com base no ID do produto -->
+                            <form th:action="@{/produto/deletar/{id}(id=${produto.id})}" method="post" class="hidden">
+                                <button type="submit"
+                                    onclick="return confirm('Tem certeza que deseja deletar este produto?');" class="del">
+                                    <span class="material-symbols-outlined">
+                                        delete
+                                    </span>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="backdrop">
+        <button type="button" onclick="closeImages()">
+            <span class="material-symbols-outlined">
+                close
+            </span>
+        </button>
+        <!-- th:each cria um elemento <img> para cada produto na lista "produtos" -->
+        <div th:each="produto : ${produtos}">
+            <!-- th:src define o caminho da imagem, passando o ID do produto como parâmetro -->
+            <!-- th:id define o ID do elemento <img> como "img-" seguido do ID do produto -->
+            <img th:src="@{/produto/imagem/{id}(id=${produto.id})}" alt="Imagem do produto"
+                th:id="'img-' + ${produto.id}" class="img">
+        </div>
+    </div>
+
+    <script>
+        function openImage(id) {
+            document.querySelector(".backdrop").classList.add("enabled");
+            document.querySelector('#img-' + id).classList.add("enabled");
+        }
+
+        function closeImages() {
+            document.querySelector(".backdrop").classList.remove("enabled");
+            document.querySelectorAll(".img").forEach((img) => {
+                img.classList.remove("enabled");
+            })
+        }
+    </script>
+</body>
+
+</html>

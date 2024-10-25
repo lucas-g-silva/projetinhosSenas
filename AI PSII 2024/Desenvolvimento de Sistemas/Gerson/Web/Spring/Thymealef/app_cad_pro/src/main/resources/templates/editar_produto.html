@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<!-- xmlns:th define o namespace do Thymeleaf, habilitando o uso dos atributos "th:*" no HTML -->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Editar Produto</title>
+</head>
+
+<body>
+    <!-- th:action define a URL para onde o formulário será enviado (no caso, para "/produto/salvar"). -->
+    <!-- th:object associa o formulário a um objeto "produto", permitindo acessar e editar os campos do produto. -->
+    <form th:action="@{/produto/salvar}" th:object="${produto}" method="post" enctype="multipart/form-data">
+        <h1>Editar Produto</h1>
+
+        <!-- th:field associa o campo ao atributo "id" do objeto "produto". Como é um campo oculto, ele armazena o ID sem ser exibido. -->
+        <input type="hidden" th:field="*{id}">
+
+        <label for="nome">Nome:</label>
+        <!-- th:field associa o campo ao atributo "nome" do objeto "produto". -->
+        <input type="text" name="nome" id="nome" th:field="*{nome}" required>
+
+        <label for="descricao">Descrição</label>
+        <!-- th:field associa o campo ao atributo "descricao" do objeto "produto". -->
+        <input type="text" name="descricao" id="descricao" th:field="*{descricao}" required>
+
+        <label for="preco">Preço</label>
+        <!-- th:field associa o campo ao atributo "preco" do objeto "produto" e define o tipo "number" para valores decimais. -->
+        <input type="number" name="preco" id="preco" step="0.01" th:field="*{preco}" required>
+
+        <label for="quantidade">Quantidade</label>
+        <!-- th:field associa o campo ao atributo "quantidade" do objeto "produto". -->
+        <input type="number" name="quantidade" id="quantidade" th:field="*{quantidade}" required>
+
+        <label for="categoria">Categoria</label>
+        <!-- th:field associa o campo ao atributo "categoria" do objeto "produto". -->
+        <input type="text" name="categoria" id="categoria" th:field="*{categoria}" required>
+
+        <label for="fornecedor">Fornecedor</label>
+        <!-- th:field associa o campo ao atributo "fornecedor" do objeto "produto". -->
+        <input type="text" name="fornecedor" id="fornecedor" th:field="*{fornecedor}" required>
+
+        <label>Imagem</label>
+        <!-- Este campo permite o upload de uma imagem para o produto. Não há uso de Thymeleaf aqui pois é opcional. -->
+        <input type="file" name="imagem" id="imagem">
+
+        <div class="buttons">
+            <button type="submit">Salvar</button>
+            <!-- Este link redireciona para a página de listagem de produtos ao cancelar a edição. -->
+            <a href="/listar">Cancelar</a>
+        </div>
+    </form>
+</body>
+
+</html>

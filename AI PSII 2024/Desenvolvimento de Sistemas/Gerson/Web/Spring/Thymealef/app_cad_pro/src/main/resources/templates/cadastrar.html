@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!-- xmlns:th define o namespace do Thymeleaf, permitindo o uso dos atributos "th:*" no HTML -->
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/style.css">
+    <title>Cadastrar Produto</title>
+</head>
+<body>
+    <!-- th:action define a URL para onde o formulário será enviado, no caso, para "/cadastrar" -->
+    <form th:action="@{/cadastrar}" method="post" enctype="multipart/form-data">
+        <h1>Cadastrar Produto</h1>
+        
+        <label for="nome">Nome</label>
+        <!-- Campo para inserir o nome do produto; não possui atributo th:* pois será preenchido pelo usuário -->
+        <input type="text" name="nome" id="nome" required>
+
+        <label for="descricao">Descrição</label>
+        <!-- Campo para inserir a descrição do produto -->
+        <input type="text" name="descricao" id="descricao" required>
+
+        <label for="preco">Preço</label>
+        <!-- Campo para inserir o preço do produto com suporte a valores decimais (step="0.01") -->
+        <input type="number" name="preco" step="0.01" id="preco" required>
+
+        <label for="quantidade">Quantidade</label>
+        <!-- Campo para inserir a quantidade disponível do produto -->
+        <input type="number" name="quantidade" id="quantidade" required>
+
+        <label for="categoria">Categoria</label>
+        <!-- Campo para inserir a categoria do produto -->
+        <input type="text" name="categoria" id="categoria" required>
+
+        <label for="fornecedor">Fornecedor</label>
+        <!-- Campo para inserir o fornecedor do produto -->
+        <input type="text" name="fornecedor" id="fornecedor" required>
+
+        <label for="file">Imagem</label>
+        <!-- Campo para fazer upload de uma imagem do produto; o atributo "accept" limita o tipo de arquivo para imagens -->
+        <input type="file" name="file" id="file" accept="image/*">
+        
+        <div class="buttons">
+            <button type="submit">Cadastrar</button>
+            <!-- th:href define a URL para onde o link de "Cancelar" redireciona, no caso, para "/listar" -->
+            <a th:href="@{/listar}">Cancelar</a>
+        </div>
+    </form>
+</body>
+</html>
