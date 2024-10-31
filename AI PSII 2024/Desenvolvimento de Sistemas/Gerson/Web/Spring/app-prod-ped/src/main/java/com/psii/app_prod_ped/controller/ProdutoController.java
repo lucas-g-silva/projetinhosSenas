@@ -20,7 +20,6 @@ public class ProdutoController {
     public String listarProdutos(Model model) {
         model.addAttribute("produtos", produtoRepository.findAll());
         model.addAttribute("pedidos", new ArrayList<>());
-        System.out.println("AQUI");
         return "index";
     }
 

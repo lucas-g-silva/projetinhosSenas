@@ -58,6 +58,7 @@ form .input{
     transition-duration: .2s;
 }
 
+
 form .input:hover {
     outline: 2px solid var(--table-header-color);
 }

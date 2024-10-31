@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -10,7 +9,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap"
         rel="stylesheet">
 </head>
 
@@ -50,9 +49,10 @@
             <label>Data do Pedido:</label>
             <input type="date" name="dataPedido" required class="input">
 
-            <label>ID do Produto:</label>
-            <input type="number" name="produto.id" required class="input">
-
+            <label>Produto:</label>
+            <select name="produto.id" id="produto.id" class="input">
+                <option th:each="produto : ${produtos}" th:value="${produto.id}" th:text="${produto.descricao}"></option>
+            </select>
             <input type="submit" class="button" value="Cadastrar Pedido">
         </form>
 
@@ -63,7 +63,7 @@
                 <th>Data do Pedido</th>
                 <th>ID Produto</th>
             </tr>
-            <tr th:each="produto : ${produtos}">
+            <tr th:each="pedido : ${pedidos}">
                 <td th:text="${pedido.id}"></td>
                 <td th:text="${pedido.dataPedido}"></td>
                 <td th:text="${pedido.produto.id}"></td>
