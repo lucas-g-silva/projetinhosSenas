@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles-gravadora.css}">
+    <title>Gravadoras</title>
+
+</head>
+
+<body>
+    <h1>Gravadoras</h1>
+    <form action="#" th:action="@{/gravadoras}" th:object="${gravadora}" method="post">
+        <input type="text" th:field="*{nome}" placeholder="Nome" required />
+        <button type="submit">Adicionar Gravadora</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="gravadora : ${gravadoras}">
+                <td th:text="${gravadora.nome}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>

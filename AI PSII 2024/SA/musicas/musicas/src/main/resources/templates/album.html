@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/styles-album.css}">
+    <title>Álbuns</title>
+
+
+
+</head>
+
+<body>
+    <h1>Álbuns</h1>
+    <form action="#" th:action="@{/albuns}" th:object="${album}" method="post">
+        <input type="text" th:field="*{titulo}" placeholder="Título" required />
+        <input type="text" th:field="*{anoLancamento}" placeholder="Ano de Lançamento" required />
+        <select th:field="*{artista}" required>
+            <option value="" disabled selected>Selecione o Artista</option>
+            <option th:each="artista : ${artistas}" th:value="${artista.id}" th:text="${artista.nome}"></option>
+        </select>
+        <select th:field="*{gravadora}" required>
+            <option value="" disabled selected>Selecione a Gravadora</option>
+            <option th:each="gravadora : ${gravadoras}" th:value="${gravadora.id}" th:text="${gravadora.nome}"></option>
+        </select>
+        <button type="submit">Adicionar Álbum</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>Ano de Lançamento</th>
+                <th>Artista</th>
+                <th>Gravadora</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="album : ${albuns}">
+                <td th:text="${album.titulo}"></td>
+                <td th:text="${album.anoLancamento}"></td>
+                <td th:text="${album.artista.nome}"></td>
+                <td th:text="${album.gravadora.nome}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+
+</html>
